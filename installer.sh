@@ -63,7 +63,7 @@ done 2>&1
 #chronyd -q
 
 
-read -p "Provide Link for Stage3 Tarball / Leave empty for automatic download " stage3 2>&1		#This downloads "core" Gentoo
+read -p "Provide Link for Stage3 Tarball / Leave empty for automatic download(Desktop) " stage3 2>&1		#This downloads "core" Gentoo
 
 if [ -z "$stage3" ]; then
 	#wget http://ftp.fi.muni.cz/pub/linux/gentoo/releases/amd64/autobuilds/current-stage3-amd64-desktop-openrc/stage3-amd64-desktop-openrc-20240901T170410Z.tar.xz
@@ -80,4 +80,29 @@ fi
 
 
 
+echo "Configuration of CFlags and CXXFlags..." #CFlags and CXXFlags serve as a tool to optimize GCC and C++ compilers
+#sleep 1.5
 
+
+touch /mnt/gentoo/etc/portage/make.conf
+
+echo """# Compiler flags to set for all languages
+COMMON_FLAGS=\"-march=native -O2 -pipe\"
+# Use the same settings for both variables
+CFLAGS=\"${COMMON_FLAGS}\"
+CXXFLAGS=\"${COMMON_FLAGS}\"""" > /mnt/gentoo/etc/portage/make.conf
+
+
+########################	THREADS DISCOVERY
+hreads="$(nproc)"
+threads=$((threads+1))
+########################
+
+
+########################	RAM DISCOVERY
+halfram=$(sudo cat /proc/meminfo | head -n 1 | sed 's/[^0-9]//g')
+halfram=$((($halfram/1000000)+2))
+########################
+
+
+echo "MAKEOPTS=\"-j$halfram -l$threads\"">> /mnt/gentoo/etc/make.conf
