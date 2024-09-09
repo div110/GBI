@@ -7,4 +7,3 @@
   **Requirements**
 --------
  * Gentoo LiveGUI
- * ~~GCC~~ 
