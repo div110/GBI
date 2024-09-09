@@ -7,3 +7,4 @@
   **Requirements**
 --------
  * Gentoo LiveGUI
+ * UEFI System
