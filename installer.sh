@@ -14,6 +14,8 @@ exec 2> err_log
 echo "ALL errors are redirected to err_log"
 #sleep 1.5
 echo "the Installer will create 3 Partitions on your Disk"
+read -p "Do you wish to use Automatic Disk Discovery? [yes/no]" auto_disk
+
 #sleep 1.5
 echo "Select your Disk"
 
@@ -24,6 +26,15 @@ do
 	echo "Selecting $diskname..."
 	break;
 done 2>&1
+
+
+#automatic disk discovery
+#
+#lsblk -n -o 'NAME' --nodeps | head -n 1
+#
+#
+
+
 
 #fdisk BLOCK
 #/
@@ -91,7 +102,7 @@ COMMON_FLAGS=\"-march=native -O2 -pipe\"
 # Use the same settings for both variables
 CFLAGS=\"${COMMON_FLAGS}\"
 CXXFLAGS=\"${COMMON_FLAGS}\"""" > /mnt/gentoo/etc/portage/make.conf
-
+echo "Architecture: Native; Optimization O2; Piping Allowed"
 
 ########################	THREADS DISCOVERY
 hreads="$(nproc)"
@@ -109,7 +120,6 @@ echo "MAKEOPTS=\"-j$halfram -l$threads\"">> /mnt/gentoo/etc/make.conf
 
 
 
-
 #DNS INFO
 cp --dereference /etc/resolv.conf /mnt/gentoo/etc/
 
@@ -122,3 +132,78 @@ mount --rbind /dev /mnt/gentoo/dev
 mount --make-rslave /mnt/gentoo/dev
 mount --bind /run /mnt/gentoo/run
 mount --make-slave /mnt/gentoo/run 
+
+
+
+#chrooting into the new env
+#ch/mnt/gentoo /bin/bash #root directory change
+#source /etc/profile #using profile
+#export PS1="(chroot) ${PS1}" #??????
+
+
+mkdir /efi
+#mount /dev/sda1 /efi /mounting efi partition to /efi directory
+
+emerge-webrsync
+
+
+#emerge --ask --verbose --oneshot app-portage/mirrorselect
+#mirrorselect -i -o >> /etc/portage/make.conf
+
+emerge --sync
+
+
+eselect profile list 
+read -p "Choose a Profile Number: " ProfileNumber
+eselect profile set $ProfileNumber
+echo "Configure Host for Binary Packages?"
+select binary in "Yes" "No";
+do 
+	echo "Selecting $binary..."
+	break
+done 2>&1
+
+if [ "$binary"="Yes" ]then;
+######################
+#Binhost Config Block#
+######################
+fi
+
+
+#################
+#USE FLAGS BLOCK#
+#################
+
+
+
+##CPU FLAGS##
+echo "CPU Flags are set Automatically"
+echo "Located at /etc/portage/package.use/00cpu-flags"
+emerge --ask --oneshot app-portage/cpuid2cpuflags
+echo "*/* $(cpuid2cpuflags)" > /etc/portage/package.use/00cpu-flags
+
+
+
+##VIDEO_CARDS FLAG##
+echo "SETTING GPU Flags"
+echo "Select Your GPU Manufacturer: "
+select videocard in "intel" "nvidia" "amdgpu"; #missing nouveau driver option
+do
+	
+	echo "VIDEO_CARDS=\"$videocard\"" >> /etc/portage/make.conf
+	echo "Setting VIDEO_CARDS to $videocard"
+	break
+done 2>&1
+
+
+echo "LICENSES"
+read -p "ACCEPT All Licenses? [y/n]" license
+if [ "$license" = "y" ]; then
+	echo "ACCEPT_LICENSE=\"*\"">>/etc/portage/make.conf
+else
+	#missing mechanism for choosing all allowed licenses
+fi
+
+
+
+emerge --ask --verbose --update --deep --newuse @world
