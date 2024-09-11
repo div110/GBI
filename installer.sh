@@ -218,3 +218,40 @@ select country in $(ls /usr/share/zoneinfo/Europe/);
 echo "$continent/$country" > /etc/timezone
 
 emerge --config sys-libs/timezone-data
+
+
+select locale in $(cat /usr/share/i18n/SUPPORTED);
+do
+	echo "		<====>"
+	locale-gen
+	break
+done 2>&1
+
+
+eselect locale list
+read locale
+eselect locale set $locale
+
+env-update && source /etc/profile && export PS1="(chroot) ${PS1}"
+
+
+emerge --ask sys-kernel/linux-firmware
+
+emerge --ask sys-firmware/sof-firmware #to be safe
+emerge --ask sys-firmware/intel-microcode #Just for Intel CPUs
+
+##Bootloader##
+#just GRUB for now
+
+touch /etc/portage/package.use/installkernel
+echo "sys-kernel/installkernel grub" >> /etc/portage/package.use/installkernel
+emerge --ask sys-kernel/installkernel
+
+
+
+##InitRamFS
+echo "sys-kernel/installkernel dracut" >> /etc/portage/package.use/installkernel
+
+
+
+##KERNEL CONFIG + INSTALL
