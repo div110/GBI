@@ -207,3 +207,14 @@ fi
 
 
 emerge --ask --verbose --update --deep --newuse @world
+
+
+
+emerge --ask --depclean
+
+#OpenRC Timezones
+select continent in $(ls /usr/share/zoneinfo);
+select country in $(ls /usr/share/zoneinfo/Europe/); 
+echo "$continent/$country" > /etc/timezone
+
+emerge --config sys-libs/timezone-data
