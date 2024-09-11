@@ -8,3 +8,4 @@
 --------
  * Gentoo LiveGUI
  * UEFI System
+ * amd64 Architecture
