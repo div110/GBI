@@ -250,8 +250,100 @@ emerge --ask sys-kernel/installkernel
 
 
 ##InitRamFS
-echo "sys-kernel/installkernel dracut" >> /etc/portage/package.use/installkernel
+echo "sys-kernel/installkernel dracut" >> /etc/portage/package.use/installkernel 
+
+
+#########################
+##KERNEL CONFIG+COMPILE##
+#########################
+
+###DISTRIBUTION KERNELS###
+echo "Compilation of KERNEL: "
+select binsrc in "Compile Localy" "Use Precompiled";
+break
+done
+	
+
+###############
+#UNSTABLE IMHO#
+###############
+if [ "$binsrc" = "Compile Localy" ];then
+	emerge --ask sys-kernel/gentoo-kernel
+else
+	emerge --ask sys-kernel/gentoo-kernel-bin #binary??? ew :/
+fi
+
+#
+#Post Install/upgrade tasks
+#
+
+emerge --ask sys-kernel/gentoo-sources
+
+
+eselect kernel list
+read -p "Option: " KernelNumber
+eselect kearnel set KernelNumber
+################
+#/UNSTABLE IMHO#
+################
 
 
 
-##KERNEL CONFIG + INSTALL
+##fstab##
+read -p "Where should USBs be Mounted?(Default /mnt/usb): " usbmount
+sudo mkdir $usbmount
+
+read -p "Will You Switch Storages Frequently?[y/n]: " uuid
+if [ "$uuid" = "n" ]; then
+echo """
+/dev/sda1   /efi         vfat   	umask=0077     		0 2
+/dev/sda2   none         swap   	sw                      0 0
+/dev/sda3   /            $filesystem    defaults,noatime        0 1
+#/dev/	    $usbmount    auto 		noauto,user		0 0
+/dev/cdrom  /mnt/cdrom   auto    	noauto,user             0 0"""
+else 
+######################
+#GPT DISK LABEL fstab#
+######################
+break
+
+##Network##
+echo "|Network Configuration|"
+select customname in "Custom hostname" "Random hostname";
+if [ "$customname" = "Custom hostname" ]; then
+	read -p "Enter hostname: " hostname
+else
+	hostname = $(cat /dev/urandom | tr -dc A-Za-z0-9 | head -c 6)
+fi
+
+
+echo $hostname > /etc/hostname
+emerge --ask net-misc/dhcpcd
+rc-update add dhcpcd default
+rc-service dhcpcd start
+
+
+emerge --ask --noreplace net-misc/netifrc 
+
+select ipconfig in "Static" "DHCP" "Custom";
+case $ipconfig in
+
+  Static)
+    read -p "IP: " ip
+    read -p "MASK: " mask
+    read -p "Broadcast: " brd
+    read -p "Router IP: " routerIP
+    echo """config_eth0=\"$ip netmask $mask brd $brd\"
+routes_eth0=\"default via $routerIP\" """> /etc/conf.d/net
+
+    ;;
+
+  DHCP)
+    echo "config_eth0=\"dhcp\""> /etc/conf.d/net
+    ;;
+
+  Custom)
+    nano /etc/conf.d/net
+    ;;
+
+esac
