@@ -39,15 +39,48 @@ return atoi(data_bin);}
 
 
 
+int todec(int data_bin){
+char binary_text[8];
+sprintf(binary_text, "%d", data_bin);
+for(int i=0;i<8;i++){binary_text[i]=binary_text[i]-48;
+//printf("%d\n",binary_text[i]);
+}
+
+//11000000="11000000"
+
+
+//printf("%d\n%d\n%d\n", binary_text[0],binary_text[1],binary_text[2]);
+int data=0;
+for(int i=0;i<=7;i++){
+data = data+(binary_text[i]*power(2,7-i));
+//printf("%i\n", binary_text[i]*power(2,7-i));
+//printf("%d\n", data);
+}
+printf("%d\n", data);
+return data;}
+
+
+
+
+
+
 
 
 int main(int argc, char * argv[]){
-printf("%d %d %d %d\n", format(argv[1],1),format(argv[1],2),format(argv[1],3),format(argv[1],4));
-int binary1 = format(argv[1],1);
-int binary2 = format(argv[1],2);
-int binary3 = format(argv[1],3);
-int binary4 = format(argv[1],4);
-printf("%d %d %d %d\n", tobin(binary1),tobin(binary2),tobin(binary3),tobin(binary4));
+
+int binaryIP1 = tobin(format(argv[1],1));
+int binaryIP2 = tobin(format(argv[1],2));
+int binaryIP3 = tobin(format(argv[1],3));
+int binaryIP4 = tobin(format(argv[1],4));
+int binaryMASK1 = tobin(format(argv[2],1));
+int binaryMASK2 = tobin(format(argv[2],2));
+int binaryMASK3 = tobin(format(argv[2],3));
+int binaryMASK4 = tobin(format(argv[2],4));
+printf("%d\t%d\t%d\t%d\n",binaryIP1, binaryIP2, binaryIP3, binaryIP4);
+printf("%d\t%d\t%d\t%d\n",binaryMASK1,binaryMASK2,binaryMASK3,binaryMASK4); 
+todec(10101000);
+
+
 return 0;
 
 
