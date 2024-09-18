@@ -42,20 +42,10 @@ return atoi(data_bin);}
 int todec(int data_bin){
 char binary_text[8];
 sprintf(binary_text, "%d", data_bin);
-for(int i=0;i<8;i++){binary_text[i]=binary_text[i]-48;
-//printf("%d\n",binary_text[i]);
-}
-
-//11000000="11000000"
-
-
-//printf("%d\n%d\n%d\n", binary_text[0],binary_text[1],binary_text[2]);
+for(int i=0;i<8;i++){binary_text[i]=binary_text[i]-48;}
 int data=0;
 for(int i=0;i<=7;i++){
-data = data+(binary_text[i]*power(2,7-i));
-//printf("%i\n", binary_text[i]*power(2,7-i));
-//printf("%d\n", data);
-}
+data = data+(binary_text[i]*power(2,7-i));}
 printf("%d\n", data);
 return data;}
 
