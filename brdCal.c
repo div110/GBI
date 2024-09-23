@@ -42,12 +42,18 @@ return atoi(data_bin);}
 int todec(int data_bin){
 char binary_text[8];
 sprintf(binary_text, "%d", data_bin);
-for(int i=0;i<8;i++){binary_text[i]=binary_text[i]-48;}
-int data=0;
-for(int i=0;i<=7;i++){
-data = data+(binary_text[i]*power(2,7-i));}
-printf("%d\n", data);
-return data;}
+for(int i=0;i<8;i++){binary_text[i]=binary_text[i]-48;
+if(!binary_text[i]){
+binary_text[i] = 0;}
+printf("%d\n", binary_text[i]);}
+int data_dec=0;
+int length =      sizeof(binary_text)/sizeof(binary_text[0])-1;
+printf("Length of the number: %ld\n", sizeof(binary_text)/sizeof(binary_text[0]));
+for(int i=0;i<=length;i++){
+//printf("Data for i=%d : %d\n", i, data_dec);
+data_dec+=power(2,length-i)*binary_text[i];
+}
+return data_dec;}
 
 
 
@@ -66,9 +72,9 @@ int binaryMASK1 = tobin(format(argv[2],1));
 int binaryMASK2 = tobin(format(argv[2],2));
 int binaryMASK3 = tobin(format(argv[2],3));
 int binaryMASK4 = tobin(format(argv[2],4));
-printf("%d\t%d\t%d\t%d\n",binaryIP1, binaryIP2, binaryIP3, binaryIP4);
-printf("%d\t%d\t%d\t%d\n",binaryMASK1,binaryMASK2,binaryMASK3,binaryMASK4); 
-todec(10101000);
+//printf("%d\t%d\t%d\t%d\n",binaryIP1, binaryIP2, binaryIP3, binaryIP4);
+//printf("%d\t%d\t%d\t%d\n",binaryMASK1,binaryMASK2,binaryMASK3,binaryMASK4); 
+printf("%d\n",todec(10101000));
 
 
 return 0;
