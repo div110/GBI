@@ -33,25 +33,32 @@ return atoi(triple);}
 int tobin(int data){
 char data_bin[8];
 for(int i=7;i>=0;i--){
-if(data<power(2,i)){data_bin[7-i]='0';}
-else{data_bin[7-i]='1';data=data-power(2,i);}}
+if(data<power(2,i)){data_bin[7-i]=0;}
+else{data_bin[7-i]=1;data=data-power(2,i);}}
 return atoi(data_bin);}
 
 
 
 int todec(int data_bin){
-char binary_text[8];
+int count=0;
+int n = data_bin;
+while(n != 0){
+n=n/10;
+count++;
+}
+
+char binary_text[count];
 sprintf(binary_text, "%d", data_bin);
-for(int i=0;i<8;i++){binary_text[i]=binary_text[i]-48;
-if(!binary_text[i]){
+for(int i=0;i<count;i++){binary_text[i]=binary_text[i]-48;
+if(binary_text[i]!=1){
 binary_text[i] = 0;}
+
 printf("%d\n", binary_text[i]);}
 int data_dec=0;
-int length =      sizeof(binary_text)/sizeof(binary_text[0])-1;
-printf("Length of the number: %ld\n", sizeof(binary_text)/sizeof(binary_text[0]));
-for(int i=0;i<=length;i++){
-//printf("Data for i=%d : %d\n", i, data_dec);
-data_dec+=power(2,length-i)*binary_text[i];
+//printf("Length of the number: %d\n", count);
+for(int i=0;i<count;i++){
+//printf("Data for i=%d : %d\n", i, power(2,count-i-1)*binary_text[i]);
+data_dec+=power(2,count-1-i)*binary_text[i];
 }
 return data_dec;}
 
@@ -74,8 +81,9 @@ int binaryMASK3 = tobin(format(argv[2],3));
 int binaryMASK4 = tobin(format(argv[2],4));
 //printf("%d\t%d\t%d\t%d\n",binaryIP1, binaryIP2, binaryIP3, binaryIP4);
 //printf("%d\t%d\t%d\t%d\n",binaryMASK1,binaryMASK2,binaryMASK3,binaryMASK4); 
-printf("%d\n",todec(10101000));
-
+printf("%d\n",todec(1010));
+printf("%d\n", todec(11000000));
+printf("%d\n", todec(111));
 
 return 0;
 
