@@ -2,7 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-
+ //////////POWER FUNCTION////////////////
+////////////////////////////////////////
 int power(int number, int exponent){
 if(exponent==0){number=1;}         
 else{
@@ -10,10 +11,10 @@ int base = number;
 for(int i=1; i<exponent;i++){
 number=number*base;}}
 return number;}
+////////////////////////////////////////
 
-
-
-
+ ////////////////////>>FORMATING TO DECIMAL OCTETS<<//////////////////////
+/////////////////////////////////////////////////////////////////////////
 int format(char argv[], int order){
 int pos[5];
 pos[0]=-1;
@@ -27,18 +28,22 @@ pos[4]=strlen(argv);
 for(int i =pos[order-1]+1; i<pos[order]; i++){
 triple[i%4]=argv[i];}
 return atoi(triple);}
+/////////////////////////////////////////////////////////////////////////
 
 
-
+ ////////////////>>CONVERT TO BINARY<<////////////////
+/////////////////////////////////////////////////////
 int tobin(int data){
 char data_bin[8];
 for(int i=7;i>=0;i--){
 if(data<power(2,i)){data_bin[7-i]='0';}
 else{data_bin[7-i]='1';data=data-power(2,i);}}
-return atoi(data_bin);}
+return atoi(data_bin);}    //return atoi(data_bin);
+//////////////////////////////////////////////////////
 
 
-
+ ////////////////////////CONVERT TO DECIMAL//////////////////////////////
+////////////////////////////////////////////////////////////////////////
 int todec(int data_bin){
 int count=0;
 int n = data_bin;
@@ -46,13 +51,11 @@ while(n != 0){
 n=n/10;
 count++;
 }
-
 char binary_text[count];
 sprintf(binary_text, "%d", data_bin);
 for(int i=0;i<count;i++){binary_text[i]=binary_text[i]-48;
 if(binary_text[i]!=1){
 binary_text[i] = 0;}
-
 printf("%d\n", binary_text[i]);}
 int data_dec=0;
 //printf("Length of the number: %d\n", count);
@@ -61,10 +64,7 @@ for(int i=0;i<count;i++){
 data_dec+=power(2,count-1-i)*binary_text[i];
 }
 return data_dec;}
-
-
-
-
+/////////////////////////////////////////////////////////////////////////
 
 
 
@@ -79,11 +79,19 @@ int binaryMASK1 = tobin(format(argv[2],1));
 int binaryMASK2 = tobin(format(argv[2],2));
 int binaryMASK3 = tobin(format(argv[2],3));
 int binaryMASK4 = tobin(format(argv[2],4));
+char binaryBC1[8];
+char binaryBC2[8];
+char binaryBC3[8];
+char binaryBC4[8];
+
 printf("Binary IP: %d\t%d\t%d\t%d\n",binaryIP1, binaryIP2, binaryIP3, binaryIP4);
 printf("Binary MASK: %d\t%d\t%d\t%d\n",binaryMASK1,binaryMASK2,binaryMASK3,binaryMASK4); 
 printf("%d\n",todec(1010));
 printf("%d\n", todec(11000000));
 printf("%d\n", todec(111));
+
+//for(int i=0;i<8;i++)
+//if(binaryMASK1[i]=='1'){binaryBC1[i]=binaryIP1[i];}
 
 return 0;
 
