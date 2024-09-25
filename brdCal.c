@@ -33,8 +33,8 @@ return atoi(triple);}
 int tobin(int data){
 char data_bin[8];
 for(int i=7;i>=0;i--){
-if(data<power(2,i)){data_bin[7-i]=0;}
-else{data_bin[7-i]=1;data=data-power(2,i);}}
+if(data<power(2,i)){data_bin[7-i]='0';}
+else{data_bin[7-i]='1';data=data-power(2,i);}}
 return atoi(data_bin);}
 
 
@@ -79,8 +79,8 @@ int binaryMASK1 = tobin(format(argv[2],1));
 int binaryMASK2 = tobin(format(argv[2],2));
 int binaryMASK3 = tobin(format(argv[2],3));
 int binaryMASK4 = tobin(format(argv[2],4));
-//printf("%d\t%d\t%d\t%d\n",binaryIP1, binaryIP2, binaryIP3, binaryIP4);
-//printf("%d\t%d\t%d\t%d\n",binaryMASK1,binaryMASK2,binaryMASK3,binaryMASK4); 
+printf("Binary IP: %d\t%d\t%d\t%d\n",binaryIP1, binaryIP2, binaryIP3, binaryIP4);
+printf("Binary MASK: %d\t%d\t%d\t%d\n",binaryMASK1,binaryMASK2,binaryMASK3,binaryMASK4); 
 printf("%d\n",todec(1010));
 printf("%d\n", todec(11000000));
 printf("%d\n", todec(111));
