@@ -56,7 +56,8 @@ sprintf(binary_text, "%d", data_bin);
 for(int i=0;i<count;i++){binary_text[i]=binary_text[i]-48;
 if(binary_text[i]!=1){
 binary_text[i] = 0;}
-printf("%d\n", binary_text[i]);}
+//printf("%d\n", binary_text[i]);
+}
 int data_dec=0;
 //printf("Length of the number: %d\n", count);
 for(int i=0;i<count;i++){
@@ -69,13 +70,13 @@ return data_dec;}
  /////////////////////////BROADCAST OCTETS////////////////////////////////
 /////////////////////////////////////////////////////////////////////////
 int broadcast(int ip, int mask){
-int broadcast_value;
+int broadcast_value=0;
 int freeBit=8;
 
 if(mask != 0){
-
+int compare=0;
 for(int i=0;i<8;i++){
-int compare = 0;
+compare = 0;
 for(int j=i;j>=0;j--){
 compare+=power(10,j);
 //printf("%d   %d\n",j, compare);
@@ -83,18 +84,21 @@ if(mask == compare){freeBit=j;
 	break;}
 }
 }}
-printf("number of free bits: %d\n",freeBit);
+//printf("number of free bits: %d\n",freeBit);
 
 broadcast_value=ip/power(10,freeBit);
-printf("frozen bits: %d\n", broadcast_value);
+//printf("frozen bits: %d\n", broadcast_value);
 broadcast_value*=power(10,freeBit);
-printf("cleared octet: %d\n", broadcast_value);
-for(int i=0;i<=freeBit;i++){
+//printf("cleared octet: %d\n", broadcast_value);
+for(int i=0;i<freeBit;i++){
 ////////////////
 //HERE DODELAT//
 ////////////////
+broadcast_value+=power(10,i);
+//printf("Broadcast Value: %d\n", broadcast_value);
 }
-}
+
+return broadcast_value;}
 /////////////////////////////////////////////////////////////////////////
 
 
@@ -114,9 +118,9 @@ int binaryMASK4 = tobin(format(argv[2],4));
 
 
 
-broadcast(10101010,10000000);
-broadcast(11000000,11000000);
-broadcast(11000000,11110000);
+//broadcast(10101010,11111111);
+//broadcast(1,11111111);
+//broadcast(11000111,11110000);
 
 
 
@@ -124,9 +128,18 @@ broadcast(11000000,11110000);
 
 
 
-printf("Binary IP: %d\t%d\t%d\t%d\n",binaryIP1, binaryIP2, binaryIP3, binaryIP4);
-printf("Binary MASK: %d\t%d\t%d\t%d\n",binaryMASK1,binaryMASK2,binaryMASK3,binaryMASK4);
+//printf("Binary IP: %d\t%d\t%d\t%d\n",binaryIP1, binaryIP2, binaryIP3, binaryIP4);
+//printf("Binary MASK: %d\t%d\t%d\t%d\n",binaryMASK1,binaryMASK2,binaryMASK3,binaryMASK4);
 //printf("%d %d %d %d\n", sizeof(binaryBC1)/sizeof(binaryBC1[0]),sizeof(binaryBC2)/sizeof(binaryBC2[0]),sizeof(binaryBC3)/sizeof(binaryBC3[0]),sizeof(binaryBC4)/sizeof(binaryBC4[0]))
+//printf("Binary BC: %d\t%d\t%d\t%d\n", broadcast(binaryIP1,binaryMASK1),broadcast(binaryIP2,binaryMASK2),broadcast(binaryIP3,binaryMASK3),broadcast(binaryIP4,binaryMASK4));
+int BC1=broadcast(binaryIP1,binaryMASK1);
+int BC2=broadcast(binaryIP2,binaryMASK2);
+int BC3=broadcast(binaryIP3,binaryMASK3);
+int BC4=broadcast(binaryIP4,binaryMASK4);
+
+
+printf("%d.%d.%d.%d\n",todec(BC1),todec(BC2),todec(BC3),todec(BC4));
+
 return 0;
 
 
