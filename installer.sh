@@ -331,7 +331,7 @@ case $ipconfig in
   Static)
     read -p "IP: " ip
     read -p "MASK: " mask
-    read -p "Broadcast: " brd
+    read -p "Broadcast: " brd  #brdcal
     read -p "Router IP: " routerIP
     echo """config_eth0=\"$ip netmask $mask brd $brd\"
 routes_eth0=\"default via $routerIP\" """> /etc/conf.d/net
@@ -347,3 +347,26 @@ routes_eth0=\"default via $routerIP\" """> /etc/conf.d/net
     ;;
 
 esac
+
+cd /etc/init.d
+ln -s net.lo net.eth0
+rc-update add net.eth0 default
+
+
+
+
+echo """127.0.0.1	localhost
+::1		localhost
+127.0.1.1	$hostname.localdomain	$hostname""" > /etc/hosts
+
+
+echo "Now you will set the Password for ROOT"
+
+
+#nano /etc/rc.conf		CONFIGURE STARTUP,SERVICES,SHUTDOWN
+
+
+#nano /etc/conf.d/keymaps	for Keyboard
+
+
+#nano /etc/conf.d/hwclock 	NEJAKE HODINY IDK    If the hardware clock is not using UTC, then it is necessary to set clock="local" in the file. 
