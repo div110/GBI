@@ -361,7 +361,7 @@ echo """127.0.0.1	localhost
 
 
 echo "Now you will set the Password for ROOT"
-
+passwd
 
 #nano /etc/rc.conf		CONFIGURE STARTUP,SERVICES,SHUTDOWN
 
@@ -370,3 +370,66 @@ echo "Now you will set the Password for ROOT"
 
 
 #nano /etc/conf.d/hwclock 	NEJAKE HODINY IDK    If the hardware clock is not using UTC, then it is necessary to set clock="local" in the file. 
+echo "ADD SystemLogger?: "
+select syslog in "Yes" "No";
+	break
+done
+if [ "$syslog"="Yes" ];then
+	emerge --ask app-admin/sysklogd
+	rc-update add sysklogd default
+else
+break
+
+echo "ADD cronie?: "
+select cronie in "Yes" "No";
+	break
+done 
+if [ "$cronie"="Yes" ];then
+	emerge --ask sys-process/cronie
+	rc-update add cronie default
+else
+break
+
+echo "Enable SSH?: "
+select ssh in "Yes" "No";
+	break
+if [ "$ssh"="Yes" ];then
+	rc-update add sshd default
+else 
+break
+
+
+###########################################################
+#							  #
+# Uncomment the serial console section in /etc/inittab:   #
+# root #nano -w /etc/inittab				  #
+#							  #
+# # SERIAL CONSOLES					  #
+# s0:12345:respawn:/sbin/agetty 9600 ttyS0 vt100	  #
+# s1:12345:respawn:/sbin/agetty 9600 ttyS1 vt100	  #
+###########################################################
+
+
+
+emerge --ask app-shells/bash-completion
+
+emerge --ask net-misc/chrony
+rc-update add chronyd default
+
+
+if [ "$filesystem"="XFS" ];then
+	emerge sys-fs/xfsprogs
+else
+	emerge sys-fs/btrfs-progs
+break
+
+emerge sys-fs/dosfstools
+
+
+emerge --ask sys-block/io-scheduler-udev-rules
+
+
+#DHCP daemon + Wireless Tools
+
+emerge --ask net-misc/dhcpcd
+emerge --ask net-wireless/iw net-wireless/wpa_supplicant
