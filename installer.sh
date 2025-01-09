@@ -77,7 +77,7 @@ done 2>&1
 read -p "Provide Link for Stage3 Tarball / Leave empty for automatic download(Desktop) " stage3 2>&1		#This downloads "core" Gentoo
 
 if [ -z "$stage3" ]; then
-	#wget http://ftp.fi.muni.cz/pub/linux/gentoo/releases/amd64/autobuilds/current-stage3-amd64-desktop-openrc/stage3-amd64-desktop-openrc-20240901T170410Z.tar.xz
+	#wget https://ftp.fi.muni.cz/pub/linux/gentoo/releases/amd64/autobuilds/20250105T170325Z/stage3-amd64-desktop-openrc-20250105T170325Z.tar.xz
 	echo "base"
 else
 	#wget $stage3
