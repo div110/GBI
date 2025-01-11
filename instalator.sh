@@ -11,38 +11,51 @@ exec > /dev/null
 fi
 
 exec 2> err_log
-echo "VŠECHNY errory budou přesměrovány do err_log"
+echo "VŠECHNY chyby budou přesměrovány do err_log"
 #sleep 1.5
 echo "Instalator vytvoří 3 oddíly na Vašem disku"
-read -p "Přejete si použít automatický výber disku? [yes/no]" auto_disk
 
 #sleep 1.5
-echo "Vyberte disk:"
 
-cd /dev/
-select diskname in *;
+echo "Vyberte cílový disk:"
+select diskname in /dev/*; do
+    if [[ -n $diskname ]]; then
+        echo "Zvolen: $diskname"
+        break
+    else
+        echo "Další pokus."
+    fi
+done
+swapsize=$(sudo cat /proc/meminfo | head -n 1 | sed 's/[^0-9]//g')
+swapsize=$((($swapsize/1000000)*3/2))
+swapsize="+"$swapsize"G"
+echo $swapsize;
+sudo fdisk "$diskname" <<- BRR
+g
+n
+1
 
-do
-	echo "Vybírám: $diskname..."
-	break;
-done 2>&1
++1G
+t
+1
+n
+2
+
+$swapsize
+t
+2
+19
+n
+3
 
 
-#automatic disk discovery
-#
-#lsblk -n -o 'NAME' --nodeps | head -n 1
-#
-#
+t
+3
+23
+w
+BRR
+echo "Oddíly vytvořeny pro $diskname"
 
-
-
-#fdisk BLOCK
-#/
-#/
-#/
-#/
-#/
-#fdisk BLOCK
 
 
 echo "Vyberte souborový systém pro váš Kořenový oddíl"
