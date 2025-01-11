@@ -1,0 +1,202 @@
+\documentclass[12pt,a4paper,twoside,]{article}
+\usepackage[inner=4cm,outer=2.5cm,top=2.5cm,bottom=2.5cm]{geometry}
+\usepackage{setspace}
+\usepackage{graphicx}
+\usepackage{titlesec}
+\onehalfspacing
+
+\setlength{\parskip}{6pt}
+
+
+
+\usepackage{fancyhdr}
+\renewcommand{\headrulewidth}{0pt}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot[LE,RO]{\thepage}
+
+\setlength{\headheight}{14.5pt}
+
+\usepackage{fontspec}
+\setmainfont{TeX Gyre Termes}
+
+\begin{document}
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.5,]{obrazky/sssi_logo.png}
+
+
+	
+\textsf{\textbf{\Huge Maturitní práce\\}}
+\textsf{ \textbf{\Huge Script pro instalaci operačního systému Gentoo \\}}
+\textsf{ \Huge \\Studijní obor: 18-20-M/01 \\Informační technologie\\}
+\textsf{\LARGE \\Autor: Halamka David\\
+Třída: IT4/A\\
+Vedoucí práce: Petr Martínek
+}
+\end{figure}
+
+
+\newpage
+Prohlašuji, že jsem předkládanou práci vypracoval/a sám/sama za použití zdrojů a literatury v ní uvedených. Souhlasím s tím, aby moje maturitní práce byla využívána pro potřeby Střední školy spojů a informatiky, Tábor, Bydlinského 2474 nebo jiných subjektů, které se podílely na zadání práce.\\ 
+\\	…………………….~~~~~~~~~~~~~……………………..\\
+datum~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~podpis
+
+
+
+\newpage
+\renewcommand{\contentsname}{\textsf{Obsah}}\tableofcontents
+
+\newpage
+\section{\textsf{Anotace}}
+{Teoretická část maturitní práce popisuje proces instalace operačního systému Gentoo
+	z pohledu tvorby scriptu. V práci je také zároveň rozvedena problematika stěžejních
+	kroků instalace. Cílem práce bylo usnadnit novým uživatelům instalaci a konfiguraci
+	systému.
+	\vspace{2cm}
+	\\Klíčová slova:
+	\\Keywords:
+}
+
+
+\newpage
+
+\section{\textsf{Příprava disků}}
+{Příprava disků je nutným krokem každé instalace. Hlavním důvodem je, 
+že stávající schéma rozdělení a souborové systémy nemusí být v souladu s novým operačním systémem. 
+Z toho důvodu nestačí disky pouze smazat. Použíté schéma rozdělení je GPT. 
+Mezi hlavní důvody pro výběr GPT patří: lepší kompatibilita s UEFI systémy, 
+vyšší maximální počet oddílů, podpora disků větších než 2TB a kontrola integrity.
+Oddíly a jejích nastavení mají velký vliv na paměť i výkon systému. Proto je potřeba, 
+aby script i samotná instalace přizpůsobily rozdělení specifikacím systému.} 
+
+{\hspace*{-1.5em}První je EFI oddíl. Slouží pro zavádění UEFI systémů. Bude obsahovat bootloadery(zavaděče). 
+Velikost je pevně nastavena na 1GB, jelikož není potřeba škálovat se systémem.
+Souborový systém oddílu je fat32.}
+
+{\hspace*{-1.5em}Druhý je Swap oddíl. Swap obsahuje časti operační paměti, vyhodnocené jako nejméně používané. 
+Rozbor samotného algoritmu pro správu paměti je mimo záběr maturitní práce. Je třeba,
+aby velikost Swap oddílu rostla s kapacitou paměťi RAM. Tento vztah je způsoben vlastnostmi hibernace, 
+která nahraje celý obsah operační paměti na Swap oddíl. Má-li tedy systém využívat hibernaci, je nutné
+aby velikost oddílu byla ostře větší, než velikost paměťi RAM. }
+
+{\hspace*{-1.5em}Třetí je Root oddíl. Obsahuje komplement EFI oddílu. Je to zároveň také jediný oddíl z trojice, 
+u kterého lze účině zvolit souborový systém. Zabírá zbytek místa na disku.}
+
+{\hspace*{-1.5em}Script vytváří oddíly pomocí nástroje \texttt{fdisk}. \texttt{fdisk} je interaktivní nástroj na tvorbu \\oddílu, proto je nutné aby script dodával instrukce přímo do vstupu nástroje, ne shellu. Přesměrování provádí Here document, který dokáže přesměrovat dávkovaný vstup přímo do programu.\\ Výběr disku:}
+\\ 
+
+\texttt{\hspace*{-1.5em}select diskname in /dev/*; do\\}
+\texttt{if [[ -n \$diskname ]]; then\\}
+\texttt{\hspace*{2em}echo "Zvolen: \$diskname"\\}
+\texttt{\hspace*{2em}break\\}
+\texttt{else\\}
+\texttt{\hspace*{2em}echo "Vyberte zařízení"\\}
+\texttt{fi\\}
+\texttt{done\\}
+
+
+\texttt{\hspace*{-1.5em}select} umožňuje vybrat soubor ze složky \texttt{/dev}, kde se nacházejí bloková zařízení.
+\newpage
+{\hspace*{-1.5em}Pro škálování Swapu je potřeba zjistit informace o velikosti paměti RAM. Ty jsou uložené v souboru \texttt{/proc/meminfo}. Pro \texttt{fdisk} je potřeba, aby jsme dostali pouze numerický údaj. Přečtení a zpracování tedy vypadá následovně:\\
+	
+\texttt{swapsize=\$(sudo cat /proc/meminfo | head -n 1 | sed 's/[\^0-9]//g')}\\
+
+\hspace*{-1.5em}Výsledné číslo pak zvětšíme o 50 \%:\\ 
+
+\texttt{swapsize=\$(((\$swapsize/1000000)*3/2))}\\
+
+
+
+
+
+\subsection{\textsf{Souborový systém}}
+Manuální instalace i script dávají uživateli možnost vyběru souborového systému pro kořenový oddíl.
+Souborový systém slouží k interpretaci dat ve formě souborů, adresářů a metadat. Dělí se na dvě hlavní skupiny: Žurnálovací a Copy on Write.
+Žurnálovací systémy uchovávají záznam prováděných operací ve speciální datové struktuře v rámci jejich oddílu. 
+Záznam slouží k obnově konzistence souborového systému v případě přerušení zápisu, způsobeným například odpojením zdrojem energie. 
+Copy on Write systémy nevytváří kopii souboru pro úpravu, pouze předají odkaz na již existující soubor a to klidně více procesům najednou.
+Kopii dat vytvoří až v případě, že se nějaký z procesů pokusí přepsat data. Tento přístup umožňuje integraci snapshotů a RAIDů.
+Script volí mezi třemi souborovými systémy: XFS, btrfs a ext4. \\Je vhodné zmínit, že formátování odstraní veškerá data z oddílu. 
+Formátování oddílů pro souborový systém ve scriptu provádí příkaz mkfs: 
+
+\texttt{mkfs.vfat -F 32 /dev/sda1}\\
+\texttt{\hspace*{1.5em}mkfs.\$filesystem /dev/sda3}
+
+\hspace*{-1.5em}Speciální případ je Swap, který je potřeba prvně inicializovat: 
+
+\texttt{mkswap /dev/sda2}
+
+\hspace*{-1.5em}A poté aktivovat:
+
+\texttt{swapon /dev/sda2}
+
+\hspace*{-1.5em}Nyní stačí namontovat kořenový oddíl na \texttt{/mnt/gentoo} a EFI oddíl pod kořenový do adresáře \texttt{/mnt/gentoo/efi}.
+
+\newpage
+\section{Stage Tarball}
+{Pro instalaci základního systému je třeba tzv. Stage 3 Tarball, neboli archiv obsahující
+minimální systém pro začátek instalace. Archivů je mnoho a dělí se podle profilů.
+
+\hspace*{-1.5em}Každý profil blíže specifikuje budoucí záměr a funkce systému. Například profil
+‘Desktop’ obsahuje balíčky, respektive jejich USE přepínače, usnadňující zprovoznění
+uživatelského rozhraní.
+Profilů existuje velké množství, čehož důsledkem je více funkčních kombinací. Z
+tohoto důvodu script umožňuje zvolit archiv jak automaticky, tak i manuálně pomocí
+URL adresy. 
+
+\hspace*{-1.5em}Pro výchozí výběr byl zvolen archiv z FTP serveru Fakulty informatiky
+Masarykovy Univerzity v Brně. Script řeší výběr archivu pomocí jednoduché logiky,
+která upřednostní manuální výběr, je-li dostupný:}\\
+
+\texttt{\hspace*{-1.5em}read -p stage3 2>\&1}\\
+\texttt{if [ -z "\$stage3" ]; then}\\
+\texttt{\hspace*{+1.5em}wget https://ftp.fi.muni.cz/pub/linux/gentoo/...\\}
+\texttt{else}\\
+\texttt{\hspace*{+1.5em}wget \$stage3}\\
+\texttt{fi}\\
+
+{\hspace*{-1.5em}Nesprávně zvolený profil lze po dokončení instalace změnit pomocí:\\}
+
+\texttt{eselect profile list}\\
+\texttt{\hspace*{--1.5em}eselect profile set \#}\\
+
+{\hspace*{-1.5em}Uživatel by však měl mít na paměti, že změna profilu může, v některých případech
+vést až k překompilování celého systému.}
+
+\hspace*{-1.5em}V tuto chvíli se doporučuje, aby uživatel provedl kontrolu archivu pomocí checksumů.
+Ty lze získat v souboru .DIGESTS z jakéhokoliv zrdcadla. Pro druhý, vlastní checksum je doporučený nástroj sha256sum, který vytváří checksum pomocí algoritmu sha256. Použití:
+
+\texttt{sha256sum nazevSouboru}
+
+\hspace*{-1.5em}Z bezpečnostních důvodů není doporučeno starší algoritmy, například: md5, sha1...
+
+\hspace*{-1.5em}Script, z důvodu minimalizace rizik, tuto kontrolu neprovádí.
+\newpage
+\subsection{Instalace archivu}
+Před instalací je vhodné nastavit systémový čas. K tomu slouží nástroj chrony:
+\texttt{chrony -q} anebo, není-li dostupné RTC, pomocí: \texttt{date mmddhhmmyy}.
+V případě jakýchkoliv pochybností je možné datum zkontrolovat pomocí \texttt{date}.
+Archiv je potřeba extrahovat do cílového adresáře nového systému. Proto je nutné,
+aby byl adresář již předem vytvořený. Ve velké většině případů \texttt{/mnt/gentoo}.\\
+Tarball instalujeme pomocí nástroje tar v příkazu:
+
+\texttt{\hspace*{-1.5em}tar xpvf stage3-*.tar.xz --xattrs-include='*.*' --numeric-owner \\-C /mnt/gentoo}
+
+\hspace*{-1.5em}Pro lepší orientaci bude význam přepínačů a argumentů rozepsán:
+
+\hspace*{-1.5em}\texttt{x} - soubor bude extrahován.\\
+\texttt{p} - ponechat oprávnění. *\\
+\texttt{v} - zapíná výpis průběhu extrakce, volitelný.\\
+\texttt{f} - určuje jaký soubor má být extrahován a cestu k němu.\\
+\texttt{--xattrs-include='*.*'} - zachová rozšiřující atributy.
+(např.:SELinux štítky)\\
+\texttt{--numeric-owner} - zachová vlastnictví podle číselných ID uživatelů a
+skupin.\\
+\texttt{-C /mnt/gentoo} - extrahuje obsah do uvedeného adresáře.\\
+
+\hspace*{-1.5em}*Ačkoliv tar již nemění oprávnění při extrakci, může dojít ke
+ztrátě speciálních oprávnění, například: setuid, setgid
+
+\newpage
+\end{document}

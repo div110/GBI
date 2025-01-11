@@ -1,0 +1,25 @@
+Instalace archivu
+Před instalací je vhodné nastavit systémový čas. K tomu slouží nástroj chrony:
+chrony -q anebo, není-li dostupné RTC, pomocí: date mmddhhmmyy
+V případě jakýchkoliv podezření je možné datum zkontrolovat pomocí date.
+Archiv je potřeba extrahovat do cílového adresáře nového systému. Proto je nutné,
+aby byl adresář již předem vytvořený. Ve velké většině případů /mnt/gentoo
+Tarball instalujeme pomocí nástroje tar v příkazu:
+
+tar xpvf stage3-*.tar.xz --xattrs-include='*.*' --numeric-owner -C /mnt/gentoo
+
+Pro lepší orientaci bude význam přepínačů a argumentů rozepsán:
+
+x - soubor bude extrahován.
+p - ponechat oprávnění. Ačkoliv tar již nemění oprávnění při extrakci, může dojít ke
+ztrátě speciálních oprávnění např.: setuid.
+v - zapíná výpis průběhu extrakce, volitelný.
+f - určuje jaký soubor má být extrahován a cestu k němu.
+--xattrs-include='*.*' - zachová rozšiřující atributy.
+(např.:SELinux štítky)
+--numeric-owner - zachová vlastnictví podle číselných ID uživatelů a
+skupin, nikoliv podle jmen.
+-C /mnt/gentoo - extrahuje obsah do uvedeného adresáře, bez ohledu na
+aktuální umístění
+
+
