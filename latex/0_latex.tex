@@ -109,7 +109,7 @@ u kterého lze účině zvolit souborový systém. Zabírá zbytek místa na dis
 
 
 
-
+\newpage
 \subsection{\textsf{Souborový systém}}
 Manuální instalace i script dávají uživateli možnost vyběru souborového systému pro kořenový oddíl.
 Souborový systém slouží k interpretaci dat ve formě souborů, adresářů a metadat. Dělí se na dvě hlavní skupiny: Žurnálovací a Copy on Write.
@@ -131,7 +131,10 @@ Formátování oddílů pro souborový systém ve scriptu provádí příkaz mkf
 
 \texttt{swapon /dev/sda2}
 
-\hspace*{-1.5em}Nyní stačí namontovat kořenový oddíl na \texttt{/mnt/gentoo} a EFI oddíl pod kořenový do adresáře \texttt{/mnt/gentoo/efi}.
+\hspace*{-1.5em}Nyní stačí namontovat oddíly na jejich adresáře:
+
+\texttt{mount /dev/sda3 /mnt/gentoo}\\
+\texttt{\hspace*{1.5em}mount /dev/sda1 /mnt/gentoo/efi}
 
 \newpage
 \section{Stage Tarball}
@@ -171,13 +174,14 @@ Ty lze získat v souboru .DIGESTS z jakéhokoliv zrdcadla. Pro druhý, vlastní 
 
 \hspace*{-1.5em}Z bezpečnostních důvodů není doporučeno starší algoritmy, například: md5, sha1...
 
-\hspace*{-1.5em}Script, z důvodu minimalizace rizik, tuto kontrolu neprovádí.
+\hspace*{-1.5em}Script, z důvodu minimalizace rizik a skrytých paradoxů, tuto kontrolu neprovádí.
 \newpage
 \subsection{Instalace archivu}
-Před instalací je vhodné nastavit systémový čas. K tomu slouží nástroj chrony:
-\texttt{chrony -q} anebo, není-li dostupné RTC, pomocí: \texttt{date mmddhhmmyy}.
+Před instalací je vhodné nastavit systémový čas. K tomu slouží chrony:\\
+\texttt{chrony -q}\\
+ anebo, není-li dostupné RTC, pomocí: \\ \texttt{date mmddhhmmyy}.\\
 V případě jakýchkoliv pochybností je možné datum zkontrolovat pomocí \texttt{date}.
-Archiv je potřeba extrahovat do cílového adresáře nového systému. Proto je nutné,
+\\Archiv je potřeba extrahovat do cílového adresáře nového systému. Proto je nutné,\\
 aby byl adresář již předem vytvořený. Ve velké většině případů \texttt{/mnt/gentoo}.\\
 Tarball instalujeme pomocí nástroje tar v příkazu:
 
@@ -199,4 +203,6 @@ skupin.\\
 ztrátě speciálních oprávnění, například: setuid, setgid
 
 \newpage
+\subsection{Kompilace}
+Gentoo 
 \end{document}
