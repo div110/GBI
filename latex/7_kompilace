@@ -19,6 +19,10 @@ Proměnná pro Rust je RUSTFLAGS.
 RUSTFLAGS="$-C target-cpu=native opt-level=2"
 
 target-cpu=native - přizpůsobí kompilaci pro nainstalovaný procesor, obdoba -march=native z CFlags
-opt-level=2 - optimalizuje strojový kód, podobné -O2
+opt-level=2 - optimalizuje strojový kód, podobné -O2      %https://doc.rust-lang.org/rustc/codegen-options/index.html
+
+Makeopts
+
+
 
 Pro konfiguraci jednotlivých balíčků slouží /etc/portage/package.use. 
