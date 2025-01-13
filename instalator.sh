@@ -27,7 +27,12 @@ select diskname in /dev/*; do
     fi
 done
 swapsize=$(sudo cat /proc/meminfo | head -n 1 | sed 's/[^0-9]//g')
-swapsize=$((($swapsize/1000000)*3/2))
+
+swapsize=$(($swapsize/1000000))
+ramsize=$swapsize
+swapsize=$(($swapsize*3/2))
+
+
 swapsize="+"$swapsize"G"
 echo $swapsize;
 sudo fdisk "$diskname" <<- BRR
