@@ -1,7 +1,7 @@
 Součástí základního systému je Portage. Portage je nativní package manager pro Gentoo.
 Obstarává kompilace, instalace, závislosti, synchronizace a mnoho dalšího. V této fázi instalace 
 je doporučené optimalizovat kompilace. Veškerá globální konfigurace je součástí /etc/portage/make.conf.
-Zároveň obsahuje přepínače pro překladače GCC a C++. Jejich správnému nastavení bude věnována tato kapitola.
+Zároveň obsahuje přepínače pro překladače GCC, C++ a Rust. Jejich správnému nastavení bude věnována tato kapitola.
 
 Pro nastavení GCC slouží proměnná CFlags ve tvaru CFLAGS="flag1 flag2...". Nastavení C++ je totožné, mění se pouze proměná a to na 'CXXFLAGS'.
 Uvádíme-li, že nastavení jsou totožná, je to myšleno doslovně. Je doporučeno, aby přepínače u překladačů byli při instalaci stejné. Níže je uvedena
@@ -10,8 +10,15 @@ vzorová konfigurace:
 CFLAGS="-march=native -O2 -pipe"
 CXXFLAGS="${CFLAGS}"
 
--march=native - použije unikátní nastavení a instrukční sady pro daný procesor
+-march=native - použije nastavení a instrukční sady pro daný procesor
 -O2 - překladač se pokusí kompilovat rychleji na úkor paměti.
--pipe - zrychluje kompilaci díky 'rourám', ty překladač vytvoří místo dočasných souborů. Nastav
+-pipe - zrychluje kompilaci díky 'rourám', ty překladač vytvoří místo dočasných souborů. 
+
+Proměnná pro Rust je RUSTFLAGS.
+
+RUSTFLAGS="$-C target-cpu=native opt-level=2"
+
+target-cpu=native - přizpůsobí kompilaci pro nainstalovaný procesor, obdoba -march=native z CFlags
+opt-level=2 - optimalizuje strojový kód, podobné -O2
 
 Pro konfiguraci jednotlivých balíčků slouží /etc/portage/package.use. 
