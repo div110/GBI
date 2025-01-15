@@ -23,9 +23,13 @@ opt-level=2 - optimalizuje strojový kód, podobné -O2      %https://doc.rust-l
 
 MAKE Operace
 Chceme-li, aby systém zůstal responzivní i během kompilace, je potřeba omezit maximální zatížení systému. 
-Přepínače omezující zátěž se zadávají do proměnné MAKEOPTS.
+Přepínače make omezující zátěž se zadávají do proměnné MAKEOPTS.
 
-MAKEOPTS="-j# -l#"
+MAKEOPTS="-j5 -l5"
 
+-j - určuje maximální počet paralelních procesů.
+-l - nastavuje maximální vytížení procesoru. Překročí-li zátěž uvedenou hodnotu, make přestane vytvářet nové procesy.
+      Vytížení se počíta jako množství procesů běžících na procesoru.
 
-Pro konfiguraci jednotlivých balíčků slouží /etc/portage/package.use. 
+Důležitý fakt pro volbu parametrů je, že každý proces zatěžuje mimo procesoru také paměť. Jako jednoduché pravidlo
+platí, že na každý paralelní proces by měl počítač obsahovat 1-2GB RAM.
