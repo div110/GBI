@@ -21,8 +21,11 @@ RUSTFLAGS="$-C target-cpu=native opt-level=2"
 target-cpu=native - přizpůsobí kompilaci pro nainstalovaný procesor, obdoba -march=native z CFlags
 opt-level=2 - optimalizuje strojový kód, podobné -O2      %https://doc.rust-lang.org/rustc/codegen-options/index.html
 
-Makeopts
+MAKE Operace
+Chceme-li, aby systém zůstal responzivní i během kompilace, je potřeba omezit maximální zatížení systému. 
+Přepínače omezující zátěž se zadávají do proměnné MAKEOPTS.
 
+MAKEOPTS="-j# -l#"
 
 
 Pro konfiguraci jednotlivých balíčků slouží /etc/portage/package.use. 
