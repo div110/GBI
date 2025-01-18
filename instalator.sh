@@ -228,9 +228,15 @@ sudo emerge --ask --verbose --update --deep --newuse @world
 sudo emerge --ask --depclean
 
 #OpenRC Timezones
-select continent in $(ls /usr/share/zoneinfo);
-select country in $(ls /usr/share/zoneinfo/Europe/); 
-echo "${continent}/${country}" | sudo tee /etc/timezone > /dev/null
+select continent in /usr/share/zoneinfo/*;do
+break
+done
+echo $continent
+select country in $continent/*;do
+break
+done
+echo ${country} | sed 's/\S*info\///g' | sudo tee /etc/timezone > /dev/null
+
 
 sudo emerge --config sys-libs/timezone-data
 
