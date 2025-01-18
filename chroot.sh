@@ -2,21 +2,21 @@ source /etc/profile #using profile
 export PS1="(chroot) ${PS1}" #??????
 
 
-sudo mkdir /efi
-sudo mount $diskname1 /efi #/mounting efi partition to /efi directory
+mkdir /efi
+mount $diskname1 /efi #/mounting efi partition to /efi directory
 
-sudo emerge-webrsync
+emerge-webrsync
 
 
-sudo emerge --ask --verbose --oneshot app-portage/mirrorselect
-sudo mirrorselect -i -o >> /etc/portage/make.conf
+emerge --ask --verbose --oneshot app-portage/mirrorselect
+mirrorselect -i -o >> /etc/portage/make.conf
 
-sudo emerge --sync
+emerge --sync
 
 
 eselect profile list 
 read -p "Vyberte číslo Profilu: " ProfileNumber
-sudo eselect profile set $ProfileNumber
+eselect profile set $ProfileNumber
 
 
 
@@ -26,8 +26,8 @@ sudo eselect profile set $ProfileNumber
 ##CPU FLAGS##
 echo "CPU přepínače jsou nastaveny Automaticky"
 echo "Umístěny v /etc/portage/package.use/00cpu-flags"
-sudo emerge --ask --oneshot app-portage/cpuid2cpuflags
-echo "*/* $(cpuid2cpuflags)" | sudo tee -a /etc/portage/package.use/00cpu-flags > /dev/null
+emerge --ask --oneshot app-portage/cpuid2cpuflags
+echo "*/* $(cpuid2cpuflags)" | tee -a /etc/portage/package.use/00cpu-flags > /dev/null
 
 
 
@@ -37,20 +37,20 @@ echo "Vyberte výrobce Vaší grafické karty: "
 select videocard in "intel" "nvidia" "amdgpu"; #missing nouveau driver option
 do
 	
-	echo "VIDEO_CARDS=\"$videocard\"" | sudo tee -a /etc/portage/make.conf > /dev/null
+	echo "VIDEO_CARDS=\"$videocard\"" | tee -a /etc/portage/make.conf > /dev/null
 	echo "VIDEO_CARDS = $videocard"
 	break
 done 2>&1
 
-echo "ACCEPT_LICENSE=\"*\"" | sudo tee -a /etc/portage/make.conf > /dev/null
+echo "ACCEPT_LICENSE=\"*\"" | tee -a /etc/portage/make.conf > /dev/null
 
 
 
-sudo emerge --ask --verbose --update --deep --newuse @world
+emerge --ask --verbose --update --deep --newuse @world
 
 
 
-sudo emerge --ask --depclean
+emerge --ask --depclean
 
 #OpenRC Timezones
 select continent in /usr/share/zoneinfo/*;do
@@ -60,10 +60,10 @@ echo $continent
 select country in $continent/*;do
 break
 done
-echo ${country} | sed 's/\S*info\///g' | sudo tee /etc/timezone > /dev/null
+echo ${country} | sed 's/\S*info\///g' | tee /etc/timezone > /dev/null
 
 
-sudo emerge --config sys-libs/timezone-data
+emerge --config sys-libs/timezone-data
 
 
 select locale in $(cat /usr/share/i18n/SUPPORTED);
@@ -74,29 +74,29 @@ do
 done 2>&1
 
 
-sudo eselect locale list
+eselect locale list
 read locale
-sudo eselect locale set $locale
+eselect locale set $locale
 
-sudo env-update && source /etc/profile && export PS1="(chroot) ${PS1}"
+env-update && source /etc/profile && export PS1="(chroot) ${PS1}"
 
 
-sudo emerge --ask sys-kernel/linux-firmware
+emerge --ask sys-kernel/linux-firmware
 
-sudo emerge --ask sys-firmware/sof-firmware #to be safe
-sudo emerge --ask sys-firmware/intel-microcode #Just for Intel CPUs
+emerge --ask sys-firmware/sof-firmware #to be safe
+emerge --ask sys-firmware/intel-microcode #Just for Intel CPUs
 
 ##Bootloader##
 #just GRUB for now
 
-sudo touch /etc/portage/package.use/installkernel
+touch /etc/portage/package.use/installkernel
 echo "sys-kernel/installkernel grub" | sudo tee -a /etc/portage/package.use/installkernel > /dev/null
-sudo emerge --ask sys-kernel/installkernel
+emerge --ask sys-kernel/installkernel
 
 
 
 ##InitRamFS
-echo "sys-kernel/installkernel dracut" | sudo tee -a /etc/portage/package.use/installkernel > /dev/null
+echo "sys-kernel/installkernel dracut" | tee -a /etc/portage/package.use/installkernel > /dev/null
 
 
 #########################
@@ -113,9 +113,9 @@ done
 ###############
 
 if [ "$binsrc" = "Kompilovat lokálně" ];then
-	sudo emerge --ask sys-kernel/gentoo-kernel
+	emerge --ask sys-kernel/gentoo-kernel
 else
-	sudo emerge --ask sys-kernel/gentoo-kernel-bin #binary??? ew :/
+	emerge --ask sys-kernel/gentoo-kernel-bin #binary??? ew :/
 fi
 
 ################
@@ -129,7 +129,7 @@ echo """
 /dev/sda1   /efi         vfat   	umask=0077     		0 2
 /dev/sda2   none         swap   	sw                      0 0
 /dev/sda3   /            $filesystem    defaults,noatime        0 1
-/dev/cdrom  /mnt/cdrom   auto    	noauto,user             0 0""" | sudo tee -a /etc/fstab > /dev/null
+/dev/cdrom  /mnt/cdrom   auto    	noauto,user             0 0""" | tee -a /etc/fstab > /dev/null
 
 
 ##Network##
@@ -143,13 +143,13 @@ else
 fi
 
 
-echo $hostname | sudo tee /etc/hostname > /dev/null
-sudo emerge --ask net-misc/dhcpcd
-sudo rc-update add dhcpcd default
-sudo rc-service dhcpcd start
+echo $hostname | tee /etc/hostname > /dev/null
+emerge --ask net-misc/dhcpcd
+rc-update add dhcpcd default
+rc-service dhcpcd start
 
 
-sudo emerge --ask --noreplace net-misc/netifrc 
+emerge --ask --noreplace net-misc/netifrc 
 
 select ipconfig in "Statická" "DHCP" "Custom";
 case $ipconfig in
@@ -160,23 +160,23 @@ case $ipconfig in
     read -p "Broadcast: " brd  #brdcal
     read -p "Výchozí brána: " routerIP
     echo """config_eth0=\"$ip netmask $mask brd $brd\"
-routes_eth0=\"default via $routerIP\" """ | sudo tee /etc/conf.d/net
+routes_eth0=\"default via $routerIP\" """ | tee /etc/conf.d/net
 
     ;;
 
   DHCP)
-    echo "config_eth0=\"dhcp\"" | sudo tee /etc/conf.d/net
+    echo "config_eth0=\"dhcp\"" | tee /etc/conf.d/net
     ;;
 
   Custom)
-    sudo nano /etc/conf.d/net
+    nano /etc/conf.d/net
     ;;
 
 esac
 
 cd /etc/init.d
 ln -s net.lo net.eth0
-sudo rc-update add net.eth0 default
+rc-update add net.eth0 default
 
 
 
@@ -204,8 +204,8 @@ select syslog in "Ano" "Ne";
 	break
 done
 if [ "$syslog"="Ano" ];then
-	sudo emerge --ask app-admin/sysklogd
-	sudo rc-update add sysklogd default
+	emerge --ask app-admin/sysklogd
+	rc-update add sysklogd default
 else
 break
 
@@ -216,8 +216,8 @@ select cronie in "Ano" "Ne";
 	break
 done
 if [ "$cronie"="Ano" ];then
-	sudo emerge --ask sys-process/cronie
-	sudo rc-update add cronie default
+	emerge --ask sys-process/cronie
+	rc-update add cronie default
 else
 break
 
@@ -227,7 +227,7 @@ echo "Zapnout SSH?: "
 select ssh in "Ano" "Ne";
 	break
 if [ "$ssh"="Ano" ];then
-	sudo rc-update add sshd default
+	rc-update add sshd default
 else 
 break
 
@@ -244,33 +244,33 @@ break
 
 
 
-sudo emerge --ask app-shells/bash-completion
-sudo emerge --ask net-misc/chrony
-sudo rc-update add chronyd default
+emerge --ask app-shells/bash-completion
+emerge --ask net-misc/chrony
+rc-update add chronyd default
 
 
 if [ "$filesystem"="XFS" ];then
-	sudo emerge sys-fs/xfsprogs
+	emerge sys-fs/xfsprogs
 else
-	sudo emerge sys-fs/btrfs-progs
+	emerge sys-fs/btrfs-progs
 break
 
 
-sudo emerge sys-fs/dosfstools
-sudo emerge --ask sys-block/io-scheduler-udev-rules
+emerge sys-fs/dosfstools
+emerge --ask sys-block/io-scheduler-udev-rules
 
 
 #DHCP daemon + Wireless Tools
-sudo emerge --ask net-misc/dhcpcd
-sudo emerge --ask net-wireless/iw net-wireless/wpa_supplicant
+emerge --ask net-misc/dhcpcd
+emerge --ask net-wireless/iw net-wireless/wpa_supplicant
 
 
 
 #BOOTLOADER
-echo 'GRUB_PLATFORMS="efi-64"' | sudo tee -a /etc/portage/make.conf
-sudo emerge --ask sys-boot/grub
-sudo grub-install --efi-directory=/efi
-sudo grub-mkconfig -o /boot/grub/grub.cfg
+echo 'GRUB_PLATFORMS="efi-64"' | tee -a /etc/portage/make.conf
+emerge --ask sys-boot/grub
+grub-install --efi-directory=/efi
+grub-mkconfig -o /boot/grub/grub.cfg
 
 
 
