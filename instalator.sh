@@ -1,17 +1,8 @@
 #! /bin/bash
-
-
 clear
-read -p "Ztlumit výstup?(NEDOPORUČENÉ) [y/N]? " quiet
 
 
-if [ "$quiet" = "y" ]; then
-exec > /dev/null
 
-fi
-
-exec 2> err_log
-echo "VŠECHNY chyby budou přesměrovány do err_log"
 #sleep 1.5
 echo "Instalator vytvoří 3 oddíly na Vašem disku"
 
@@ -26,8 +17,12 @@ select diskname in /dev/*; do
         echo "Další pokus."
     fi
 done
-swapsize=$(sudo cat /proc/meminfo | head -n 1 | sed 's/[^0-9]//g')
 
+diskname1=${diskname}1
+diskname2=${diskname}2
+diskname3=${diskname}3
+
+swapsize=$(sudo cat /proc/meminfo | head -n 1 | sed 's/[^0-9]//g')
 swapsize=$(($swapsize/1000000))
 ramsize=$swapsize
 swapsize=$(($swapsize*3/2))
@@ -35,6 +30,26 @@ swapsize=$(($swapsize*3/2))
 
 swapsize="+"$swapsize"G"
 echo $swapsize;
+
+
+
+
+
+#cleaning
+sudo umount $diskname
+sudo umount $diskname1
+sudo swapoff $diskname2
+sudo wipefs -a $diskname2
+sudo umount $diskname3
+sudo fdisk "$diskname" <<-RBB
+g
+w
+RBB
+
+
+
+
+
 sudo fdisk "$diskname" <<- BRR
 g
 n
@@ -64,48 +79,51 @@ echo "Oddíly vytvořeny pro $diskname"
 
 
 echo "Vyberte souborový systém pro váš Kořenový oddíl"
-select filesystem in "XFS" "btrfs" "ext4";
+select filesystem in "xfs" "btrfs" "ext4";
 do 
 	echo "Formátuji na $filesystem..."
 	break
 done 2>&1
 
 
-#mkfs.vfat -F 32 /dev/
-
-#mkfs.$filesystem /dev/$diskname
-
-#mkswap /dev/$diskname
-#swapon /dev/$diskname
 
 
-#mkdir --parents /mnt/gentoo
-#mkdir --parents /mnt/gentoo/efi
+ 
+sudo mkfs.vfat -I -F 32 $diskname1
+
+sudo mkfs.$filesystem -f $diskname3
+
+sudo mkswap $diskname2
+sudo swapon $diskname2
 
 
-#mount /dev/$diskname /mnt/gentoo
+sudo mkdir --parents /mnt/gentoo
+sudo mkdir --parents /mnt/gentoo/efi
+
+
+sudo mount $diskname3 /mnt/gentoo
 
 
 
 
-#cd /mnt/gentoo
-#chronyd -q
+cd /mnt/gentoo
+sudo chronyd -q
 
 
 read -p "Zadejte URL Adresu Stage3 Tarballu (Prázdné pro automatické stažení[DESKTOP])" stage3 2>&1		#This downloads "core" Gentoo
 
 if [ -z "$stage3" ]; then
-	#wget http://ftp.fi.muni.cz/pub/linux/gentoo/releases/amd64/autobuilds/current-stage3-amd64-desktop-openrc/stage3-amd64-desktop-openrc-20240901T170410Z.tar.xz
+	sudo wget https://ftp.fi.muni.cz/pub/linux/gentoo/releases/amd64/autobuilds/20250115T221822Z/stage3-amd64-desktop-openrc-20250115T221822Z.tar.xz
 	echo "Základní"
 else
-	#wget $stage3
+	sudo wget $stage3
 	echo "Vlastní"
 fi
 
 
 
 
-#tar xpvf stage3-*.tar.xz --xattrs-include='*.*' --numeric-owner
+sudo tar xpvf stage3-*.tar.xz --xattrs-include='*.*' --numeric-owner
 
 
 
@@ -113,13 +131,13 @@ echo "Konfigurace CFlags a CXXFlags..." #CFlags and CXXFlags serve as a tool to 
 #sleep 1.5
 
 
-touch /mnt/gentoo/etc/portage/make.conf
+sudo touch /mnt/gentoo/etc/portage/make.conf
 
-echo """# Compiler flags to set for all languages
+sudo echo """# Compiler flags to set for all languages
 COMMON_FLAGS=\"-march=native -O2 -pipe\"
 # Use the same settings for both variables
 CFLAGS=\"${COMMON_FLAGS}\"
-CXXFLAGS=\"${COMMON_FLAGS}\"""" > /mnt/gentoo/etc/portage/make.conf
+CXXFLAGS=\"${COMMON_FLAGS}\"""" | sudo tee /mnt/gentoo/etc/portage/make.conf > /dev/null
 echo "Architecture: Native; Optimization O2; Piping Allowed"
 
 ########################	ZJIŠŤOVÁNÍ VLÁKEN SYSTÉMU
@@ -134,39 +152,39 @@ halfram=$((($halfram/1000000)+2))
 ########################
 
 
-echo "MAKEOPTS=\"-j$halfram -l$threads\"">> /mnt/gentoo/etc/make.conf
+sudo echo "MAKEOPTS=\"-j$halfram -l$threads\"" | sudo tee -a /mnt/gentoo/etc/portage/make.conf > /dev/null
 
 
 
 #DNS INFO
-cp --dereference /etc/resolv.conf /mnt/gentoo/etc/
+sudo cp --dereference /etc/resolv.conf /mnt/gentoo/etc/
 
 
 #this is really boring :)
-mount --types proc /proc /mnt/gentoo/proc
-mount --rbind /sys /mnt/gentoo/sys
-mount --make-rslave /mnt/gentoo/sys
-mount --rbind /dev /mnt/gentoo/dev
-mount --make-rslave /mnt/gentoo/dev
-mount --bind /run /mnt/gentoo/run
-mount --make-slave /mnt/gentoo/run 
+sudo mount --types proc /proc /mnt/gentoo/proc
+sudo mount --rbind /sys /mnt/gentoo/sys
+sudo mount --make-rslave /mnt/gentoo/sys
+sudo mount --rbind /dev /mnt/gentoo/dev
+sudo mount --make-rslave /mnt/gentoo/dev
+sudo mount --bind /run /mnt/gentoo/run
+sudo mount --make-slave /mnt/gentoo/run 
 
 
 
 #změna kořene na nové prostředí
-#ch/mnt/gentoo /bin/bash #root directory change
-#source /etc/profile #using profile
-#export PS1="(chroot) ${PS1}" #??????
+chroot /mnt/gentoo /bin/bash #root directory change
+source /etc/profile #using profile
+export PS1="(chroot) ${PS1}" #??????
 
 
-mkdir /efi
-#mount /dev/sda1 /efi /mounting efi partition to /efi directory
+sudo mkdir /efi
+mount $diskname1 /efi #/mounting efi partition to /efi directory
 
 emerge-webrsync
 
 
-#emerge --ask --verbose --oneshot app-portage/mirrorselect
-#mirrorselect -i -o >> /etc/portage/make.conf
+emerge --ask --verbose --oneshot app-portage/mirrorselect
+mirrorselect -i -o >> /etc/portage/make.conf
 
 emerge --sync
 
@@ -174,31 +192,17 @@ emerge --sync
 eselect profile list 
 read -p "Vyberte číslo Profilu: " ProfileNumber
 eselect profile set $ProfileNumber
-echo "Chcete nakonfigurovat Binární Repositář?"
-select binary in "Yes" "No";
-do 
-	echo "$binary..."
-	break
-done 2>&1
-
-if [ "$binary"="Yes" ]then;
-######################
-#Binhost Config Block#
-######################
-fi
 
 
-#################
-#USE FLAGS BLOCK#
-#################
+
 
 
 
 ##CPU FLAGS##
-echo "CPU Flags jsou nastavny Automaticky"
+echo "CPU přepínače jsou nastaveny Automaticky"
 echo "Umístěny v /etc/portage/package.use/00cpu-flags"
 emerge --ask --oneshot app-portage/cpuid2cpuflags
-echo "*/* $(cpuid2cpuflags)" > /etc/portage/package.use/00cpu-flags
+echo "*/* $(cpuid2cpuflags)" | sudo tee -a /etc/portage/package.use/00cpu-flags > /dev/null
 
 
 
@@ -213,14 +217,7 @@ do
 	break
 done 2>&1
 
-
-echo "LICENCE"
-read -p "Přijmout všechny licence? [y/n]" license
-if [ "$license" = "y" ]; then
-	echo "ACCEPT_LICENSE=\"*\"">>/etc/portage/make.conf
-else
-	#missing mechanism for choosing all allowed licenses
-fi
+echo "ACCEPT_LICENSE=\"*\"" | sudo tee -a /etc/portage/make.conf > /dev/null
 
 
 
@@ -233,7 +230,7 @@ emerge --ask --depclean
 #OpenRC Timezones
 select continent in $(ls /usr/share/zoneinfo);
 select country in $(ls /usr/share/zoneinfo/Europe/); 
-echo "$continent/$country" > /etc/timezone
+echo "${continent}/${country}" | sudo tee /etc/timezone > /dev/null
 
 emerge --config sys-libs/timezone-data
 
@@ -262,13 +259,13 @@ emerge --ask sys-firmware/intel-microcode #Just for Intel CPUs
 #just GRUB for now
 
 touch /etc/portage/package.use/installkernel
-echo "sys-kernel/installkernel grub" >> /etc/portage/package.use/installkernel
+echo "sys-kernel/installkernel grub" | sudo tee -a /etc/portage/package.use/installkernel > /dev/null
 emerge --ask sys-kernel/installkernel
 
 
 
 ##InitRamFS
-echo "sys-kernel/installkernel dracut" >> /etc/portage/package.use/installkernel 
+echo "sys-kernel/installkernel dracut" | sudo tee -a /etc/portage/package.use/installkernel > /dev/null
 
 
 #########################
@@ -277,58 +274,37 @@ echo "sys-kernel/installkernel dracut" >> /etc/portage/package.use/installkernel
 
 ###DISTRIBUTION KERNELS###
 echo "Kompilace Jádra: "
-select binsrc in "Compile Localy" "Use Precompiled";
+select binsrc in "Kompilovat lokálně" "Použít předkompilovaný";
 break
 done
 	
 
 ###############
-#UNSTABLE IMHO#
-###############
-if [ "$binsrc" = "Compile Localy" ];then
+
+if [ "$binsrc" = "Kompilovat lokálně" ];then
 	emerge --ask sys-kernel/gentoo-kernel
 else
 	emerge --ask sys-kernel/gentoo-kernel-bin #binary??? ew :/
 fi
 
-#
-#Post Install/upgrade tasks
-#
-
-emerge --ask sys-kernel/gentoo-sources
-
-
-eselect kernel list
-read -p "Option: " KernelNumber
-eselect kearnel set KernelNumber
-################
-#/UNSTABLE IMHO#
 ################
 
 
 
 ##fstab##
-read -p "Kam připojovat USB zařízení?(Výchozí: /mnt/usb): " usbmount
-sudo mkdir $usbmount
 
-read -p "Will You Switch Storages Frequently?[y/n]: " uuid
-if [ "$uuid" = "n" ]; then
+
 echo """
 /dev/sda1   /efi         vfat   	umask=0077     		0 2
 /dev/sda2   none         swap   	sw                      0 0
 /dev/sda3   /            $filesystem    defaults,noatime        0 1
-#/dev/	    $usbmount    auto 		noauto,user		0 0
-/dev/cdrom  /mnt/cdrom   auto    	noauto,user             0 0"""
-else 
-######################
-#GPT DISK LABEL fstab#
-######################
-break
+/dev/cdrom  /mnt/cdrom   auto    	noauto,user             0 0""" | sudo tee -a /etc/fstab > /dev/null
+
 
 ##Network##
 echo "|Konfigurace sítě|"
-select customname in "Custom hostname" "Random hostname";
-if [ "$customname" = "Custom hostname" ]; then
+select customname in "Vlastní hostname" "Náhodný hostname";
+if [ "$customname" = "Vlastní hostname" ]; then
 	read -p "Enter hostname: " hostname
 else
 	hostname = $(cat /dev/urandom | tr -dc A-Za-z0-9 | head -c 6)
@@ -346,11 +322,11 @@ emerge --ask --noreplace net-misc/netifrc
 select ipconfig in "Statická" "DHCP" "Custom";
 case $ipconfig in
 
-  Static)
+  Statická)
     read -p "IP: " ip
-    read -p "MASK: " mask
+    read -p "Maska: " mask
     read -p "Broadcast: " brd  #brdcal
-    read -p "Router IP: " routerIP
+    read -p "Výchozí brána: " routerIP
     echo """config_eth0=\"$ip netmask $mask brd $brd\"
 routes_eth0=\"default via $routerIP\" """> /etc/conf.d/net
 
@@ -381,37 +357,44 @@ echo """127.0.0.1	localhost
 echo "Zvolte heslo pro ROOT uživatele"
 passwd
 
+
+
+###################################################################################################################################################
 #nano /etc/rc.conf		CONFIGURE STARTUP,SERVICES,SHUTDOWN
-
-
 #nano /etc/conf.d/keymaps	for Keyboard
-
-
 #nano /etc/conf.d/hwclock 	NEJAKE HODINY IDK    If the hardware clock is not using UTC, then it is necessary to set clock="local" in the file. 
+###################################################################################################################################################
+
+
+#SYSLOGD
 echo "Přidat SystemLogger?: "
-select syslog in "Yes" "No";
+select syslog in "Ano" "Ne";
 	break
 done
-if [ "$syslog"="Yes" ];then
+if [ "$syslog"="Ano" ];then
 	emerge --ask app-admin/sysklogd
 	rc-update add sysklogd default
 else
 break
 
+
+#CRONIE
 echo "Přidat cronie?: "
-select cronie in "Yes" "No";
+select cronie in "Ano" "Ne";
 	break
-done 
-if [ "$cronie"="Yes" ];then
+done
+if [ "$cronie"="Ano" ];then
 	emerge --ask sys-process/cronie
 	rc-update add cronie default
 else
 break
 
+
+#SSH
 echo "Zapnout SSH?: "
-select ssh in "Yes" "No";
+select ssh in "Ano" "Ne";
 	break
-if [ "$ssh"="Yes" ];then
+if [ "$ssh"="Ano" ];then
 	rc-update add sshd default
 else 
 break
@@ -430,7 +413,6 @@ break
 
 
 emerge --ask app-shells/bash-completion
-
 emerge --ask net-misc/chrony
 rc-update add chronyd default
 
@@ -441,13 +423,27 @@ else
 	emerge sys-fs/btrfs-progs
 break
 
+
 emerge sys-fs/dosfstools
-
-
 emerge --ask sys-block/io-scheduler-udev-rules
 
 
 #DHCP daemon + Wireless Tools
-
 emerge --ask net-misc/dhcpcd
 emerge --ask net-wireless/iw net-wireless/wpa_supplicant
+
+
+
+#BOOTLOADER
+echo 'GRUB_PLATFORMS="efi-64"' >> /etc/portage/make.conf
+emerge --ask sys-boot/grub
+grub-install --efi-directory=/efi
+grub-mkconfig -o /boot/grub/grub.cfg
+
+
+
+
+exit
+cd
+umount -l /mnt/gentoo/dev{/shm,/pts,}
+umount -R /mnt/gentoo
