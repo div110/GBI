@@ -105,7 +105,7 @@ echo "sys-kernel/installkernel dracut" | tee -a /etc/portage/package.use/install
 
 ###DISTRIBUTION KERNELS###
 echo "Kompilace Jádra: "
-select binsrc in "Kompilovat lokálně" "Použít předkompilovaný";
+select binsrc in "Kompilovat lokálně" "Použít předkompilovaný";do
 break
 done
 	
@@ -151,7 +151,7 @@ rc-service dhcpcd start
 
 emerge --ask --noreplace net-misc/netifrc 
 
-select ipconfig in "Statická" "DHCP" "Custom";
+select ipconfig in "Statická" "DHCP" "nano";
 case $ipconfig in
 
   Statická)
@@ -168,7 +168,7 @@ routes_eth0=\"default via $routerIP\" """ | tee /etc/conf.d/net
     echo "config_eth0=\"dhcp\"" | tee /etc/conf.d/net
     ;;
 
-  Custom)
+  nano)
     nano /etc/conf.d/net
     ;;
 
