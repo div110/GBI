@@ -180,18 +180,18 @@ export PS1="(chroot) ${PS1}" #??????
 sudo mkdir /efi
 sudo mount $diskname1 /efi #/mounting efi partition to /efi directory
 
-emerge-webrsync
+sudo emerge-webrsync
 
 
-emerge --ask --verbose --oneshot app-portage/mirrorselect
-mirrorselect -i -o >> /etc/portage/make.conf
+sudo emerge --ask --verbose --oneshot app-portage/mirrorselect
+sudo mirrorselect -i -o >> /etc/portage/make.conf
 
-emerge --sync
+sudo emerge --sync
 
 
 eselect profile list 
 read -p "Vyberte číslo Profilu: " ProfileNumber
-eselect profile set $ProfileNumber
+sudo eselect profile set $ProfileNumber
 
 
 
