@@ -172,7 +172,7 @@ sudo mount --make-slave /mnt/gentoo/run
 
 
 #změna kořene na nové prostředí
-sudo chroot /mnt/gentoo /bin/bash #root directory change
+sudo chroot /mnt/gentoo /bin/bash & echo "Chroot..." #root directory change
 sudo source /etc/profile #using profile
 sudo export PS1="(chroot) ${PS1}" #??????
 
