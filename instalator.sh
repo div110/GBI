@@ -201,7 +201,7 @@ sudo eselect profile set $ProfileNumber
 ##CPU FLAGS##
 echo "CPU přepínače jsou nastaveny Automaticky"
 echo "Umístěny v /etc/portage/package.use/00cpu-flags"
-emerge --ask --oneshot app-portage/cpuid2cpuflags
+sudo emerge --ask --oneshot app-portage/cpuid2cpuflags
 echo "*/* $(cpuid2cpuflags)" | sudo tee -a /etc/portage/package.use/00cpu-flags > /dev/null
 
 
@@ -212,7 +212,7 @@ echo "Vyberte výrobce Vaší grafické karty: "
 select videocard in "intel" "nvidia" "amdgpu"; #missing nouveau driver option
 do
 	
-	echo "VIDEO_CARDS=\"$videocard\"" >> /etc/portage/make.conf
+	echo "VIDEO_CARDS=\"$videocard\"" | sudo tee -a /etc/portage/make.conf > /dev/null
 	echo "VIDEO_CARDS = $videocard"
 	break
 done 2>&1
@@ -221,18 +221,18 @@ echo "ACCEPT_LICENSE=\"*\"" | sudo tee -a /etc/portage/make.conf > /dev/null
 
 
 
-emerge --ask --verbose --update --deep --newuse @world
+sudo emerge --ask --verbose --update --deep --newuse @world
 
 
 
-emerge --ask --depclean
+sudo emerge --ask --depclean
 
 #OpenRC Timezones
 select continent in $(ls /usr/share/zoneinfo);
 select country in $(ls /usr/share/zoneinfo/Europe/); 
 echo "${continent}/${country}" | sudo tee /etc/timezone > /dev/null
 
-emerge --config sys-libs/timezone-data
+sudo emerge --config sys-libs/timezone-data
 
 
 select locale in $(cat /usr/share/i18n/SUPPORTED);
@@ -243,24 +243,24 @@ do
 done 2>&1
 
 
-eselect locale list
+sudo eselect locale list
 read locale
-eselect locale set $locale
+sudo eselect locale set $locale
 
-env-update && source /etc/profile && export PS1="(chroot) ${PS1}"
+sudo env-update && source /etc/profile && export PS1="(chroot) ${PS1}"
 
 
-emerge --ask sys-kernel/linux-firmware
+sudo emerge --ask sys-kernel/linux-firmware
 
-emerge --ask sys-firmware/sof-firmware #to be safe
-emerge --ask sys-firmware/intel-microcode #Just for Intel CPUs
+sudo emerge --ask sys-firmware/sof-firmware #to be safe
+sudo emerge --ask sys-firmware/intel-microcode #Just for Intel CPUs
 
 ##Bootloader##
 #just GRUB for now
 
-touch /etc/portage/package.use/installkernel
+sudo touch /etc/portage/package.use/installkernel
 echo "sys-kernel/installkernel grub" | sudo tee -a /etc/portage/package.use/installkernel > /dev/null
-emerge --ask sys-kernel/installkernel
+sudo emerge --ask sys-kernel/installkernel
 
 
 
@@ -282,9 +282,9 @@ done
 ###############
 
 if [ "$binsrc" = "Kompilovat lokálně" ];then
-	emerge --ask sys-kernel/gentoo-kernel
+	sudo emerge --ask sys-kernel/gentoo-kernel
 else
-	emerge --ask sys-kernel/gentoo-kernel-bin #binary??? ew :/
+	sudo emerge --ask sys-kernel/gentoo-kernel-bin #binary??? ew :/
 fi
 
 ################
@@ -308,16 +308,17 @@ if [ "$customname" = "Vlastní hostname" ]; then
 	read -p "Enter hostname: " hostname
 else
 	hostname = $(cat /dev/urandom | tr -dc A-Za-z0-9 | head -c 6)
+ 	cat $hostname
 fi
 
 
-echo $hostname > /etc/hostname
-emerge --ask net-misc/dhcpcd
-rc-update add dhcpcd default
-rc-service dhcpcd start
+echo $hostname | sudo tee /etc/hostname > /dev/null
+sudo emerge --ask net-misc/dhcpcd
+sudo rc-update add dhcpcd default
+sudo rc-service dhcpcd start
 
 
-emerge --ask --noreplace net-misc/netifrc 
+sudo emerge --ask --noreplace net-misc/netifrc 
 
 select ipconfig in "Statická" "DHCP" "Custom";
 case $ipconfig in
@@ -328,30 +329,30 @@ case $ipconfig in
     read -p "Broadcast: " brd  #brdcal
     read -p "Výchozí brána: " routerIP
     echo """config_eth0=\"$ip netmask $mask brd $brd\"
-routes_eth0=\"default via $routerIP\" """> /etc/conf.d/net
+routes_eth0=\"default via $routerIP\" """ | sudo tee /etc/conf.d/net
 
     ;;
 
   DHCP)
-    echo "config_eth0=\"dhcp\""> /etc/conf.d/net
+    echo "config_eth0=\"dhcp\"" | sudo tee /etc/conf.d/net
     ;;
 
   Custom)
-    nano /etc/conf.d/net
+    sudo nano /etc/conf.d/net
     ;;
 
 esac
 
 cd /etc/init.d
 ln -s net.lo net.eth0
-rc-update add net.eth0 default
+sudo rc-update add net.eth0 default
 
 
 
 
 echo """127.0.0.1	localhost
 ::1		localhost
-127.0.1.1	$hostname.localdomain	$hostname""" > /etc/hosts
+127.0.1.1	$hostname.localdomain	$hostname""" | sudo tee -a /etc/hosts
 
 
 echo "Zvolte heslo pro ROOT uživatele"
@@ -372,8 +373,8 @@ select syslog in "Ano" "Ne";
 	break
 done
 if [ "$syslog"="Ano" ];then
-	emerge --ask app-admin/sysklogd
-	rc-update add sysklogd default
+	sudo emerge --ask app-admin/sysklogd
+	sudo rc-update add sysklogd default
 else
 break
 
@@ -384,8 +385,8 @@ select cronie in "Ano" "Ne";
 	break
 done
 if [ "$cronie"="Ano" ];then
-	emerge --ask sys-process/cronie
-	rc-update add cronie default
+	sudo emerge --ask sys-process/cronie
+	sudo rc-update add cronie default
 else
 break
 
@@ -395,7 +396,7 @@ echo "Zapnout SSH?: "
 select ssh in "Ano" "Ne";
 	break
 if [ "$ssh"="Ano" ];then
-	rc-update add sshd default
+	sudo rc-update add sshd default
 else 
 break
 
@@ -412,38 +413,38 @@ break
 
 
 
-emerge --ask app-shells/bash-completion
-emerge --ask net-misc/chrony
-rc-update add chronyd default
+sudo emerge --ask app-shells/bash-completion
+sudo emerge --ask net-misc/chrony
+sudo rc-update add chronyd default
 
 
 if [ "$filesystem"="XFS" ];then
-	emerge sys-fs/xfsprogs
+	sudo emerge sys-fs/xfsprogs
 else
-	emerge sys-fs/btrfs-progs
+	sudo emerge sys-fs/btrfs-progs
 break
 
 
-emerge sys-fs/dosfstools
-emerge --ask sys-block/io-scheduler-udev-rules
+sudo emerge sys-fs/dosfstools
+sudo emerge --ask sys-block/io-scheduler-udev-rules
 
 
 #DHCP daemon + Wireless Tools
-emerge --ask net-misc/dhcpcd
-emerge --ask net-wireless/iw net-wireless/wpa_supplicant
+sudo emerge --ask net-misc/dhcpcd
+sudo emerge --ask net-wireless/iw net-wireless/wpa_supplicant
 
 
 
 #BOOTLOADER
-echo 'GRUB_PLATFORMS="efi-64"' >> /etc/portage/make.conf
-emerge --ask sys-boot/grub
-grub-install --efi-directory=/efi
-grub-mkconfig -o /boot/grub/grub.cfg
+echo 'GRUB_PLATFORMS="efi-64"' | sudo tee -a /etc/portage/make.conf
+sudo emerge --ask sys-boot/grub
+sudo grub-install --efi-directory=/efi
+sudo grub-mkconfig -o /boot/grub/grub.cfg
 
 
 
 
 exit
 cd
-umount -l /mnt/gentoo/dev{/shm,/pts,}
-umount -R /mnt/gentoo
+sudo umount -l /mnt/gentoo/dev{/shm,/pts,}
+sudo umount -R /mnt/gentoo
