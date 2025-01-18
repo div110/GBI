@@ -1,6 +1,8 @@
 #! /bin/bash
 clear
 
+sudo chmod +x chroot.sh
+sudo cp chroot.sh /chroot.sh
 
 
 #sleep 1.5
@@ -171,6 +173,6 @@ sudo mount --bind /run /mnt/gentoo/run
 sudo mount --make-slave /mnt/gentoo/run 
 
 
-
+sudo mv /chroot.sh /mnt/gentoo/chroot.sh
 #změna kořene na nové prostředí
 sudo chroot /mnt/gentoo /bin/bash
