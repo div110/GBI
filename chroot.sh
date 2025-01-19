@@ -205,13 +205,15 @@ passwd
 #SYSLOGD
 echo "Přidat SystemLogger?: "
 select syslog in "Ano" "Ne";do
-	break
+        echo $syslog
+        break
 done
-if [ "$syslog"="Ano" ];then
-	emerge --ask app-admin/sysklogd
-	rc-update add sysklogd default
-else
-break
+
+if [ "$syslog" = "Ano" ];then
+        
+        emerge --ask app-admin/sysklogd
+        rc-update add sysklogd default
+fi
 
 
 #CRONIE
@@ -219,11 +221,10 @@ echo "Přidat cronie?: "
 select cronie in "Ano" "Ne";do
 	break
 done
-if [ "$cronie"="Ano" ];then
+if [ "$cronie" = "Ano" ];then
 	emerge --ask sys-process/cronie
 	rc-update add cronie default
-else
-break
+fi
 
 
 #SSH
@@ -233,8 +234,7 @@ select ssh in "Ano" "Ne";do
  done
 if [ "$ssh"="Ano" ];then
 	rc-update add sshd default
-else 
-break
+fi
 
 
 ###########################################################
@@ -254,11 +254,11 @@ emerge --ask net-misc/chrony
 rc-update add chronyd default
 
 
-if [ "$filesystem"="XFS" ];then
+if [ "$filesystem"="xfs" ];then
 	emerge sys-fs/xfsprogs
 else
 	emerge sys-fs/btrfs-progs
-break
+fi
 
 
 emerge sys-fs/dosfstools
