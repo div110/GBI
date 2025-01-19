@@ -90,7 +90,7 @@ emerge --ask sys-firmware/intel-microcode #Just for Intel CPUs
 #just GRUB for now
 
 touch /etc/portage/package.use/installkernel
-echo "sys-kernel/installkernel grub" | sudo tee -a /etc/portage/package.use/installkernel > /dev/null
+echo "sys-kernel/installkernel grub" | tee -a /etc/portage/package.use/installkernel > /dev/null
 emerge --ask sys-kernel/installkernel
 
 
@@ -187,7 +187,7 @@ rc-update add net.eth0 default
 
 echo """127.0.0.1	localhost
 ::1		localhost
-127.0.1.1	$hostname.localdomain	$hostname""" | sudo tee -a /etc/hosts
+127.0.1.1	$hostname.localdomain	$hostname""" | tee -a /etc/hosts
 
 
 echo "Zvolte heslo pro ROOT uživatele"
