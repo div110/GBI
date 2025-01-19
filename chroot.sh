@@ -272,6 +272,12 @@ emerge --ask net-wireless/iw net-wireless/wpa_supplicant
 
 
 #BOOTLOADER
+#restarted, got into chroot + ?REMOUNTED?
+#something not right
+#manual fix:
+#grub-install --efi-directory=/efi
+#grub-mkconfig -o /boot/grub/grub.cfg
+#
 echo 'GRUB_PLATFORMS="efi-64"' | tee -a /etc/portage/make.conf
 emerge --ask sys-boot/grub
 grub-install --efi-directory=/efi
