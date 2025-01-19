@@ -230,6 +230,7 @@ break
 echo "Zapnout SSH?: "
 select ssh in "Ano" "Ne";do
 	break
+ done
 if [ "$ssh"="Ano" ];then
 	rc-update add sshd default
 else 
