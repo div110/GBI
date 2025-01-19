@@ -139,8 +139,8 @@ sudo touch /mnt/gentoo/etc/portage/make.conf
 sudo echo """# Compiler flags to set for all languages
 COMMON_FLAGS=\"-march=native -O2 -pipe\"
 # Use the same settings for both variables
-CFLAGS=\"${COMMON_FLAGS}\"
-CXXFLAGS=\"${COMMON_FLAGS}\"""" | sudo tee /mnt/gentoo/etc/portage/make.conf > /dev/null
+CFLAGS=\"-march=native -O2 -pipe\"
+CXXFLAGS=\"-march=native -O2 -pipe\"""" | sudo tee /mnt/gentoo/etc/portage/make.conf > /dev/null
 echo "Architecture: Native; Optimization O2; Piping Allowed"
 
 ########################	ZJIŠŤOVÁNÍ VLÁKEN SYSTÉMU
