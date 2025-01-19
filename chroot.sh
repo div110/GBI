@@ -140,7 +140,7 @@ done
 if [ "$customname" = "Vlastní hostname" ]; then
 	read -p "Enter hostname: " hostname
 else
-	hostname = $(cat /dev/urandom | tr -dc A-Za-z0-9 | head -c 6)
+	hostname=$(cat /dev/urandom | tr -dc A-Za-z0-9 | head -c 6)
  	cat $hostname
 fi
 
