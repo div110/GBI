@@ -141,7 +141,7 @@ if [ "$customname" = "Vlastní hostname" ]; then
 	read -p "Enter hostname: " hostname
 else
 	hostname=$(cat /dev/urandom | tr -dc A-Za-z0-9 | head -c 6)
- 	cat $hostname
+ 	echo $hostname
 fi
 
 
@@ -153,7 +153,9 @@ rc-service dhcpcd start
 
 emerge --ask --noreplace net-misc/netifrc 
 
-select ipconfig in "Statická" "DHCP" "nano";
+select ipconfig in "Statická" "DHCP" "nano";do
+break
+done
 case $ipconfig in
 
   Statická)
