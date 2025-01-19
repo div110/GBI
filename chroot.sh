@@ -134,7 +134,9 @@ echo """
 
 ##Network##
 echo "|Konfigurace sítě|"
-select customname in "Vlastní hostname" "Náhodný hostname";
+select customname in "Vlastní hostname" "Náhodný hostname";do
+break
+done
 if [ "$customname" = "Vlastní hostname" ]; then
 	read -p "Enter hostname: " hostname
 else
@@ -200,7 +202,7 @@ passwd
 
 #SYSLOGD
 echo "Přidat SystemLogger?: "
-select syslog in "Ano" "Ne";
+select syslog in "Ano" "Ne";do
 	break
 done
 if [ "$syslog"="Ano" ];then
@@ -212,7 +214,7 @@ break
 
 #CRONIE
 echo "Přidat cronie?: "
-select cronie in "Ano" "Ne";
+select cronie in "Ano" "Ne";do
 	break
 done
 if [ "$cronie"="Ano" ];then
@@ -224,7 +226,7 @@ break
 
 #SSH
 echo "Zapnout SSH?: "
-select ssh in "Ano" "Ne";
+select ssh in "Ano" "Ne";do
 	break
 if [ "$ssh"="Ano" ];then
 	rc-update add sshd default
