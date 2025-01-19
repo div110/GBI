@@ -112,9 +112,9 @@ u kterého lze účině zvolit souborový systém. Zabírá zbytek místa na dis
 \newpage
 \subsection{\textsf{Souborový systém}}
 Manuální instalace i script dávají uživateli možnost vyběru souborového systému pro kořenový oddíl.
-Souborový systém slouží k interpretaci dat ve formě souborů, adresářů a metadat. Dělí se na dvě hlavní skupiny: Žurnálovací a Copy on Write.
+Souborový systém slouží k interpretaci dat ve formě souborů, adresářů a metadat. Dělí se na dvě hlavní skupiny: Žurnálovací a Copy on Write.\\
 Žurnálovací systémy uchovávají záznam prováděných operací ve speciální datové struktuře v rámci jejich oddílu. 
-Záznam slouží k obnově konzistence souborového systému v případě přerušení zápisu, způsobeným například odpojením zdrojem energie. 
+Záznam slouží k obnově konzistence souborového systému v případě přerušení zápisu, způsobeným například odpojením zdrojem energie. \\
 Copy on Write systémy nevytváří kopii souboru pro úpravu, pouze předají odkaz na již existující soubor a to klidně více procesům najednou.
 Kopii dat vytvoří až v případě, že se nějaký z procesů pokusí přepsat data. Tento přístup umožňuje integraci snapshotů a RAIDů.
 Script volí mezi třemi souborovými systémy: XFS, btrfs a ext4. \\Je vhodné zmínit, že formátování odstraní veškerá data z oddílu. 
@@ -204,5 +204,39 @@ ztrátě speciálních oprávnění, například: setuid, setgid
 
 \newpage
 \subsection{Kompilace}
-Gentoo 
+Součástí základního systému je Portage. Portage je nativní package manager pro Gentoo.
+Obstarává kompilace, instalace, závislosti, synchronizace a mnoho dalšího. V této fázi instalace
+je doporučené optimalizovat kompilace. Veškerá globální konfigurace je součástí /etc/portage/make.conf.
+Zároveň obsahuje přepínače pro překladače GCC, C++ a Rust. Jejich správnému nastavení bude věnována tato kapitola.
+
+\hspace*{-1.5em}Pro nastavení GCC slouží proměnná CFlags ve tvaru \texttt{CFLAGS="flag1 flag2..."}. Nastavení C++ je totožné, mění se pouze proměná a to na \texttt{'CXXFLAGS'}.
+Uvádíme-li, že nastavení jsou totožná, je to myšleno doslovně. Je doporučeno, aby přepínače u překladačů byli při instalaci stejné. Níže je uvedena
+vzorová konfigurace:
+
+\hspace*{-1.5em}\texttt{CFLAGS="-march=native -O2 -pipe"}\\
+\texttt{CXXFLAGS="-march=native -O2 -pipe"}\\
+
+\hspace*{-1.5em}\texttt{-march=native} - použije nastavení a instrukční sady pro daný procesor\\
+\texttt{-O2} - překladač se pokusí kompilovat rychleji na úkor paměti.\\
+\texttt{-pipe} - zrychluje kompilaci díky 'rourám', ty překladač vytvoří místo dočasných souborů.\\
+
+\hspace*{-1.5em}Proměnná pro Rust je \texttt{RUSTFLAGS}.
+
+\texttt{RUSTFLAGS="\$-C target-cpu=native opt-level=2"}\\
+
+\hspace*{-1.5em}\texttt{target-cpu=native} - přizpůsobí kompilaci pro instalovaný procesor.\\
+\texttt{opt-level=2} - optimalizuje strojový kód, podobné -O2      %https://doc.rust-lang.org/rustc/codegen-options/index.html
+
+\subsection{MAKE Operace}
+Chceme-li, aby systém zůstal responzivní i během kompilace, je potřeba omezit maximální zatížení systému.
+Přepínače make omezující zátěž se zadávají do proměnné \texttt{MAKEOPTS}.
+
+\texttt{MAKEOPTS="-j5 -l5"}
+
+\hspace{-1.5em}\texttt{-j} - určuje maximální počet paralelních procesů.\\
+\texttt{-l} - nastavuje maximální vytížení procesoru.
+
+\hspace{-1.5em}Důležitým faktorem pro volbu parametrů je, že každý proces zatěžuje mimo procesoru také paměť.
+
+\newpage
 \end{document}
