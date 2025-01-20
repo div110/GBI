@@ -1,7 +1,8 @@
 Anotace
-Teoretická část maturitní práce popisuje proces instalace operačního systému Gentoo
-z pohledu tvorby scriptu. V práci je také zároveň rozvedena problematika stěžejních
-kroků instalace. Cílem práce bylo usnadnit novým uživatelům instalaci a konfiguraci
-systému.
+Maturitní práce se zabývá instalací operačního systému Gentoo a její automatizací.
+Teoretická část maturitní práce popisuje proces instalace operačního systému Gentoo a tvorbu scriptu.
+Zároveň také rozvádí stěžejní kroky instalace s cílem přiblížit uživateli problematiku.
+Praktickou část maturitní práce tvoří script pro instalaci operačního systému Gentoo.
+
 Klíčová slova:
 Keywords:
