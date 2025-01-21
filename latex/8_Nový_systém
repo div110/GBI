@@ -1,0 +1,11 @@
+\section{Nový systém}
+Pro vstup do nového systému, jelikož se nejedná o virtualizaci, je nutné zajistit přístup k fyzickým prostředkům.
+Toho docílíme přikazem mount adresářů /sys, /proc, /dev a /run na jejich /mnt/gentoo protějšky. Chceme-li v novém 
+systému stejné DNS servery, zkopírujeme ještě jejich záznam: cp /etc/resolv.conf /mnt/gentoo/etc. Pokud se jedná o symlink
+je potřeba přidat přepínač --dereference, abychom zkopírovali soubor, ne odkaz na něj. 
+\subsection{}
+Do nového prostředí se dostaneme pomocí nástroje chroot ve tvaru:
+
+chroot /mnt/gentoo /bin/bash
+/mnt/gentoo - adresář s novým kořenem
+/bin/bash - program/příkaz, který chceme v novém prostředí spustit
