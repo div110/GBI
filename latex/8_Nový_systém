@@ -9,3 +9,6 @@ Do nového prostředí se dostaneme pomocí nástroje chroot ve tvaru:
 chroot /mnt/gentoo /bin/bash
 /mnt/gentoo - adresář s novým kořenem
 /bin/bash - program/příkaz, který chceme v novém prostředí spustit
+
+Zároveň je nyní také možné namontovat EFI oddíl na /efi adresář
+
