@@ -2,7 +2,7 @@
 clear
 
 sudo chmod +x chroot.sh
-sudo cp chroot.sh /chroot.sh
+
 
 
 #sleep 1.5
@@ -108,7 +108,7 @@ sudo mount $diskname3 /mnt/gentoo
 
 
 chmod +x chroot.sh
-mv chroot.sh /mnt/gentoo
+mv chroot.sh /mnt/gentoo/chroot.sh
 cd /mnt/gentoo
 sudo chronyd -q
 
@@ -176,6 +176,7 @@ sudo mount --make-slave /mnt/gentoo/run
 sudo echo $filesystem | sudo tee -a /mnt/gentoo/filesystem #
 sudo echo $diskname1 | sudo tee -a /mnt/gentoo/diskname1
 ###########################################
+
 
 #změna kořene na nové prostředí
 sudo chroot /mnt/gentoo /bin/bash #########
