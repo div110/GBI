@@ -6,7 +6,7 @@ je potřeba přidat přepínač --dereference, abychom zkopírovali soubor, ne o
 \subsection{Chroot}
 Do nového prostředí se dostaneme pomocí nástroje chroot ve tvaru:
 
-chroot /mnt/gentoo /bin/bash
+chroot /mnt/gentoo chroot.sh
 /mnt/gentoo - adresář s novým kořenem
 /bin/bash - program/příkaz, který chceme v novém prostředí spustit
 
@@ -15,4 +15,4 @@ Zároveň je nyní vhodné namontovat EFI oddíl na /efi adresář.
 \subsection{Portage}
 Oficiální package manager pro Gentoo je Portage. Kromě instalace balíčků zároveň řeší závislosti.
 Dříve se jednalo o převážně nebinární package manager, dnes již však obsahuje i velkou škálu binárních balíčků.
-Pro instalaci již zkompilovaných balíčků není nutná speciální konfigurace
+Pro instalaci již zkompilovaných balíčků není nutná speciální konfigurace. 
