@@ -1,6 +1,7 @@
 source /etc/profile #using profile
 export PS1="(chroot) ${PS1}" #??????
 
+diskname1=$(cat diskname1)
 filesystem=$(cat filesystem)
 mkdir /efi
 mount $diskname1 /efi #/mounting efi partition to /efi directory
