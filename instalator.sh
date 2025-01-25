@@ -173,8 +173,8 @@ sudo mount --bind /run /mnt/gentoo/run
 sudo mount --make-slave /mnt/gentoo/run 
 
 ###########################################
-echo $filesystem > /mnt/gentoo/filesystem #
+sudo echo $filesystem | sudo tee -a /mnt/gentoo/filesystem #
 ###########################################
-sudo mv /chroot.sh /mnt/gentoo/chroot.sh
+sudo cp /chroot.sh /mnt/gentoo/chroot.sh
 #změna kořene na nové prostředí
-sudo chroot /mnt/gentoo chroot.sh #########
+sudo chroot /mnt/gentoo /chroot.sh #########
