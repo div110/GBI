@@ -3,12 +3,16 @@ Pro vstup do nového systému, jelikož se nejedná o virtualizaci, je nutné za
 Toho docílíme přikazem mount adresářů /sys, /proc, /dev a /run na jejich /mnt/gentoo protějšky. Chceme-li v novém 
 systému stejné DNS servery, zkopírujeme ještě jejich záznam: cp /etc/resolv.conf /mnt/gentoo/etc. Pokud se jedná o symlink
 je potřeba přidat přepínač --dereference, abychom zkopírovali soubor, ne odkaz na něj. 
-\subsection{}
+\subsection{Chroot}
 Do nového prostředí se dostaneme pomocí nástroje chroot ve tvaru:
 
 chroot /mnt/gentoo /bin/bash
 /mnt/gentoo - adresář s novým kořenem
 /bin/bash - program/příkaz, který chceme v novém prostředí spustit
 
-Zároveň je nyní také možné namontovat EFI oddíl na /efi adresář
+Zároveň je nyní vhodné namontovat EFI oddíl na /efi adresář.
 
+\subsection{Portage}
+Oficiální package manager pro Gentoo je Portage. Kromě instalace balíčků zároveň řeší závislosti.
+Dříve se jednalo o převážně nebinární package manager, dnes již však obsahuje i velkou škálu binárních balíčků.
+Pro instalaci již zkompilovaných balíčků není nutná speciální konfigurace
