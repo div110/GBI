@@ -107,8 +107,8 @@ sudo mount $diskname3 /mnt/gentoo
 
 
 
-chmod +x chroot.sh
-mv chroot.sh /mnt/gentoo/chroot.sh
+
+sudo mv chroot.sh /mnt/gentoo/chroot.sh
 cd /mnt/gentoo
 sudo chronyd -q
 
