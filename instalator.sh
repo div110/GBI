@@ -174,7 +174,8 @@ sudo mount --make-slave /mnt/gentoo/run
 
 ###########################################
 sudo echo $filesystem | sudo tee -a /mnt/gentoo/filesystem #
+sudo echo $diskname1 | sudo tee -a /mnt/gentoo/diskname1
 ###########################################
-sudo cp /chroot.sh /mnt/gentoo/chroot.sh
+
 #změna kořene na nové prostředí
 sudo chroot /mnt/gentoo /chroot.sh #########
