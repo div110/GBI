@@ -177,6 +177,7 @@ sudo echo $filesystem | sudo tee -a /mnt/gentoo/filesystem #
 sudo echo $diskname1 | sudo tee -a /mnt/gentoo/diskname1
 ###########################################
 
+mv chroot.sh /mnt/gentoo/chroot.sh
 
 #změna kořene na nové prostředí
 sudo chroot /mnt/gentoo /bin/bash #########
