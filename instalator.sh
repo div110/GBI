@@ -178,4 +178,4 @@ sudo echo $diskname1 | sudo tee -a /mnt/gentoo/diskname1
 ###########################################
 
 #změna kořene na nové prostředí
-sudo chroot /mnt/gentoo chroot.sh #########
+sudo chroot /mnt/gentoo /mnt/gentoo/chroot.sh #########
