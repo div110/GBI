@@ -172,8 +172,9 @@ sudo mount --make-rslave /mnt/gentoo/dev
 sudo mount --bind /run /mnt/gentoo/run
 sudo mount --make-slave /mnt/gentoo/run 
 
-#echo $filesystem > /mnt/gentoo/filesystem
-
+###########################################
+echo $filesystem > /mnt/gentoo/filesystem #
+###########################################
 sudo mv /chroot.sh /mnt/gentoo/chroot.sh
 #změna kořene na nové prostředí
-sudo chroot /mnt/gentoo /bin/bash
+sudo chroot /mnt/gentoo chroot.sh #########
