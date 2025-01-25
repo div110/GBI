@@ -31,7 +31,7 @@ swapsize=$(($swapsize*3/2))
 
 
 swapsize="+"$swapsize"G"
-echo $swapsize;
+echo $swapsize
 
 
 
