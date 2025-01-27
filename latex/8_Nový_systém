@@ -14,5 +14,9 @@ Zároveň je nyní vhodné namontovat EFI oddíl na /efi adresář.
 
 \subsection{Portage}
 Oficiální package manager pro Gentoo je Portage. Kromě instalace balíčků zároveň řeší závislosti.
-Dříve se jednalo o převážně nebinární package manager, dnes již však obsahuje i velkou škálu binárních balíčků.
-Pro instalaci již zkompilovaných balíčků není nutná speciální konfigurace. 
+Dříve se jednalo o převážně nebinární package manager, dnes již však obsahuje i mnoho binárních balíčků.
+
+Hlavní výhodou jsou USE Flags. Ty slouží k konfiguraci sestavení a instalace balíčků. Určují jaké funkce mají programy obsahovat a podporovat.
+Použijeme-li například vlajku X, bude všechen software instalován s podporou display serveru Xorg. Víme-li, že některé funkce nechceme, 
+můžeme je odebrat pomocí znaménka mínus(pomlčky). Například: -kde odebere podporu grafických prostředí KDE.
+Ne všechny balíčky přepínače USE podporují. Podporu určují samotní vývojáři stejně jako její podobu.
