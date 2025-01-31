@@ -239,4 +239,159 @@ Přepínače make omezující zátěž se zadávají do proměnné \texttt{MAKEO
 \hspace{-1.5em}Důležitým faktorem pro volbu parametrů je, že každý proces zatěžuje mimo procesoru také paměť.
 
 \newpage
+\section{Nový systém}
+Všechny následující kroky se již budou provádět v novém systému.
+Pro vstup do nového systému, jelikož se nejedná o virtualizaci, je nutné zajistit přístup k fyzickým prostředkům.
+Toho docílíme přikazem mount adresářů \texttt{/sys}, \texttt{/proc}, \texttt{/dev} a \texttt{/run} na jejich \texttt{/mnt/gentoo} protějšky. Chceme-li v novém 
+systému stejné DNS servery, zkopírujeme ještě jejich záznam: \\ \texttt{cp /etc/resolv.conf /mnt/gentoo/etc}\\ Pokud se jedná o symlink
+je potřeba přidat přepínač  \texttt{--dereference}, 
+\\abychom zkopírovali soubor, ne odkaz na něj. 
+\subsection{Chroot}
+Do nového prostředí se dostaneme pomocí nástroje chroot ve tvaru:
+
+\texttt{chroot /mnt/gentoo chroot.sh}\\
+\texttt{/mnt/gentoo} - adresář s novým kořenem\\
+\texttt{/bin/bash} - program/příkaz, který chceme v novém prostředí spustit
+
+\hspace*{-1.5em}Zároveň je nyní vhodné namontovat EFI oddíl na \texttt{/efi} adresář.
+
+\subsection{Portage}
+Oficiální package manager pro Gentoo je Portage. Kromě instalací zároveň řeší závislosti, opravy, správu a metadata balíčků.
+%Hlavním způsobem instalace je sestavení ze zdrojového kódu, avšak dnes již obsahuje i mnoho binárních balíčků. \\
+\subsubsection{Základní příkazy}
+Software se instaluje pomocí příkazu:  
+
+ \texttt{emerge kategorie/nazev} 
+ 
+\hspace*{-1.5em}Nevíme-li, některý z výše uvedených parametrů, můžeme využít příkaz:
+
+\texttt{emerge --search regulerni\_vyraz} 
+
+\hspace*{-1.5em}Příkaz pro jednoduchý update celého systému je:
+
+\texttt{emerge -avuDN @world}\\
+
+\hspace*{-1.5em}Uživatel by měl mít na paměti, že update může trvat až nižší desítky hodin. Pro lepší časový odhad je vhodné si přečíst obsah výstupu přepínače \texttt{-a}. %\texttt{-v}
+\newpage
+\subsubsection{USE}
+Mezi hlavní výhody Portage patří USE Flags. Ty slouží ke konfiguraci sestavení a instalace balíčků. Určují jaké funkce mají programy obsahovat a podporovat.\\
+Použijeme-li například vlajku \texttt{X}, bude všechen software instalován s podporou display serveru Xorg. Víme-li, že některé funkce nebudeme potřebovat, můžeme je odebrat pomocí znaménka mínus(pomlčky). Například: \texttt{-kde} odebere podporu grafických prostředí KDE.
+Ne všechny balíčky přepínače USE podporují. Podporu přepínačů určují vývojáři.
+Všechny použité přepínače se nachází ve složce \texttt{/etc/portage/make.conf}. \\
+Jejich seznam si můžeme vypsat pomocí příkazu:
+
+\texttt{cat /etc/portage/make.conf | grep USE}
+
+\hspace*{-1.5em}Seznam všech přepínačů se nachází na webu:
+
+\texttt{https://www.gentoo.org/support/use-flags/}\\
+
+\hspace*{-1.5em}Existují i přepínače procesor a grafický čip. Přepínače pro procesor se nastavují pomocí programu cpuid2cpuflags:
+
+
+\texttt{echo "*/* \$(cpuid2flags)" > /etc/portage/package.use/00cpu-flags}\\
+
+\hspace*{-1.5em}Přepínače pro grafický čip, v případě potrřeby, lze nastavit pomocí příkazu:
+
+\texttt{echo "*/* VIDEO\_CARDS: *gpu*" > /etc/portage/package.use/00video-cards}\\
+
+\hspace*{-1.5em}\texttt{*gpu*} nahradíme dle následující tabulky:
+
+\begin{table}[h]
+	\centering
+	\begin{tabular}{|c|c|c|}
+		\hline
+		Výrobce & Přepínač & poznámka \\
+		\hline
+		Nvidia & nvidia & -\\
+		\hline
+		Intel & intel & od 4. Generace \\
+		\hline
+		AMD & amdgpu radeonsi & od roku 2013/14 \\
+		\hline
+		Raspberry Pi & vc4 & - \\
+		\hline
+		QEMU&virgl&-\\
+		\hline
+		KVM&virgl&-\\
+		\hline
+		WSL&d3d12&- \\
+		\hline
+		Nvidia & nouveau & Open Source*\\
+		\hline
+		
+		%https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Base
+		%https://wiki.gentoo.org/wiki/Radeon#Feature_support
+		%https://wiki.gentoo.org/wiki/Intel#Feature_support
+		%https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Base#VIDEO_CARDS
+	\end{tabular}
+\end{table}
+*Všechny modely kromě architektur Maxwell, Pascal, Volta
+\newpage
+\subsubsection{Licence}
+%https://www.gentoo.org/glep/glep-0023.html#id7
+%https://wiki.gentoo.org/wiki/License_groups
+Od roku 2014 obsahují repositáře Gentoo štítky s licencemi balíčků. Pro lepší orientaci byla také zavedena proměnná \texttt{ACCEPT\_LICENSE}. Licence byly rozděleny do skupin, které se deklarují v~\texttt{/etc/portage/make.conf}:
+
+\texttt{ACCEPT\_LICENSE="@group"}
+
+\hspace*{-1.5em}Základní skupiny jsou:
+
+\begin{table}[h]
+	\centering
+	\begin{tabular}{|c|c|c|}
+		\hline
+		Pro software & Popis & Svobodné \\
+		\hline
+		GPL-COMPATIBLE & GPL kompatibilní & ANO \\
+		\hline
+		FSF-APPROVED & Všechny licence schválené FSF & ANO \\
+		\hline
+		MISC-FREE & Momentálně neschválené & ANO \\
+		\hline		
+		EULA & Licence pro koncového uživatele & NE \\
+		\hline
+		OSI-APPROVED & Schválené OSI & NE \\
+		\hline
+		OSI-APPROVED-FREE & Schválené OSI & ANO \\
+		\hline
+		OSI-APPROVED-NONFREE & Schválené OSI & NE \\
+		\hline
+		BINARY-REDISTRUTABLE & Neschválené & - - - \\
+		\hline
+
+	\end{tabular}
+\end{table}
+\begin{table}[h]
+	\centering
+	\begin{tabular}{|c|c|}
+		\hline
+		Pro dokumenty & Popis \\
+		\hline
+		FSF-APPROVED-OTHER & FSF schválené non-Software Licence \\
+		\hline
+		MISC-FREE-DOCS & Neschválená \\
+		\hline
+	\end{tabular}
+\end{table}
+\begin{table}[h]
+	\centering
+	\begin{tabular}{|c|c|}
+	\hline
+	Nadskupiny & Popis \\
+	\hline
+	FREE & FREE-SOFTWARE a FREE-DOCUMENTS \\
+	\hline
+	FREE-SOFTWARE & -\\
+	\hline
+	FREE-DOCUMENTS & \\
+	\hline
+	\end{tabular}
+\end{table}
+Pokud uživatel chce mít možnost nainstalovat software pod jakoukoliv licencí, může zvolit přepínač \texttt{*}.
+
+
+
+
+
 \end{document}
