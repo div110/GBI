@@ -160,8 +160,8 @@ sudo echo "MAKEOPTS=\"-j$halfram -l$threads\"" | sudo tee -a /mnt/gentoo/etc/por
 
 
 #DNS INFO
-sudo cp --dereference /etc/resolv.conf /mnt/gentoo/etc/
-
+#sudo cp --dereference /etc/resolv.conf /mnt/gentoo/etc/
+echo "nameserver 8.8.8.8" | sudo tee -a /mnt/gentoo/etc/resolv.conf
 
 #this is really boring :)
 sudo mount --types proc /proc /mnt/gentoo/proc
