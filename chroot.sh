@@ -123,6 +123,7 @@ fi
 
 
 
+
 ##fstab##
 
 
@@ -134,6 +135,9 @@ echo """
 
 
 ##Network##
+#aby dhcp nekazil
+chattr +i /etc/resolv.conf
+
 echo "|Konfigurace sítě|"
 select customname in "Vlastní hostname" "Náhodný hostname";do
 break
