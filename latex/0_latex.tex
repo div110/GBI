@@ -38,7 +38,7 @@ Vedoucí práce: Petr Martínek
 
 
 \newpage
-Prohlašuji, že jsem předkládanou práci vypracoval/a sám/sama za použití zdrojů a literatury v ní uvedených. Souhlasím s tím, aby moje maturitní práce byla využívána pro potřeby Střední školy spojů a informatiky, Tábor, Bydlinského 2474 nebo jiných subjektů, které se podílely na zadání práce.\\ 
+Prohlašuji, že jsem předkládanou práci vypracoval sám za použití zdrojů a literatury v ní uvedených. Souhlasím s tím, aby moje maturitní práce byla využívána pro potřeby Střední školy spojů a informatiky, Tábor, Bydlinského 2474 nebo jiných subjektů, které se podílely na zadání práce.\\ 
 \\	…………………….~~~~~~~~~~~~~……………………..\\
 datum~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~podpis
 
@@ -50,9 +50,9 @@ datum~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~podpis
 \newpage
 \section{\textsf{Anotace}}
 {Teoretická část maturitní práce popisuje proces instalace operačního systému Gentoo
-	z pohledu tvorby scriptu. V práci je také zároveň rozvedena problematika stěžejních
-	kroků instalace. Cílem práce bylo usnadnit novým uživatelům instalaci a konfiguraci
-	systému.
+	a její vliv na tvorbu scriptu. V práci je také zároveň rozvedena problematika stěžejních
+	kroků instalace a částí operačního systému. Cílem práce bylo usnadnit novým uživatelům instalaci a konfiguraci
+	systému pro jednodušší přechod z jiných operačních systémů. Z toho důvodu je script volně dostupný na webových stránkách Github. 
 	\vspace{2cm}
 	\\Klíčová slova:
 	\\Keywords:
@@ -70,15 +70,15 @@ vyšší maximální počet oddílů, podpora disků větších než 2TB a kontr
 Oddíly a jejích nastavení mají velký vliv na paměť i výkon systému. Proto je potřeba, 
 aby script i samotná instalace přizpůsobily rozdělení specifikacím systému.} 
 
-{\hspace*{-1.5em}První je EFI oddíl. Slouží pro zavádění UEFI systémů. Bude obsahovat bootloadery(zavaděče). 
+{\hspace*{-1.5em}První je EFI oddíl. Slouží pro zavádění UEFI systémů. Bude obsahovat Bootloader. 
 Velikost je pevně nastavena na 1GB, jelikož není potřeba škálovat se systémem.
-Souborový systém oddílu je fat32.}
+Oddíl bude naformátován jako fat32.}
 
 {\hspace*{-1.5em}Druhý je Swap oddíl. Swap obsahuje časti operační paměti, vyhodnocené jako nejméně používané. 
 Rozbor samotného algoritmu pro správu paměti je mimo záběr maturitní práce. Je třeba,
-aby velikost Swap oddílu rostla s kapacitou paměťi RAM. Tento vztah je způsoben vlastnostmi hibernace, 
+aby velikost Swap oddílu rostla s kapacitou paměti RAM. Tento vztah je způsoben vlastnostmi hibernace, 
 která nahraje celý obsah operační paměti na Swap oddíl. Má-li tedy systém využívat hibernaci, je nutné
-aby velikost oddílu byla ostře větší, než velikost paměťi RAM. }
+aby velikost oddílu byla ostře větší, než velikost paměti RAM. }
 
 {\hspace*{-1.5em}Třetí je Root oddíl. Obsahuje komplement EFI oddílu. Je to zároveň také jediný oddíl z trojice, 
 u kterého lze účině zvolit souborový systém. Zabírá zbytek místa na disku.}
@@ -207,14 +207,15 @@ ztrátě speciálních oprávnění, například: setuid, setgid
 Součástí základního systému je Portage. Portage je nativní package manager pro Gentoo.
 Obstarává kompilace, instalace, závislosti, synchronizace a mnoho dalšího. V této fázi instalace
 je doporučené optimalizovat kompilace. Veškerá globální konfigurace je součástí /etc/portage/make.conf.
-Zároveň obsahuje přepínače pro překladače GCC, C++ a Rust. Jejich správnému nastavení bude věnována tato kapitola.
+Zároveň obsahuje přepínače pro překladače GCC, C++ a Rust. Jejich správnému nastavení bude věnována následující podkapitola.
 
-\hspace*{-1.5em}Pro nastavení GCC slouží proměnná CFlags ve tvaru \texttt{CFLAGS="flag1 flag2..."}. Nastavení C++ je totožné, mění se pouze proměná a to na \texttt{'CXXFLAGS'}.
+\subsubsection{Flags}
+¨Pro nastavení GCC slouží proměnná CFlags ve tvaru \texttt{CFLAGS="flag1 flag2..."}. Nastavení C++ je totožné, mění se pouze proměná a to na \texttt{'CXXFLAGS'}.
 Uvádíme-li, že nastavení jsou totožná, je to myšleno doslovně. Je doporučeno, aby přepínače u překladačů byli při instalaci stejné. Níže je uvedena
 vzorová konfigurace:
 
 \hspace*{-1.5em}\texttt{CFLAGS="-march=native -O2 -pipe"}\\
-\texttt{CXXFLAGS="-march=native -O2 -pipe"}\\
+\texttt{CXXFLAGS="-march=native -O2 -pipe"}
 
 \hspace*{-1.5em}\texttt{-march=native} - použije nastavení a instrukční sady pro daný procesor\\
 \texttt{-O2} - překladač se pokusí kompilovat rychleji na úkor paměti.\\
@@ -333,7 +334,7 @@ Jejich seznam si můžeme vypsat pomocí příkazu:
 %https://wiki.gentoo.org/wiki/License_groups
 Od roku 2014 obsahují repositáře Gentoo štítky s licencemi balíčků. Pro lepší orientaci byla také zavedena proměnná \texttt{ACCEPT\_LICENSE}. Licence byly rozděleny do skupin, které se deklarují v~\texttt{/etc/portage/make.conf}:
 
-\texttt{ACCEPT\_LICENSE="@group"}
+\texttt{ACCEPT\_LICENSE="group"}
 
 \hspace*{-1.5em}Základní skupiny jsou:
 
@@ -343,21 +344,21 @@ Od roku 2014 obsahují repositáře Gentoo štítky s licencemi balíčků. Pro 
 		\hline
 		Pro software & Popis & Svobodné \\
 		\hline
-		GPL-COMPATIBLE & GPL kompatibilní & ANO \\
+		@GPL-COMPATIBLE & GPL kompatibilní & ANO \\
 		\hline
-		FSF-APPROVED & Všechny licence schválené FSF & ANO \\
+		@FSF-APPROVED & Všechny licence schválené FSF & ANO \\
 		\hline
-		MISC-FREE & Momentálně neschválené & ANO \\
+		@MISC-FREE & Momentálně neschválené & ANO \\
 		\hline		
-		EULA & Licence pro koncového uživatele & NE \\
+		@EULA & Licence pro koncového uživatele & NE \\
 		\hline
-		OSI-APPROVED & Schválené OSI & NE \\
+		@OSI-APPROVED & Schválené OSI & NE \\
 		\hline
-		OSI-APPROVED-FREE & Schválené OSI & ANO \\
+		@OSI-APPROVED-FREE & Schválené OSI & ANO \\
 		\hline
-		OSI-APPROVED-NONFREE & Schválené OSI & NE \\
+		@OSI-APPROVED-NONFREE & Schválené OSI & NE \\
 		\hline
-		BINARY-REDISTRUTABLE & Neschválené & - - - \\
+		@BINARY-REDISTRUTABLE & Neschválené & - - - \\
 		\hline
 
 	\end{tabular}
@@ -368,9 +369,9 @@ Od roku 2014 obsahují repositáře Gentoo štítky s licencemi balíčků. Pro 
 		\hline
 		Pro dokumenty & Popis \\
 		\hline
-		FSF-APPROVED-OTHER & FSF schválené non-Software Licence \\
+		@FSF-APPROVED-OTHER & FSF schválené non-Software Licence \\
 		\hline
-		MISC-FREE-DOCS & Neschválená \\
+		@MISC-FREE-DOCS & Neschválená \\
 		\hline
 	\end{tabular}
 \end{table}
@@ -380,18 +381,44 @@ Od roku 2014 obsahují repositáře Gentoo štítky s licencemi balíčků. Pro 
 	\hline
 	Nadskupiny & Popis \\
 	\hline
-	FREE & FREE-SOFTWARE a FREE-DOCUMENTS \\
+	@FREE & @FREE-SOFTWARE a @FREE-DOCUMENTS \\
 	\hline
-	FREE-SOFTWARE & -\\
+	@FREE-SOFTWARE & @FSF-APPROVED a @OSI-APPROVED-FREE\\
 	\hline
-	FREE-DOCUMENTS & \\
+	@FREE-DOCUMENTS & @FSF-APPROVED-OTHER @MISC-FREE-DOCS\\
 	\hline
 	\end{tabular}
 \end{table}
-Pokud uživatel chce mít možnost nainstalovat software pod jakoukoliv licencí, může zvolit přepínač \texttt{*}.
+\hspace*{-1.5em}Pokud uživatel chce mít možnost nainstalovat software pod jakoukoliv licencí, může zvolit přepínač \texttt{*}.
+
+\hspace*{-1.5em}Jelikož se jedná o limitující nastavení, script nastaví hodnotu parametru na \texttt{*}. Důvodem je velké množství proprietárních ovladačů, nutných pro funkci fyzických prostředků.
 
 
+\hspace*{-1.5em}V případě, že uživatel chce použít licenci pouze v rámci balíčku, lze toho docílit pomocí záznamu v~\texttt{/etc/portage/package.use/} ve tvaru:
+
+\texttt{nazev/balicku licence}
+
+\hspace*{-1.5em}K propsání změn v \texttt{ACCEPT\_LICENSE} je nutné systém aktualizovat pomocí:
+
+\texttt{emerge --ask --verbose --update --deep --newuse @world}
 
 
+\newpage
 
+\section{Kernel}
+%https://cs.wikipedia.org/wiki/J%C3%A1dro_opera%C4%8Dn%C3%ADho_syst%C3%A9mu
+Jádro, kernel, je součást většiny operačních systémů zajišťující přístup k~fyzickým prostředkům počítače. Mezi hlavní činnosti patří správa: procesorů, procesů, pamětí a periferií. 
+\subsection{Princip}
+
+Program nikdy nekomunikuje přímo s komponentou, místo toho komunikuje s jádrem pomocí systémových volání, které pak předá instrukce komponentě. Vyhodou je, že jádro může takto sbírat instrukce od více procesů a následně je řadit podle plánovacího algoritmu, tzv. scheduler.
+
+\subsection{Task scheduler}
+%https://en.wikipedia.org/wiki/Earliest_eligible_virtual_deadline_first_scheduling
+%https://hackmd.io/@Kuanch/eevdf
+%https://www.phoronix.com/news/Linux-6.6-EEVDF-Merged
+%https://en.wikipedia.org/wiki/Completely_Fair_Scheduler
+?????CFS NEBO EEVDF?????
+
+\subsection{Firmware}
+\subsection{Initramfs}
 \end{document}
