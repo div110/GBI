@@ -137,7 +137,7 @@ Formátování oddílů pro souborový systém ve scriptu provádí příkaz mkf
 \texttt{\hspace*{1.5em}mount /dev/sda1 /mnt/gentoo/efi}
 
 \newpage
-\section{Stage Tarball}
+\section{\textsf{Stage Tarball}}
 {Pro instalaci základního systému je třeba tzv. Stage 3 Tarball, neboli archiv obsahující
 minimální systém pro začátek instalace. Archivů je mnoho a dělí se podle profilů.
 
@@ -176,7 +176,7 @@ Ty lze získat v souboru .DIGESTS z jakéhokoliv zrdcadla. Pro druhý, vlastní 
 
 \hspace*{-1.5em}Script, z důvodu minimalizace rizik a skrytých paradoxů, tuto kontrolu neprovádí.
 \newpage
-\subsection{Instalace archivu}
+\subsection{\textsf{Instalace archivu}}
 Před instalací je vhodné nastavit systémový čas. K tomu slouží chrony:\\
 \texttt{chrony -q}\\
  anebo, není-li dostupné RTC, pomocí: \\ \texttt{date mmddhhmmyy}.\\
@@ -203,13 +203,13 @@ skupin.\\
 ztrátě speciálních oprávnění, například: setuid, setgid
 
 \newpage
-\subsection{Kompilace}
+\subsection{\textsf{Kompilace}}
 Součástí základního systému je Portage. Portage je nativní package manager pro Gentoo.
 Obstarává kompilace, instalace, závislosti, synchronizace a mnoho dalšího. V této fázi instalace
 je doporučené optimalizovat kompilace. Veškerá globální konfigurace je součástí /etc/portage/make.conf.
 Zároveň obsahuje přepínače pro překladače GCC, C++ a Rust. Jejich správnému nastavení bude věnována následující podkapitola.
 
-\subsubsection{Flags}
+\subsubsection{\textsf{Flags}}
 ¨Pro nastavení GCC slouží proměnná CFlags ve tvaru \texttt{CFLAGS="flag1 flag2..."}. Nastavení C++ je totožné, mění se pouze proměná a to na \texttt{'CXXFLAGS'}.
 Uvádíme-li, že nastavení jsou totožná, je to myšleno doslovně. Je doporučeno, aby přepínače u překladačů byli při instalaci stejné. Níže je uvedena
 vzorová konfigurace:
@@ -228,7 +228,7 @@ vzorová konfigurace:
 \hspace*{-1.5em}\texttt{target-cpu=native} - přizpůsobí kompilaci pro instalovaný procesor.\\
 \texttt{opt-level=2} - optimalizuje strojový kód, podobné -O2      %https://doc.rust-lang.org/rustc/codegen-options/index.html
 
-\subsection{MAKE Operace}
+\subsection{\textsf{MAKE Operace}}
 Chceme-li, aby systém zůstal responzivní i během kompilace, je potřeba omezit maximální zatížení systému.
 Přepínače make omezující zátěž se zadávají do proměnné \texttt{MAKEOPTS}.
 
@@ -240,14 +240,14 @@ Přepínače make omezující zátěž se zadávají do proměnné \texttt{MAKEO
 \hspace{-1.5em}Důležitým faktorem pro volbu parametrů je, že každý proces zatěžuje mimo procesoru také paměť.
 
 \newpage
-\section{Nový systém}
+\section{\textsf{Nový systém}}
 Všechny následující kroky se již budou provádět v novém systému.
 Pro vstup do nového systému, jelikož se nejedná o virtualizaci, je nutné zajistit přístup k fyzickým prostředkům.
 Toho docílíme přikazem mount adresářů \texttt{/sys}, \texttt{/proc}, \texttt{/dev} a \texttt{/run} na jejich \texttt{/mnt/gentoo} protějšky. Chceme-li v novém 
 systému stejné DNS servery, zkopírujeme ještě jejich záznam: \\ \texttt{cp /etc/resolv.conf /mnt/gentoo/etc}\\ Pokud se jedná o symlink
 je potřeba přidat přepínač  \texttt{--dereference}, 
 \\abychom zkopírovali soubor, ne odkaz na něj. 
-\subsection{Chroot}
+\subsection{\textsf{Chroot}}
 Do nového prostředí se dostaneme pomocí nástroje chroot ve tvaru:
 
 \texttt{chroot /mnt/gentoo chroot.sh}\\
@@ -256,10 +256,10 @@ Do nového prostředí se dostaneme pomocí nástroje chroot ve tvaru:
 
 \hspace*{-1.5em}Zároveň je nyní vhodné namontovat EFI oddíl na \texttt{/efi} adresář.
 
-\subsection{Portage}
+\subsection{\textsf{Portage}}
 Oficiální package manager pro Gentoo je Portage. Kromě instalací zároveň řeší závislosti, opravy, správu a metadata balíčků.
 %Hlavním způsobem instalace je sestavení ze zdrojového kódu, avšak dnes již obsahuje i mnoho binárních balíčků. \\
-\subsubsection{Základní příkazy}
+\subsubsection{\textsf{Základní příkazy}}
 Software se instaluje pomocí příkazu:  
 
  \texttt{emerge kategorie/nazev} 
@@ -274,7 +274,7 @@ Software se instaluje pomocí příkazu:
 
 \hspace*{-1.5em}Uživatel by měl mít na paměti, že update může trvat až nižší desítky hodin. Pro lepší časový odhad je vhodné si přečíst obsah výstupu přepínače \texttt{-a}. %\texttt{-v}
 \newpage
-\subsubsection{USE}
+\subsubsection{\textsf{USE}}
 Mezi hlavní výhody Portage patří USE Flags. Ty slouží ke konfiguraci sestavení a instalace balíčků. Určují jaké funkce mají programy obsahovat a podporovat.\\
 Použijeme-li například vlajku \texttt{X}, bude všechen software instalován s podporou display serveru Xorg. Víme-li, že některé funkce nebudeme potřebovat, můžeme je odebrat pomocí znaménka mínus(pomlčky). Například: \texttt{-kde} odebere podporu grafických prostředí KDE.
 Ne všechny balíčky přepínače USE podporují. Podporu přepínačů určují vývojáři.
@@ -329,7 +329,7 @@ Jejich seznam si můžeme vypsat pomocí příkazu:
 \end{table}
 *Všechny modely kromě architektur Maxwell, Pascal, Volta
 \newpage
-\subsubsection{Licence}
+\subsubsection{\textsf{Licence}}
 %https://www.gentoo.org/glep/glep-0023.html#id7
 %https://wiki.gentoo.org/wiki/License_groups
 Od roku 2014 obsahují repositáře Gentoo štítky s licencemi balíčků. Pro lepší orientaci byla také zavedena proměnná \texttt{ACCEPT\_LICENSE}. Licence byly rozděleny do skupin, které se deklarují v~\texttt{/etc/portage/make.conf}:
@@ -405,20 +405,32 @@ Od roku 2014 obsahují repositáře Gentoo štítky s licencemi balíčků. Pro 
 
 \newpage
 
-\section{Kernel}
+\section{\textsf{Kernel}}
 %https://cs.wikipedia.org/wiki/J%C3%A1dro_opera%C4%8Dn%C3%ADho_syst%C3%A9mu
-Jádro, kernel, je součást většiny operačních systémů zajišťující přístup k~fyzickým prostředkům počítače. Mezi hlavní činnosti patří správa: procesorů, procesů, pamětí a periferií. 
-\subsection{Princip}
+Jádro, kernel, je součástí většiny operačních systémů. Zajišťuje přístup k~fyzickým prostředkům počítače. Mezi hlavní funkce patří správa: procesorů, procesů, pamětí a periferií. 
 
-Program nikdy nekomunikuje přímo s komponentou, místo toho komunikuje s jádrem pomocí systémových volání, které pak předá instrukce komponentě. Vyhodou je, že jádro může takto sbírat instrukce od více procesů a následně je řadit podle plánovacího algoritmu, tzv. scheduler.
+\hspace*{-1.5em}Program nikdy nekomunikuje přímo s komponentou, místo toho komunikuje s jádrem pomocí systémových volání, které pak předá instrukce komponentě. Vyhodou je, že jádro může takto sbírat instrukce od více procesů a následně je řadit podle plánovacího algoritmu, tzv. scheduler.
 
-\subsection{Task scheduler}
+\subsection{\textsf{Scheduler}}
 %https://en.wikipedia.org/wiki/Earliest_eligible_virtual_deadline_first_scheduling
 %https://hackmd.io/@Kuanch/eevdf
 %https://www.phoronix.com/news/Linux-6.6-EEVDF-Merged
 %https://en.wikipedia.org/wiki/Completely_Fair_Scheduler
-?????CFS NEBO EEVDF?????
+%https://blogs.oracle.com/linux/post/cfs-group-scheduling
+Scheduler pro linuxové jádro se nazývá {\bf C}ompletely {\bf F}air {\bf S}cheduler ({\bf CFS}). Účelem je poskytnout všem entitám stejný čas na procesoru. Entity zaštiťují jeden proces či skupinu procesů. Nejmenší možnou entitou je jeden jednovláknový proces, největší entita (skupina) může obsahovat všechny běžící procesy, taková entita je označena \texttt{root\_task\_group}. 
+\subsubsection{\textsf{Group scheduling}}
+Skupiny mají přidělenou hodnotu \texttt{cpu.shares}. Poměr hodnot \texttt{cpu.shares} jednotlivých skupin určuje jejich čas na procesoru. Obsahuje-li skupina podskupiny, postup se opakuje. Dělení na skupiny není teoreticky nutné, avšak je žádoucí například na systémech s více uživateli.
+\subsubsection{\textsf{Task scheduling}}
+Po přidělení času (pod)skupinám je potřeba naplánovat jednotlivé procesy skupiny. Plánování se provádí pomocí hodnoty \texttt{vruntime}. \texttt{vruntime} je odvozen z doby strávené na procesoru a priority(NICE). Platí, že rostoucí priorita (klesající NICE) zpomaluje růst \texttt{vruntime}. Procesy s výšší prioritou dostanou více prostoru. Procesy jsou podle \texttt{vruntime} seřazeny do Red-black tree. Jedná se o upravený binární strom s barevně označenými uzly. Strom vždy řadí menší hodnotu (v tomto případě \texttt{vruntime}) vlevo. Barvy uzlů se průbežně mění, vždy však splňují čtyři podmínky:\\
+1. Vkládaný uzel je červený.\\2. Každý uzel je černý nebo červený\\3. Nikdy nesmí být dva červené uzly bezprostředně nad sebou.\\4. Cesty z libovolných černých uzlů na konec obsahují stejný počet černých bodů. \\ 
 
-\subsection{Firmware}
-\subsection{Initramfs}
+\hspace*{-1.5em}Výše uvedené podmínky zaručují že:
+1. Větve budou vždy
+
+%https://www.cs.kent.edu/~mallouzi/Algorithm%202014/Lecture14-a.pdf
+%https://www.cs.usfca.edu/~galles/visualization/RedBlack.html
+%https://www.eecs.umich.edu/courses/eecs380/ALG/red_black.html
+%https://en.wikipedia.org/wiki/Red%E2%80%93black_tree
+\subsection{\textsf{Firmware}}
+\subsection{\textsf{Initramfs}}
 \end{document}
