@@ -70,23 +70,23 @@ vyšší maximální počet oddílů, podpora disků větších než 2TB a kontr
 Oddíly a jejích nastavení mají velký vliv na paměť i výkon systému. Proto je potřeba, 
 aby script i samotná instalace přizpůsobily rozdělení specifikacím systému.} 
 
-{\hspace*{-1.5em}První je EFI oddíl. Slouží pro zavádění UEFI systémů. Bude obsahovat Bootloader. 
+{První je EFI oddíl. Slouží pro zavádění UEFI systémů. Bude obsahovat Bootloader. 
 Velikost je pevně nastavena na 1GB, jelikož není potřeba škálovat se systémem.
 Oddíl bude naformátován jako fat32.}
 
-{\hspace*{-1.5em}Druhý je Swap oddíl. Swap obsahuje časti operační paměti, vyhodnocené jako nejméně používané. 
+{Druhý je Swap oddíl. Swap obsahuje časti operační paměti, vyhodnocené jako nejméně používané. 
 Rozbor samotného algoritmu pro správu paměti je mimo záběr maturitní práce. Je třeba,
 aby velikost Swap oddílu rostla s kapacitou paměti RAM. Tento vztah je způsoben vlastnostmi hibernace, 
 která nahraje celý obsah operační paměti na Swap oddíl. Má-li tedy systém využívat hibernaci, je nutné
 aby velikost oddílu byla ostře větší, než velikost paměti RAM. }
 
-{\hspace*{-1.5em}Třetí je Root oddíl. Obsahuje komplement EFI oddílu. Je to zároveň také jediný oddíl z trojice, 
+{Třetí je Root oddíl. Obsahuje komplement EFI oddílu. Je to zároveň také jediný oddíl z trojice, 
 u kterého lze účině zvolit souborový systém. Zabírá zbytek místa na disku.}
 
-{\hspace*{-1.5em}Script vytváří oddíly pomocí nástroje \texttt{fdisk}. \texttt{fdisk} je interaktivní nástroj na tvorbu \\oddílu, proto je nutné aby script dodával instrukce přímo do vstupu nástroje, ne shellu. Přesměrování provádí Here document, který dokáže přesměrovat dávkovaný vstup přímo do programu.\\ Výběr disku:}
+{Script vytváří oddíly pomocí nástroje \texttt{fdisk}. \texttt{fdisk} je interaktivní nástroj na tvorbu \\oddílu, proto je nutné aby script dodával instrukce přímo do vstupu nástroje, ne shellu. Přesměrování provádí Here document, který dokáže přesměrovat dávkovaný vstup přímo do programu.\\ Výběr disku:}
 \\ 
 
-\texttt{\hspace*{-1.5em}select diskname in /dev/*; do\\}
+\texttt{select diskname in /dev/*; do\\}
 \texttt{if [[ -n \$diskname ]]; then\\}
 \texttt{\hspace*{2em}echo "Zvolen: \$diskname"\\}
 \texttt{\hspace*{2em}break\\}
@@ -96,15 +96,17 @@ u kterého lze účině zvolit souborový systém. Zabírá zbytek místa na dis
 \texttt{done\\}
 
 
-\texttt{\hspace*{-1.5em}select} umožňuje vybrat soubor ze složky \texttt{/dev}, kde se nacházejí bloková zařízení.
+\texttt{select} umožňuje vybrat soubor ze složky \texttt{/dev}, kde se nacházejí bloková zařízení.
 \newpage
-{\hspace*{-1.5em}Pro škálování Swapu je potřeba zjistit informace o velikosti paměti RAM. Ty jsou uložené v souboru \texttt{/proc/meminfo}. Pro \texttt{fdisk} je potřeba, aby jsme dostali pouze numerický údaj. Přečtení a zpracování tedy vypadá následovně:\\
+{Pro škálování Swapu je potřeba zjistit informace o velikosti paměti RAM. Ty jsou uložené v souboru \texttt{/proc/meminfo}. Pro \texttt{fdisk} je potřeba, aby jsme dostali pouze numerický údaj. Přečtení a zpracování tedy vypadá následovně:\\
 	
-\texttt{swapsize=\$(sudo cat /proc/meminfo | head -n 1 | sed 's/[\^0-9]//g')}\\
+\texttt{swapsize=\$(sudo cat /proc/meminfo | head -n 1 | sed 's/[\^{}0-9]//g')}\\
 
 \hspace*{-1.5em}Výsledné číslo pak zvětšíme o 50 \%:\\ 
 
 \texttt{swapsize=\$(((\$swapsize/1000000)*3/2))}\\
+
+
 
 
 
@@ -123,15 +125,15 @@ Formátování oddílů pro souborový systém ve scriptu provádí příkaz mkf
 \texttt{mkfs.vfat -F 32 /dev/sda1}\\
 \texttt{\hspace*{1.5em}mkfs.\$filesystem /dev/sda3}
 
-\hspace*{-1.5em}Speciální případ je Swap, který je potřeba prvně inicializovat: 
+Speciální případ je Swap, který je potřeba prvně inicializovat: 
 
 \texttt{mkswap /dev/sda2}
 
-\hspace*{-1.5em}A poté aktivovat:
+A poté aktivovat:
 
 \texttt{swapon /dev/sda2}
 
-\hspace*{-1.5em}Nyní stačí namontovat oddíly na jejich adresáře:
+Nyní stačí namontovat oddíly na jejich adresáře:
 
 \texttt{mount /dev/sda3 /mnt/gentoo}\\
 \texttt{\hspace*{1.5em}mount /dev/sda1 /mnt/gentoo/efi}
@@ -141,55 +143,56 @@ Formátování oddílů pro souborový systém ve scriptu provádí příkaz mkf
 {Pro instalaci základního systému je třeba tzv. Stage 3 Tarball, neboli archiv obsahující
 minimální systém pro začátek instalace. Archivů je mnoho a dělí se podle profilů.
 
-\hspace*{-1.5em}Každý profil blíže specifikuje budoucí záměr a funkce systému. Například profil
+Každý profil blíže specifikuje budoucí záměr a funkce systému. Například profil
 ‘Desktop’ obsahuje balíčky, respektive jejich USE přepínače, usnadňující zprovoznění
 uživatelského rozhraní.
 Profilů existuje velké množství, čehož důsledkem je více funkčních kombinací. Z
 tohoto důvodu script umožňuje zvolit archiv jak automaticky, tak i manuálně pomocí
 URL adresy. 
 
-\hspace*{-1.5em}Pro výchozí výběr byl zvolen archiv z FTP serveru Fakulty informatiky
+Pro výchozí výběr byl zvolen archiv z FTP serveru Fakulty informatiky
 Masarykovy Univerzity v Brně. Script řeší výběr archivu pomocí jednoduché logiky,
 která upřednostní manuální výběr, je-li dostupný:}\\
 
-\texttt{\hspace*{-1.5em}read -p stage3 2>\&1}\\
+\texttt{read -p stage3 2>\&1}\\
 \texttt{if [ -z "\$stage3" ]; then}\\
 \texttt{\hspace*{+1.5em}wget https://ftp.fi.muni.cz/pub/linux/gentoo/...\\}
 \texttt{else}\\
 \texttt{\hspace*{+1.5em}wget \$stage3}\\
 \texttt{fi}\\
 
-{\hspace*{-1.5em}Nesprávně zvolený profil lze po dokončení instalace změnit pomocí:\\}
+{Nesprávně zvolený profil lze po dokončení instalace změnit pomocí:\\}
 
 \texttt{eselect profile list}\\
 \texttt{\hspace*{--1.5em}eselect profile set \#}\\
 
-{\hspace*{-1.5em}Uživatel by však měl mít na paměti, že změna profilu může, v některých případech
+{Uživatel by však měl mít na paměti, že změna profilu může, v některých případech
 vést až k překompilování celého systému.}
 
-\hspace*{-1.5em}V tuto chvíli se doporučuje, aby uživatel provedl kontrolu archivu pomocí checksumů.
-Ty lze získat v souboru .DIGESTS z jakéhokoliv zrdcadla. Pro druhý, vlastní checksum je doporučený nástroj sha256sum, který vytváří checksum pomocí algoritmu sha256. Použití:
+V tuto chvíli se doporučuje, aby uživatel provedl kontrolu archivu pomocí checksumů.
+Ty lze získat v souboru .DIGESTS z jakéhokoliv zrcadla. Pro druhý, vlastní checksum je doporučený nástroj sha256sum, který vytváří checksum pomocí algoritmu sha256. Použití:
 
 \texttt{sha256sum nazevSouboru}
 
-\hspace*{-1.5em}Z bezpečnostních důvodů není doporučeno starší algoritmy, například: md5, sha1...
+Z bezpečnostních důvodů není doporučeno starší algoritmy, například: md5, sha1...
 
-\hspace*{-1.5em}Script, z důvodu minimalizace rizik a skrytých paradoxů, tuto kontrolu neprovádí.
+Script, z důvodu minimalizace rizik a skrytých paradoxů, tuto kontrolu neprovádí.
 \newpage
 \subsection{\textsf{Instalace archivu}}
 Před instalací je vhodné nastavit systémový čas. K tomu slouží chrony:\\
 \texttt{chrony -q}\\
  anebo, není-li dostupné RTC, pomocí: \\ \texttt{date mmddhhmmyy}.\\
+ 
 V případě jakýchkoliv pochybností je možné datum zkontrolovat pomocí \texttt{date}.
 \\Archiv je potřeba extrahovat do cílového adresáře nového systému. Proto je nutné,\\
 aby byl adresář již předem vytvořený. Ve velké většině případů \texttt{/mnt/gentoo}.\\
 Tarball instalujeme pomocí nástroje tar v příkazu:
 
-\texttt{\hspace*{-1.5em}tar xpvf stage3-*.tar.xz --xattrs-include='*.*' --numeric-owner \\-C /mnt/gentoo}
+\texttt{tar xpvf stage3-*.tar.xz --xattrs-include='*.*' --numeric-owner \\-C /mnt/gentoo}
 
-\hspace*{-1.5em}Pro lepší orientaci bude význam přepínačů a argumentů rozepsán:
+Pro lepší orientaci bude význam přepínačů a argumentů rozepsán:
 
-\hspace*{-1.5em}\texttt{x} - soubor bude extrahován.\\
+\texttt{x} - soubor bude extrahován.\\
 \texttt{p} - ponechat oprávnění. *\\
 \texttt{v} - zapíná výpis průběhu extrakce, volitelný.\\
 \texttt{f} - určuje jaký soubor má být extrahován a cestu k němu.\\
@@ -199,7 +202,7 @@ Tarball instalujeme pomocí nástroje tar v příkazu:
 skupin.\\
 \texttt{-C /mnt/gentoo} - extrahuje obsah do uvedeného adresáře.\\
 
-\hspace*{-1.5em}*Ačkoliv tar již nemění oprávnění při extrakci, může dojít ke
+*Ačkoliv tar již nemění oprávnění při extrakci, může dojít ke
 ztrátě speciálních oprávnění, například: setuid, setgid
 
 \newpage
@@ -210,22 +213,22 @@ je doporučené optimalizovat kompilace. Veškerá globální konfigurace je sou
 Zároveň obsahuje přepínače pro překladače GCC, C++ a Rust. Jejich správnému nastavení bude věnována následující podkapitola.
 
 \subsubsection{\textsf{Flags}}
-¨Pro nastavení GCC slouží proměnná CFlags ve tvaru \texttt{CFLAGS="flag1 flag2..."}. Nastavení C++ je totožné, mění se pouze proměná a to na \texttt{'CXXFLAGS'}.
+Pro nastavení GCC slouží proměnná CFlags ve tvaru \texttt{CFLAGS="flag1 flag2..."}. Nastavení C++ je totožné, mění se pouze proměná a to na \texttt{'CXXFLAGS'}.
 Uvádíme-li, že nastavení jsou totožná, je to myšleno doslovně. Je doporučeno, aby přepínače u překladačů byli při instalaci stejné. Níže je uvedena
 vzorová konfigurace:
 
-\hspace*{-1.5em}\texttt{CFLAGS="-march=native -O2 -pipe"}\\
+\texttt{CFLAGS="-march=native -O2 -pipe"}\\
 \texttt{CXXFLAGS="-march=native -O2 -pipe"}
 
-\hspace*{-1.5em}\texttt{-march=native} - použije nastavení a instrukční sady pro daný procesor\\
+\texttt{-march=native} - použije nastavení a instrukční sady pro daný procesor\\
 \texttt{-O2} - překladač se pokusí kompilovat rychleji na úkor paměti.\\
 \texttt{-pipe} - zrychluje kompilaci díky 'rourám', ty překladač vytvoří místo dočasných souborů.\\
 
-\hspace*{-1.5em}Proměnná pro Rust je \texttt{RUSTFLAGS}.
+Proměnná pro Rust je \texttt{RUSTFLAGS}.
 
 \texttt{RUSTFLAGS="\$-C target-cpu=native opt-level=2"}\\
 
-\hspace*{-1.5em}\texttt{target-cpu=native} - přizpůsobí kompilaci pro instalovaný procesor.\\
+\texttt{target-cpu=native} - přizpůsobí kompilaci pro instalovaný procesor.\\
 \texttt{opt-level=2} - optimalizuje strojový kód, podobné -O2      %https://doc.rust-lang.org/rustc/codegen-options/index.html
 
 \subsection{\textsf{MAKE Operace}}
@@ -254,7 +257,7 @@ Do nového prostředí se dostaneme pomocí nástroje chroot ve tvaru:
 \texttt{/mnt/gentoo} - adresář s novým kořenem\\
 \texttt{/bin/bash} - program/příkaz, který chceme v novém prostředí spustit
 
-\hspace*{-1.5em}Zároveň je nyní vhodné namontovat EFI oddíl na \texttt{/efi} adresář.
+Zároveň je nyní vhodné namontovat EFI oddíl na \texttt{/efi} adresář.
 
 \subsection{\textsf{Portage}}
 Oficiální package manager pro Gentoo je Portage. Kromě instalací zároveň řeší závislosti, opravy, správu a metadata balíčků.
@@ -264,15 +267,15 @@ Software se instaluje pomocí příkazu:
 
  \texttt{emerge kategorie/nazev} 
  
-\hspace*{-1.5em}Nevíme-li, některý z výše uvedených parametrů, můžeme využít příkaz:
+Nevíme-li, některý z výše uvedených parametrů, můžeme využít příkaz:
 
 \texttt{emerge --search regulerni\_vyraz} 
 
-\hspace*{-1.5em}Příkaz pro jednoduchý update celého systému je:
+Příkaz pro jednoduchý update celého systému je:
 
 \texttt{emerge -avuDN @world}\\
 
-\hspace*{-1.5em}Uživatel by měl mít na paměti, že update může trvat až nižší desítky hodin. Pro lepší časový odhad je vhodné si přečíst obsah výstupu přepínače \texttt{-a}. %\texttt{-v}
+Uživatel by měl mít na paměti, že update může trvat až nižší desítky hodin. Pro lepší časový odhad je vhodné si přečíst obsah výstupu přepínače \texttt{-a}. %\texttt{-v}
 \newpage
 \subsubsection{\textsf{USE}}
 Mezi hlavní výhody Portage patří USE Flags. Ty slouží ke konfiguraci sestavení a instalace balíčků. Určují jaké funkce mají programy obsahovat a podporovat.\\
@@ -283,20 +286,20 @@ Jejich seznam si můžeme vypsat pomocí příkazu:
 
 \texttt{cat /etc/portage/make.conf | grep USE}
 
-\hspace*{-1.5em}Seznam všech přepínačů se nachází na webu:
+Seznam všech přepínačů se nachází na webu:
 
 \texttt{https://www.gentoo.org/support/use-flags/}\\
 
-\hspace*{-1.5em}Existují i přepínače procesor a grafický čip. Přepínače pro procesor se nastavují pomocí programu cpuid2cpuflags:
+Existují i přepínače procesor a grafický čip. Přepínače pro procesor se nastavují pomocí programu cpuid2cpuflags:
 
 
 \texttt{echo "*/* \$(cpuid2flags)" > /etc/portage/package.use/00cpu-flags}\\
 
-\hspace*{-1.5em}Přepínače pro grafický čip, v případě potrřeby, lze nastavit pomocí příkazu:
+Přepínače pro grafický čip, v případě potrřeby, lze nastavit pomocí příkazu:
 
 \texttt{echo "*/* VIDEO\_CARDS: *gpu*" > /etc/portage/package.use/00video-cards}\\
 
-\hspace*{-1.5em}\texttt{*gpu*} nahradíme dle následující tabulky:
+\texttt{*gpu*} nahradíme dle následující tabulky:
 
 \begin{table}[h]
 	\centering
@@ -336,7 +339,7 @@ Od roku 2014 obsahují repositáře Gentoo štítky s licencemi balíčků. Pro 
 
 \texttt{ACCEPT\_LICENSE="group"}
 
-\hspace*{-1.5em}Základní skupiny jsou:
+Základní skupiny jsou:
 
 \begin{table}[h]
 	\centering
@@ -389,16 +392,16 @@ Od roku 2014 obsahují repositáře Gentoo štítky s licencemi balíčků. Pro 
 	\hline
 	\end{tabular}
 \end{table}
-\hspace*{-1.5em}Pokud uživatel chce mít možnost nainstalovat software pod jakoukoliv licencí, může zvolit přepínač \texttt{*}.
+Pokud uživatel chce mít možnost nainstalovat software pod jakoukoliv licencí, může zvolit přepínač \texttt{*}.
 
-\hspace*{-1.5em}Jelikož se jedná o limitující nastavení, script nastaví hodnotu parametru na \texttt{*}. Důvodem je velké množství proprietárních ovladačů, nutných pro funkci fyzických prostředků.
+Jelikož se jedná o limitující nastavení, script nastaví hodnotu parametru na \texttt{*}. Důvodem je velké množství proprietárních ovladačů, nutných pro funkci fyzických prostředků.
 
 
-\hspace*{-1.5em}V případě, že uživatel chce použít licenci pouze v rámci balíčku, lze toho docílit pomocí záznamu v~\texttt{/etc/portage/package.use/} ve tvaru:
+V případě, že uživatel chce použít licenci pouze v rámci balíčku, lze toho docílit pomocí záznamu v~\texttt{/etc/portage/package.use/} ve tvaru:
 
 \texttt{nazev/balicku licence}
 
-\hspace*{-1.5em}K propsání změn v \texttt{ACCEPT\_LICENSE} je nutné systém aktualizovat pomocí:
+K propsání změn v \texttt{ACCEPT\_LICENSE} je nutné systém aktualizovat pomocí:
 
 \texttt{emerge --ask --verbose --update --deep --newuse @world}
 
@@ -409,7 +412,7 @@ Od roku 2014 obsahují repositáře Gentoo štítky s licencemi balíčků. Pro 
 %https://cs.wikipedia.org/wiki/J%C3%A1dro_opera%C4%8Dn%C3%ADho_syst%C3%A9mu
 Jádro, kernel, je součástí většiny operačních systémů. Zajišťuje přístup k~fyzickým prostředkům počítače. Mezi hlavní funkce patří správa: procesorů, procesů, pamětí a periferií. 
 
-\hspace*{-1.5em}Program nikdy nekomunikuje přímo s komponentou, místo toho komunikuje s jádrem pomocí systémových volání, které pak předá instrukce komponentě. Vyhodou je, že jádro může takto sbírat instrukce od více procesů a následně je řadit podle plánovacího algoritmu, tzv. scheduler.
+Program nikdy nekomunikuje přímo s komponentou, místo toho komunikuje s jádrem pomocí systémových volání, které pak předá instrukce komponentě. Vyhodou je, že jádro může takto sbírat instrukce od více procesů a následně je řadit podle plánovacího algoritmu, tzv. scheduler.
 
 \subsection{\textsf{Scheduler}}
 %https://en.wikipedia.org/wiki/Earliest_eligible_virtual_deadline_first_scheduling
@@ -421,10 +424,10 @@ Scheduler pro linuxové jádro se nazývá {\bf C}ompletely {\bf F}air {\bf S}ch
 \subsubsection{\textsf{Group scheduling}}
 Skupiny mají přidělenou hodnotu \texttt{cpu.shares}. Poměr hodnot \texttt{cpu.shares} jednotlivých skupin určuje jejich čas na procesoru. Obsahuje-li skupina podskupiny, postup se opakuje. Dělení na skupiny není teoreticky nutné, avšak je žádoucí například na systémech s více uživateli.
 \subsubsection{\textsf{Task scheduling}}
-Po přidělení času (pod)skupinám je potřeba naplánovat jednotlivé procesy skupiny. Plánování se provádí pomocí hodnoty \texttt{vruntime}. \texttt{vruntime} je odvozen z doby strávené na procesoru a priority(NICE). Platí, že rostoucí priorita (klesající NICE) zpomaluje růst \texttt{vruntime}. Procesy s výšší prioritou dostanou více prostoru. Procesy jsou podle \texttt{vruntime} seřazeny do Red-black tree. Jedná se o upravený binární strom s barevně označenými uzly. Strom vždy řadí menší hodnotu (v tomto případě \texttt{vruntime}) vlevo. Barvy uzlů se průbežně mění, vždy však splňují čtyři podmínky:\\
+Po přidělení času (pod)skupinám je potřeba naplánovat jednotlivé procesy skupiny. Plánování se provádí pomocí hodnoty \texttt{vruntime}. \texttt{vruntime} je odvozen z doby strávené na procesoru a priority(NICE). Platí, že rostoucí priorita (klesající NICE) zpomaluje růst \texttt{vruntime}. Procesy s vyšší prioritou dostanou více prostoru. Procesy jsou podle \texttt{vruntime} seřazeny do Red-black tree. Jedná se o upravený binární strom s barevně označenými uzly. Strom vždy řadí menší hodnotu (v tomto případě \texttt{vruntime}) vlevo. Barvy uzlů se průbežně mění, vždy však splňují čtyři podmínky:\\
 1. Vkládaný uzel je červený.\\2. Každý uzel je černý nebo červený\\3. Nikdy nesmí být dva červené uzly bezprostředně nad sebou.\\4. Cesty z libovolných černých uzlů na konec obsahují stejný počet černých bodů. \\ 
 
-\hspace*{-1.5em}Výše uvedené podmínky zaručují že:
+Výše uvedené podmínky zaručují že:
 1. Větve budou vždy
 
 %https://ocw.mit.edu/courses/6-046j-introduction-to-algorithms-sma-5503-fall-2005/resources/lecture-10-red-black-trees-rotations-insertions-deletions/
