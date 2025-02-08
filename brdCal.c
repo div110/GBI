@@ -102,10 +102,19 @@ return broadcast_value;}
 /////////////////////////////////////////////////////////////////////////
 
 
-
+void hint(){
+printf("BAD USAGE! \n\nSyntax: brdcal [ipaddress] [mask]\n\n");
+}
 
 
 int main(int argc, char * argv[]){
+
+if((argc-1)!=2){
+hint();
+exit(1);
+}
+
+
 
 int binaryIP1 = tobin(format(argv[1],1));
 int binaryIP2 = tobin(format(argv[1],2));
