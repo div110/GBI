@@ -84,7 +84,6 @@ aby velikost oddílu byla ostře větší, než velikost paměti RAM. }
 u kterého lze účině zvolit souborový systém. Zabírá zbytek místa na disku.}
 
 {Script vytváří oddíly pomocí nástroje \texttt{fdisk}. \texttt{fdisk} je interaktivní nástroj na tvorbu \\oddílu, proto je nutné aby script dodával instrukce přímo do vstupu nástroje, ne shellu. Přesměrování provádí Here document, který dokáže přesměrovat dávkovaný vstup přímo do programu.\\ Výběr disku:}
-\\ 
 
 \texttt{select diskname in /dev/*; do\\}
 \texttt{if [[ -n \$diskname ]]; then\\}
@@ -94,7 +93,6 @@ u kterého lze účině zvolit souborový systém. Zabírá zbytek místa na dis
 \texttt{\hspace*{2em}echo "Vyberte zařízení"\\}
 \texttt{fi\\}
 \texttt{done\\}
-
 
 \texttt{select} umožňuje vybrat soubor ze složky \texttt{/dev}, kde se nacházejí bloková zařízení.
 \newpage
@@ -427,8 +425,8 @@ Skupiny mají přidělenou hodnotu \texttt{cpu.shares}. Poměr hodnot \texttt{cp
 Po přidělení času (pod)skupinám je potřeba naplánovat jednotlivé procesy skupiny. Plánování se provádí pomocí hodnoty \texttt{vruntime}. \texttt{vruntime} je odvozen z doby strávené na procesoru a priority(NICE). Platí, že rostoucí priorita (klesající NICE) zpomaluje růst \texttt{vruntime}. Procesy s vyšší prioritou dostanou více prostoru. Procesy jsou podle \texttt{vruntime} seřazeny do Red-black tree. Jedná se o upravený binární strom s barevně označenými uzly. Strom vždy řadí menší hodnotu (v tomto případě \texttt{vruntime}) vlevo. Barvy uzlů se průbežně mění, vždy však splňují čtyři podmínky:\\
 1. Vkládaný uzel je červený.\\2. Každý uzel je černý nebo červený\\3. Nikdy nesmí být dva červené uzly bezprostředně nad sebou.\\4. Cesty z libovolných černých uzlů na konec obsahují stejný počet černých bodů. \\ 
 
-Výše uvedené podmínky zaručují že:
-1. Větve budou vždy
+Uvedené podmínky zaručují že, jakýkoliv takový strom s $n$ uzly bude obsahovat maximálně $2\log(n+1)$ vrstev. Asymptotická složitost operací je tedy $O(\log n)$.\\
+
 
 %https://ocw.mit.edu/courses/6-046j-introduction-to-algorithms-sma-5503-fall-2005/resources/lecture-10-red-black-trees-rotations-insertions-deletions/
 %https://www.cs.kent.edu/~mallouzi/Algorithm%202014/Lecture14-a.pdf
@@ -436,5 +434,36 @@ Výše uvedené podmínky zaručují že:
 %https://www.eecs.umich.edu/courses/eecs380/ALG/red_black.html
 %https://en.wikipedia.org/wiki/Red%E2%80%93black_tree
 \subsection{\textsf{Firmware}}
+
+Firmware je kód běžící přímo na fyzické komponentě. Často je uložen v paměti, která je součástí komponenty. V případech kdy tomu tak není je potřeba jej nahrát z kernelu operačního systému. Nejčastěji se jedná o grafické karty, síťové a zvukové karty. 
+%https://www.linuxfromscratch.org/blfs/view/svn/postlfs/firmware.html
+Firmware Linuxu uložen v adresáři \texttt{/usr/lib/firmware}, odkud je při zavádění načten do zařízení. Velkou část potřebného firmwaru obsahuje \texttt{sys-kernel/linux-firmware}. 
+
+\texttt{emerge sys-kernel/linux-firmware}¨
+
+Pro procesory od výrobce Intel je potřeba stáhnout ještě mikrokód:
+
+\texttt{emerge sys-firmware/intel-microcode}. 
+
+Procesory od AMD mají mikrokód z \texttt{sys-kernel/linux-firmware}.
 \subsection{\textsf{Initramfs}}
+%https://wiki.gentoo.org/wiki/Initramfs
+%https://www.youtube.com/watch?v=KQjRnuwb7is
+{\bf Init}ial {\bf ram}-based {\bf f}ile {\bf s}ystem je malý filesystem. Cílem initramfs je připravit minimální prostředí pro spuštění Init systému. Provádí načtení kernel modulů a driverů pro zavedení důležitých filesystémů. Jakmile je vše potřebné připraveno, předá kontrolu Init systému.
+Initramfs je plnohodnotné uživatelské prostředí, je tedy možné v něm spouštět procesy. Standartním využitím této vlastnosti je záchranný systém nebo zadávání hesla pro odšifrování disku. Méně standartním využitím je hraní hry Tetris. 
+
+Generaci initramfs provádí Installkernel najde-li dracut parametr v souboru adresáře /etc/portage/package.use/.
+
+Script parametr vkládá do souboru installkernel:
+
+\texttt{echo "sys-kernel/installkernel dracut" | tee -a /\dots/installkernel}
+
+Úprava initramfs vyžaduje velké množství znalostí a schopností, proto ji nebudeme více rozebírat. Podrobnější informace obsahuje Gentoo wiki. %https://wiki.gentoo.org/wiki/Custom_Initramfs
+
+\newpage
+\subsection{\textsf{Linux Kernel}}
+
+\subsubsection{\textsf{Architektura}}
+Architektura linuxového jádra je monolitická, modulární. Je tedy možné dynamicky přidávat nebo odebírat moduly. Linuxové jádro může tedy teoreticky obsahovat jen momentálně potřebné moduly.
+\subsubsection{\textsf{Kompilace}}
 \end{document}
