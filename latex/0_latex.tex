@@ -467,6 +467,17 @@ Script parametr vkládá do souboru installkernel:
 %https://cs.wikipedia.org/wiki/Mikroj%C3%A1dro
 %https://cs.wikipedia.org/wiki/Hybridn%C3%AD_j%C3%A1dro
 %https://cs.wikipedia.org/wiki/Monolitick%C3%A9_j%C3%A1dro
-Architektura linuxového jádra je monolitická, modulární. Je tedy možné dynamicky přidávat nebo odebírat moduly. Linuxové jádro může tedy teoreticky obsahovat jen momentálně potřebné moduly. Jádro je sestaveno jako jeden blok, proto není potřeba mezi procesova komunikace jako u mikrojádra. 
+Architektura linuxového jádra je monolitická, modulární. Je tedy možné dynamicky přidávat nebo odebírat moduly. Linuxové jádro může tedy teoreticky obsahovat jen momentálně potřebné moduly. Jádro je sestaveno jako jeden blok, proto není potřeba mezi procesová komunikace jako u mikrojádra. 
 \subsubsection{\textsf{Kompilace}}
+Script nabízí dvě možnosti, lokální kompilaci a předkompilovaný kernel. Kompilace jádra zabere mnoho času, je-li čas na instalaci omezený, je doporučeno použít předkompilovaný kernel. Výhodou lokální kompilace je přizpů 
+
+\hspace{-1.5em}\texttt{select binsrc in "Kompilovat lokálně" "Použít předkompilovaný";do}}\\
+\texttt{break}\\
+\texttt{done}\\
+\texttt{if [ "\$binsrc" = "Kompilovat lokálně" ];then}\\
+\texttt{\hspace*{1.5em}emerge --ask sys-kernel/gentoo-kernel}\\
+\texttt{else}\\
+\texttt{\hspace*{1.5em}emerge --ask sys-kernel/gentoo-kernel-bin}\\
+\texttt{fi}\\
+
 \end{document}
