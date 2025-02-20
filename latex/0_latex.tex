@@ -469,15 +469,23 @@ Script parametr vkládá do souboru installkernel:
 %https://cs.wikipedia.org/wiki/Monolitick%C3%A9_j%C3%A1dro
 Architektura linuxového jádra je monolitická, modulární. Je tedy možné dynamicky přidávat nebo odebírat moduly. Linuxové jádro může tedy teoreticky obsahovat jen momentálně potřebné moduly. Jádro je sestaveno jako jeden blok, proto není potřeba mezi procesová komunikace jako u mikrojádra. 
 \subsubsection{\textsf{Kompilace}}
-Script nabízí dvě možnosti, lokální kompilaci a předkompilovaný kernel. Kompilace jádra zabere mnoho času, je-li čas na instalaci omezený, je doporučeno použít předkompilovaný kernel. Výhodou lokální kompilace je přizpů 
+Script nabízí dvě možnosti, lokální kompilaci a předkompilovaný kernel. Kompilace jádra zabere mnoho času, je-li čas na instalaci omezený, je doporučeno použít předkompilovaný kernel. Výhodou lokální kompilace je přizpůsobení podle přepínačů. 
 
 \hspace{-1.5em}\texttt{select binsrc in "Kompilovat lokálně" "Použít předkompilovaný";do}}\\
-\texttt{break}\\
+\hspace*{1.5em}\texttt{break}\\
 \texttt{done}\\
 \texttt{if [ "\$binsrc" = "Kompilovat lokálně" ];then}\\
 \texttt{\hspace*{1.5em}emerge --ask sys-kernel/gentoo-kernel}\\
 \texttt{else}\\
 \texttt{\hspace*{1.5em}emerge --ask sys-kernel/gentoo-kernel-bin}\\
 \texttt{fi}\\
+\newpage
+\subsubsection{fstab}
+%https://cs.wikipedia.org/wiki/Za%C5%99%C3%ADzen%C3%AD_(soubor)
+%https://wiki.gentoo.org/wiki//etc/fstab
+V Linuxu se zařízení z hlediska souborů dělí na bloková a znaková. Bloková zařízení jsou především různá úložiště. Operace se provádějí v blocích přes buffer. Znaková zařízení jsou zařízení s krátkou odezvou, například: klávesnice, myš terminál. Operace se provádí ihned pomocí sekvence znaků(bytů).
 
+K automatickému montování blokových zařízení slouží záznamy v souboru /etc/fstab. Struktura záznamu je
+
+identifikator mount\_point filesystem options 
 \end{document}
