@@ -175,6 +175,8 @@ sudo mount --make-slave /mnt/gentoo/run
 ###########################################
 sudo echo $filesystem | sudo tee -a /mnt/gentoo/filesystem #
 sudo echo $diskname1 | sudo tee -a /mnt/gentoo/diskname1
+sudo echo $diskname2 | sudo tee -a /mnt/gentoo/diskname2
+sudo echo $diskname3 | sudo tee -a /mnt/gentoo/diskname3
 ###########################################
 
 
