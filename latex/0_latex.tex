@@ -3,6 +3,7 @@
 \usepackage{setspace}
 \usepackage{graphicx}
 \usepackage{titlesec}
+\usepackage{hyperref}
 \onehalfspacing
 
 \setlength{\parskip}{6pt}
@@ -52,7 +53,7 @@ datum~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~podpis
 {Teoretická část maturitní práce popisuje proces instalace operačního systému Gentoo
 	a její vliv na tvorbu scriptu. V práci je také zároveň rozvedena problematika stěžejních
 	kroků instalace a částí operačního systému. Cílem práce bylo usnadnit novým uživatelům instalaci a konfiguraci
-	systému pro jednodušší přechod z jiných operačních systémů. Z toho důvodu je script volně dostupný na webových stránkách Github. 
+	systému pro jednodušší přechod z jiných operačních systémů. Z toho důvodu je script volně přístupný na webových stránkách Github. 
 	\vspace{2cm}
 	\\Klíčová slova:
 	\\Keywords:
@@ -110,7 +111,7 @@ u kterého lze účině zvolit souborový systém. Zabírá zbytek místa na dis
 
 
 \newpage
-\subsection{\textsf{Souborový systém}}
+\subsection{\textsf{Souborový systém}}\hypertarget{Souborový systém}{}
 Manuální instalace i script dávají uživateli možnost vyběru souborového systému pro kořenový oddíl.
 Souborový systém slouží k interpretaci dat ve formě souborů, adresářů a metadat. Dělí se na dvě hlavní skupiny: Žurnálovací a Copy on Write.\\
 Žurnálovací systémy uchovávají záznam prováděných operací ve speciální datové struktuře v rámci jejich oddílu. 
@@ -485,7 +486,59 @@ Script nabízí dvě možnosti, lokální kompilaci a předkompilovaný kernel. 
 %https://wiki.gentoo.org/wiki//etc/fstab
 V Linuxu se zařízení z hlediska souborů dělí na bloková a znaková. Bloková zařízení jsou především různá úložiště. Operace se provádějí v blocích přes buffer. Znaková zařízení jsou zařízení s krátkou odezvou, například: klávesnice, myš terminál. Operace se provádí ihned pomocí sekvence znaků(bytů).
 
-K automatickému montování blokových zařízení slouží záznamy v souboru /etc/fstab. Struktura záznamu je
+K automatickému montování blokových zařízení slouží záznamy v souboru /etc/fstab. Struktura záznamu je:
 
-identifikator mount\_point filesystem options 
+\begin{table}[h]
+	\begin{tabular}{|c|c|c|c|c|c|}
+		\hline
+		\texttt{zařízení} & \texttt{umístění} & \texttt{souborový systém} & \texttt{přepínač} & \texttt{Backup} & \texttt{fsck} \\
+		\hline
+		\texttt{/dev/sda3} & \texttt{/} & \texttt{XFS} & \texttt{defaults} & \texttt{0} & \texttt{2} \\
+		\hline
+		
+	\end{tabular}
+\end{table}
+\hspace*{-1.5em}\texttt{zařízení} - device file z /dev adresáře\\
+\texttt{umístění} - lokace pro montování obsahu zařízení \\
+\texttt{souborový systém} - souborový systém na zařízení\\
+\texttt{přepínač} - určuje způsob montování\\
+\texttt{backup} - zahrnutí zařízení do zálohy, boolean\\
+\texttt{fsck} - {\bf f}ile{\bf s}ystem {\bf c}hec{\bf k} určuje v jakém pořadí jsou zařízení kontrolována\\
+
+Z kapitoly o \hyperlink{Souborový systém}{Souborovém systému} víme, že script umožňuje výběr souborového systému pro \texttt{root} oddíl, tento údaj je nutné předat mezi scripty \texttt{instalator.sh} a \texttt{chroot.sh}. Scripty si proměnné předávají pomocí jednoduchých textových souborů.
+
+\hspace*{-1.5em}Pro export proměnných:
+
+\texttt{sudo echo \$filesystem | sudo tee -a /mnt/gentoo/filesystem} \\
+\hspace*{1.5em}\texttt{sudo echo \$diskname1 | sudo tee -a /mnt/gentoo/diskname1} \\
+\hspace*{1.5em}\texttt{sudo echo \$diskname2 | sudo tee -a /mnt/gentoo/diskname2} \\
+\hspace*{1.5em}\texttt{sudo echo \$diskname3 | sudo tee -a /mnt/gentoo/diskname3} \\
+
+\hspace*{-1.5em}Pro import proměnných:
+
+\texttt{filesystem=\$(cat filesystem)}\\
+\hspace*{1.5em}\texttt{diskname1=\$(cat diskname1)}\\
+\hspace*{1.5em}\texttt{diskname2=\$(cat diskname2)}\\
+\hspace*{1.5em}\texttt{diskname3=\$(cat diskname3)}\\
+
+\hspace*{-1.5em}Tento postup není efektivní. Pro systémy s jedním diskem se proměnné \texttt{diskname} liší pouze v jednom znaku. Pokud by však cílový uživatel chtěl přizpůsobit script pro více disků je výše zmíněný přístup řádově jednodušší.
+
+\newpage
+
+\section{Networking}
+%https://packages.gentoo.org/packages/net-misc/netifrc
+
+Nyní je třeba zprovoznit síťová rozhraní. Potřebné balíčky se nainstalují pomocí příkazu:
+
+\texttt{emerge --noreplace net-misc/netifrc}\\
+
+
+\subsection{DHCP}
+Automatické nastavení IP adresy, výchozí brány a DNS serveru se provádí pomocí DHCP.¨\\ 
+Chceme-li aby systém dostávál IP adresu z dhcp serveru, je potřeba instalovat balíček: 
+\hspace*{1.5em}\texttt{emerge net-misc/dhcpcd}
+NONONNONONNONONONONO
+
+\subsection{Statická IP adresa}
+Manuální adresa se deklaruje v souboru \texttt{/etc/conf.d/net} 
 \end{document}
