@@ -158,6 +158,10 @@ rc-service dhcpcd start
 
 emerge --ask --noreplace net-misc/netifrc 
 
+ip link show | awk -F': ' '/^[0-9]+: / {print $2}'
+read -p "Write interface you want to configure :" iface
+echo $iface
+
 select ipconfig in "Statická" "DHCP" "nano";do
 break
 done
@@ -168,13 +172,13 @@ case $ipconfig in
     read -p "Maska: " mask
     read -p "Broadcast: " brd  #brdcal
     read -p "Výchozí brána: " routerIP
-    echo """config_eth0=\"$ip netmask $mask brd $brd\"
-routes_eth0=\"default via $routerIP\" """ | tee /etc/conf.d/net
+    echo """config_$iface=\"$ip netmask $mask brd $brd\"
+routes_$iface=\"default via $routerIP\" """ | tee /etc/conf.d/net
 
     ;;
 
   DHCP)
-    echo "config_eth0=\"dhcp\"" | tee /etc/conf.d/net
+    echo "config_$iface=\"dhcp\"" | tee /etc/conf.d/net
     ;;
 
   nano)
@@ -184,15 +188,15 @@ routes_eth0=\"default via $routerIP\" """ | tee /etc/conf.d/net
 esac
 
 cd /etc/init.d
-ln -s net.lo net.eth0
-rc-update add net.eth0 default
+#ln -s net.lo net.eth0
+rc-update add net default
 
 
 
 
 echo """127.0.0.1	localhost
 ::1		localhost
-127.0.1.1	$hostname.localdomain	$hostname""" | tee -a /etc/hosts
+127.0.0.1	$hostname.localdomain	$hostname""" | tee -a /etc/hosts
 
 
 echo "Zvolte heslo pro ROOT uživatele"
