@@ -35,10 +35,12 @@
 Třída: IT4/A\\
 Vedoucí práce: Petr Martínek
 }
+\thispagestyle{empty}
 \end{figure}
 
 
 \newpage
+\thispagestyle{empty}
 Prohlašuji, že jsem předkládanou práci vypracoval sám za použití zdrojů a literatury v ní uvedených. Souhlasím s tím, aby moje maturitní práce byla využívána pro potřeby Střední školy spojů a informatiky, Tábor, Bydlinského 2474 nebo jiných subjektů, které se podílely na zadání práce.\\ 
 \\	…………………….~~~~~~~~~~~~~……………………..\\
 datum~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~podpis
@@ -440,7 +442,7 @@ Firmware je kód běžící přímo na fyzické komponentě. Často je uložen v
 %https://www.linuxfromscratch.org/blfs/view/svn/postlfs/firmware.html
 Firmware Linuxu uložen v adresáři \texttt{/usr/lib/firmware}, odkud je při zavádění načten do zařízení. Velkou část potřebného firmwaru obsahuje \texttt{sys-kernel/linux-firmware}. 
 
-\texttt{emerge sys-kernel/linux-firmware}¨
+\texttt{emerge sys-kernel/linux-firmware}
 
 Pro procesory od výrobce Intel je potřeba stáhnout ještě mikrokód:
 
@@ -534,7 +536,7 @@ Nyní je třeba zprovoznit síťová rozhraní. Potřebné balíčky se nainstal
 
 
 \subsection{DHCP}
-Automatické nastavení IP adresy, výchozí brány a DNS serveru se provádí pomocí DHCP.¨\\ 
+Automatické nastavení IP adresy, výchozí brány a DNS serveru se provádí pomocí DHCP.\\ 
 Chceme-li aby systém dostávál IP adresu z dhcp serveru, je potřeba instalovat balíček: 
 \hspace*{1.5em}\texttt{emerge net-misc/dhcpcd}
 NONONNONONNONONONONO
