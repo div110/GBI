@@ -1,0 +1,29 @@
+\contentsline {section}{\numberline {1}\textsf {Anotace}}{5}{section.1}%
+\contentsline {section}{\numberline {2}\textsf {Příprava disků}}{6}{section.2}%
+\contentsline {subsection}{\numberline {2.1}\textsf {Souborový systém}}{8}{subsection.2.1}%
+\contentsline {section}{\numberline {3}\textsf {Stage Tarball}}{9}{section.3}%
+\contentsline {subsection}{\numberline {3.1}\textsf {Instalace archivu}}{10}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}\textsf {Kompilace}}{11}{subsection.3.2}%
+\contentsline {subsubsection}{\numberline {3.2.1}\textsf {Flags}}{11}{subsubsection.3.2.1}%
+\contentsline {subsection}{\numberline {3.3}\textsf {MAKE Operace}}{11}{subsection.3.3}%
+\contentsline {section}{\numberline {4}\textsf {Nový systém}}{12}{section.4}%
+\contentsline {subsection}{\numberline {4.1}\textsf {Chroot}}{12}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}\textsf {Portage}}{12}{subsection.4.2}%
+\contentsline {subsubsection}{\numberline {4.2.1}\textsf {Základní příkazy}}{12}{subsubsection.4.2.1}%
+\contentsline {subsubsection}{\numberline {4.2.2}\textsf {USE}}{13}{subsubsection.4.2.2}%
+\contentsline {subsubsection}{\numberline {4.2.3}\textsf {Licence}}{14}{subsubsection.4.2.3}%
+\contentsline {section}{\numberline {5}\textsf {Kernel}}{15}{section.5}%
+\contentsline {subsection}{\numberline {5.1}\textsf {Scheduler}}{15}{subsection.5.1}%
+\contentsline {subsubsection}{\numberline {5.1.1}\textsf {Group scheduling}}{15}{subsubsection.5.1.1}%
+\contentsline {subsubsection}{\numberline {5.1.2}\textsf {Task scheduling}}{15}{subsubsection.5.1.2}%
+\contentsline {subsection}{\numberline {5.2}\textsf {Firmware}}{16}{subsection.5.2}%
+\contentsline {subsection}{\numberline {5.3}\textsf {Initramfs}}{16}{subsection.5.3}%
+\contentsline {subsection}{\numberline {5.4}\textsf {Linux Kernel}}{17}{subsection.5.4}%
+\contentsline {subsubsection}{\numberline {5.4.1}\textsf {Architektura}}{17}{subsubsection.5.4.1}%
+\contentsline {subsubsection}{\numberline {5.4.2}\textsf {Kompilace}}{17}{subsubsection.5.4.2}%
+\contentsline {subsubsection}{\numberline {5.4.3}\textsf {fstab}}{18}{subsubsection.5.4.3}%
+\contentsline {section}{\numberline {6}\textsf {Networking}}{19}{section.6}%
+\contentsline {subsection}{\numberline {6.1}\textsf {DHCP}}{19}{subsection.6.1}%
+\contentsline {subsection}{\numberline {6.2}\textsf {Statická IP adresa}}{19}{subsection.6.2}%
+\contentsline {subsection}{\numberline {6.3}\textsf {Broadcast Calculator}}{19}{subsection.6.3}%
+\contentsline {section}{\numberline {7}\textsf {Služby}}{19}{section.7}%

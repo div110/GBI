@@ -483,7 +483,7 @@ Script nabízí dvě možnosti, lokální kompilaci a předkompilovaný kernel. 
 \texttt{\hspace*{1.5em}emerge --ask sys-kernel/gentoo-kernel-bin}\\
 \texttt{fi}\\
 \newpage
-\subsubsection{fstab}
+\subsubsection{\textsf{fstab}}
 %https://cs.wikipedia.org/wiki/Za%C5%99%C3%ADzen%C3%AD_(soubor)
 %https://wiki.gentoo.org/wiki//etc/fstab
 V Linuxu se zařízení z hlediska souborů dělí na bloková a znaková. Bloková zařízení jsou především různá úložiště. Operace se provádějí v blocích přes buffer. Znaková zařízení jsou zařízení s krátkou odezvou, například: klávesnice, myš terminál. Operace se provádí ihned pomocí sekvence znaků(bytů).
@@ -527,7 +527,7 @@ Z kapitoly o \hyperlink{Souborový systém}{Souborovém systému} víme, že scr
 
 \newpage
 
-\section{Networking}
+\section{\textsf{Networking}}
 %https://packages.gentoo.org/packages/net-misc/netifrc
 
 Nyní je třeba zprovoznit síťová rozhraní. Potřebné balíčky se nainstalují pomocí příkazu:
@@ -535,12 +535,15 @@ Nyní je třeba zprovoznit síťová rozhraní. Potřebné balíčky se nainstal
 \texttt{emerge --noreplace net-misc/netifrc}\\
 
 
-\subsection{DHCP}
+\subsection{\textsf{DHCP}}
 Automatické nastavení IP adresy, výchozí brány a DNS serveru se provádí pomocí DHCP.\\ 
 Chceme-li aby systém dostávál IP adresu z dhcp serveru, je potřeba instalovat balíček: 
 \hspace*{1.5em}\texttt{emerge net-misc/dhcpcd}
-NONONNONONNONONONONO
 
-\subsection{Statická IP adresa}
+\hspace*{-1.5em}Konfigurace pro získání IP adresy se provádí v souboru \texttt{/etc/conf.d/net}
+
+\subsection{\textsf{Statická IP adresa}}
 Manuální adresa se deklaruje v souboru \texttt{/etc/conf.d/net} 
+\subsection{\textsf{Broadcast Calculator}}
+\section{\textsf{Služby}}
 \end{document}
