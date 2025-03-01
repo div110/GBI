@@ -116,7 +116,7 @@ sudo chronyd -q
 read -p "Zadejte URL Adresu Stage3 Tarballu (Prázdné pro automatické stažení[DESKTOP])" stage3 2>&1		#This downloads "core" Gentoo
 
 if [ -z "$stage3" ]; then
-	sudo wget https://ftp.fi.muni.cz/pub/linux/gentoo/releases/amd64/autobuilds/20250115T221822Z/stage3-amd64-desktop-openrc-20250115T221822Z.tar.xz
+	sudo wget https://ftp.fi.muni.cz/pub/linux/gentoo/releases/amd64/autobuilds/current-stage3-amd64-desktop-openrc/stage3-amd64-desktop-openrc-20250216T164837Z.tar.xz
 	echo "Základní"
 else
 	sudo wget $stage3
