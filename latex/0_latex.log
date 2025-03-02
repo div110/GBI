@@ -1,4 +1,4 @@
-This is LuaHBTeX, Version 1.14.0 (TeX Live 2022/dev/Debian)  (format=lualatex 2025.2.3)  27 FEB 2025 16:58
+This is LuaHBTeX, Version 1.14.0 (TeX Live 2022/dev/Debian)  (format=lualatex 2025.2.3)  2 MAR 2025 21:26
  restricted system commands enabled.
 **0_latex.tex
 (./0_latex.tex
@@ -746,19 +746,31 @@ Underfull \hbox (badness 10000) in paragraph at lines 535--536
 
  []
 
+
+Overfull \hbox (3.71275pt too wide) in paragraph at lines 538--539
+[] \TU/TeXGyreTermes(0)/m/n/12 Zde script umožňuje výběr ze dvou možnost
+í: DHCP, Stat-ická IP adresa. Každá možnost
+ []
+
+
+Overfull \hbox (0.80577pt too wide) in paragraph at lines 540--541
+[] \TU/TeXGyreTermes(0)/m/n/12 Společ-nou částí je výběr síťového rozhr
+aní. Vyp-sání všech dos-tup-ných síťových rozhraní
+ []
+
 [19] (./0_latex.aux)
 Package rerunfilecheck Info: File `0_latex.out' has not changed.
 (rerunfilecheck)             Checksum: EADB400CAD33207533CE120B57007349;3253.
 )
 
 Here is how much of LuaTeX's memory you used:
- 12210 strings out of 477805
+ 12211 strings out of 477805
  100000,662416 words of node,token memory allocated
  431 words of node memory still in use:
    3 hlist, 1 vlist, 1 rule, 2 glue, 3 kern, 1 glyph, 4 attribute, 53 glue_spec,
  4 attribute_list, 1 write nodes
    avail lists: 2:676,3:268,4:11,5:432,6:89,7:4311,8:52,9:476,10:7,11:256
- 32452 multiletter control sequences out of 65536+600000
+ 32453 multiletter control sequences out of 65536+600000
  52 fonts using 5672183 bytes
  68i,12n,84p,702b,503s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texmf/fonts/opentype/public/lm/lmmono12-regular.otf></usr/share/texm
@@ -768,7 +780,7 @@ tex-gyre/texgyretermes-regular.otf></usr/share/texmf/fonts/opentype/public/lm/lm
 sans17-regular.otf></usr/share/texmf/fonts/opentype/public/lm/lmsans10-bold.otf>
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/s
 hare/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb>
-Output written on 0_latex.pdf (19 pages, 142835 bytes).
+Output written on 0_latex.pdf (19 pages, 143893 bytes).
 
 PDF statistics: 294 PDF objects out of 1000 (max. 8388607)
  248 compressed objects within 3 object streams

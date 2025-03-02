@@ -535,12 +535,23 @@ Nyní je třeba zprovoznit síťová rozhraní. Potřebné balíčky se nainstal
 \texttt{emerge --noreplace net-misc/netifrc}\\
 
 
-\subsection{\textsf{DHCP}}
-Automatické nastavení IP adresy, výchozí brány a DNS serveru se provádí pomocí DHCP.\\ 
-Chceme-li aby systém dostávál IP adresu z dhcp serveru, je potřeba instalovat balíček: 
-\hspace*{1.5em}\texttt{emerge net-misc/dhcpcd}
+\hspace{-1.5em}Zde script umožňuje výběr ze dvou možností: DHCP, Statická IP adresa. Každá možnost je rozepsána v následujících podkapitolách.
 
-\hspace*{-1.5em}Konfigurace pro získání IP adresy se provádí v souboru \texttt{/etc/conf.d/net}
+\hspace{-1.5em}Společnou částí je výběr síťového rozhraní. Vypsání všech dostupných síťových rozhraní provádí příkaz:
+
+\texttt{ip link show | awk -F': ' '/\^[0-9]+: / \{print \$2\}'}
+
+\hspace{-1.5em}Vstup je poté uložen do proměnné \texttt{iface}\\
+Narozdíl od většiny ostatních proměnných zde není možnost výběru z přednastavených hodnot. Důvodem je, TODO
+\subsection{\textsf{DHCP}}
+DHCP provádí automatické nastavení IP adresy, výchozí brány a DNS serveru pomocí služby DHCP.
+Chceme-li aby systém dostávál IP adresu z DHCP serveru, je potřeba doinstalovat DHCP daemon:
+
+\texttt{emerge net-misc/dhcpcd}
+
+\hspace*{-1.5em}Konfigurace pro získání IP adresy se provádí v souboru \texttt{/etc/conf.d/net}. \\Struktura souboru vypadá následovně:
+
+\texttt{config\_\$iface="dhcp"}¨
 
 \subsection{\textsf{Statická IP adresa}}
 Manuální adresa se deklaruje v souboru \texttt{/etc/conf.d/net} 
