@@ -130,9 +130,9 @@ fi
 
 
 echo """
-/dev/sda1   /efi         vfat   	umask=0077     		0 2
-/dev/sda2   none         swap   	sw                      0 0
-/dev/sda3   /            $filesystem    defaults,noatime        0 1
+$diskname1   /efi         vfat   	umask=0077     		0 2
+$diskname2   none         swap   	sw                      0 0
+$diskname3   /            $filesystem    defaults,noatime        0 1
 /dev/cdrom  /mnt/cdrom   auto    	noauto,user             0 0""" | tee -a /etc/fstab > /dev/null
 
 
