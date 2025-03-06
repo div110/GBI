@@ -1,4 +1,4 @@
-This is LuaHBTeX, Version 1.14.0 (TeX Live 2022/dev/Debian)  (format=lualatex 2025.2.3)  2 MAR 2025 21:26
+This is LuaHBTeX, Version 1.14.0 (TeX Live 2022/dev/Debian)  (format=lualatex 2025.2.3)  6 MAR 2025 16:49
  restricted system commands enabled.
 **0_latex.tex
 (./0_latex.tex
@@ -758,13 +758,17 @@ Overfull \hbox (0.80577pt too wide) in paragraph at lines 540--541
 aní. Vyp-sání všech dos-tup-ných síťových rozhraní
  []
 
-[19] (./0_latex.aux)
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [19]
+[20] (./0_latex.aux)
 Package rerunfilecheck Info: File `0_latex.out' has not changed.
-(rerunfilecheck)             Checksum: EADB400CAD33207533CE120B57007349;3253.
+(rerunfilecheck)             Checksum: 7BA63442FE8024EE9047ADA727D225DD;3263.
 )
 
 Here is how much of LuaTeX's memory you used:
- 12211 strings out of 477805
+ 12212 strings out of 477805
  100000,662416 words of node,token memory allocated
  431 words of node memory still in use:
    3 hlist, 1 vlist, 1 rule, 2 glue, 3 kern, 1 glyph, 4 attribute, 53 glue_spec,
@@ -780,10 +784,10 @@ tex-gyre/texgyretermes-regular.otf></usr/share/texmf/fonts/opentype/public/lm/lm
 sans17-regular.otf></usr/share/texmf/fonts/opentype/public/lm/lmsans10-bold.otf>
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/s
 hare/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb>
-Output written on 0_latex.pdf (19 pages, 143893 bytes).
+Output written on 0_latex.pdf (20 pages, 144651 bytes).
 
-PDF statistics: 294 PDF objects out of 1000 (max. 8388607)
- 248 compressed objects within 3 object streams
- 50 named destinations out of 1000 (max. 131072)
+PDF statistics: 298 PDF objects out of 1000 (max. 8388607)
+ 251 compressed objects within 3 object streams
+ 51 named destinations out of 1000 (max. 131072)
  233 words of extra memory for PDF output out of 10000 (max. 100000000)
 

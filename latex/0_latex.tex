@@ -551,10 +551,14 @@ Chceme-li aby systém dostávál IP adresu z DHCP serveru, je potřeba doinstalo
 
 \hspace*{-1.5em}Konfigurace pro získání IP adresy se provádí v souboru \texttt{/etc/conf.d/net}. \\Struktura souboru vypadá následovně:
 
-\texttt{config\_\$iface="dhcp"}¨
+\texttt{config\_\$iface="dhcp"}
 
 \subsection{\textsf{Statická IP adresa}}
-Manuální adresa se deklaruje v souboru \texttt{/etc/conf.d/net} 
-\subsection{\textsf{Broadcast Calculator}}
+Statická adresa se deklaruje v souboru \texttt{/etc/conf.d/net}. Je důležité mít na paměti, že DHCP nepřiděluje jen IP adresy, ale také nastavuje adresy výchozí brány a DNS serveru. Syntaxe pro zápis statické adresy je:
+
+\texttt{config\_\$iface="\$ip netmask \$mask brd \$brd"}\\
+\hspace*{1.5em}\texttt{routes\_\$iface="default via \$routerIP"}
+\subsubsection{\textsf{Broadcast Calculator}}
+Pro zjednodušení konfigurace statické IP adresy je součástí repositáře i jednoduchý program Broadcast Calculator
 \section{\textsf{Služby}}
 \end{document}

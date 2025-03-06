@@ -25,5 +25,5 @@
 \contentsline {section}{\numberline {6}\textsf {Networking}}{19}{section.6}%
 \contentsline {subsection}{\numberline {6.1}\textsf {DHCP}}{19}{subsection.6.1}%
 \contentsline {subsection}{\numberline {6.2}\textsf {Statická IP adresa}}{19}{subsection.6.2}%
-\contentsline {subsection}{\numberline {6.3}\textsf {Broadcast Calculator}}{19}{subsection.6.3}%
-\contentsline {section}{\numberline {7}\textsf {Služby}}{19}{section.7}%
+\contentsline {subsubsection}{\numberline {6.2.1}\textsf {Broadcast Calculator}}{20}{subsubsection.6.2.1}%
+\contentsline {section}{\numberline {7}\textsf {Služby}}{20}{section.7}%
