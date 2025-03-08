@@ -58,7 +58,7 @@ datum~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~podpis
 	systému pro jednodušší přechod z jiných operačních systémů. Z toho důvodu je script volně přístupný na webových stránkách Github. 
 	\vspace{2cm}
 	\\Klíčová slova:
-	\\Keywords:
+	%\\Keywords:
 }
 
 
@@ -107,7 +107,19 @@ u kterého lze účině zvolit souborový systém. Zabírá zbytek místa na dis
 
 \texttt{swapsize=\$(((\$swapsize/1000000)*3/2))}\\
 
-
+Ovládání pro \texttt{fdisk} je blíže rozepsáno v tabulce níže.
+%https://man7.org/linux/man-pages/man8/fdisk.8.html
+\begin{table}[h]
+	\begin{tabular}{|c|c|c|}\hline
+		Vstup & Zkratka & Popis \\ \hline
+		-&g&Vytvoří nový GUID Partition table \\ \hline
+		n&noauto-pt&Vytvoří nový oddíl bez nové tabulky oddílů \\ \hline
+		t&type&následuje číslo, přiřadí oddílu typový štítek \\ \hline
+		w&wipe&fyzicky přemaže aktuální rozdělení disku, někdy označován write \\ \hline
+		B&protect-boot&Nemazat první sektor na disku \\ \hline
+		%TODO
+	\end{tabular}
+\end{table}
 
 
 
@@ -126,15 +138,15 @@ Formátování oddílů pro souborový systém ve scriptu provádí příkaz mkf
 \texttt{mkfs.vfat -F 32 /dev/sda1}\\
 \texttt{\hspace*{1.5em}mkfs.\$filesystem /dev/sda3}
 
-Speciální případ je Swap, který je potřeba prvně inicializovat: 
+\hspace*{-1.5em}Speciální případ je Swap, který je potřeba prvně inicializovat: 
 
 \texttt{mkswap /dev/sda2}
 
-A poté aktivovat:
+\hspace*{-1.5em}A poté aktivovat:
 
 \texttt{swapon /dev/sda2}
 
-Nyní stačí namontovat oddíly na jejich adresáře:
+\hspace*{-1.5em}Nyní stačí namontovat oddíly na jejich adresáře:
 
 \texttt{mount /dev/sda3 /mnt/gentoo}\\
 \texttt{\hspace*{1.5em}mount /dev/sda1 /mnt/gentoo/efi}
@@ -523,8 +535,8 @@ Z kapitoly o \hyperlink{Souborový systém}{Souborovém systému} víme, že scr
 \hspace*{1.5em}\texttt{diskname2=\$(cat diskname2)}\\
 \hspace*{1.5em}\texttt{diskname3=\$(cat diskname3)}\\
 
-\hspace*{-1.5em}Tento postup není efektivní. Pro systémy s jedním diskem se proměnné \texttt{diskname} liší pouze v jednom znaku. Pokud by však cílový uživatel chtěl přizpůsobit script pro více disků je výše zmíněný přístup řádově jednodušší.
-
+\hspace*{-1.5em}Tento postup není efektivní. Pro systémy s jedním diskem se proměnné \texttt{diskname} liší pouze v jednom znaku. Pokud by však cílový uživatel chtěl přizpůsobit script pro více disků je výše zmíněný přístup jednodušší na úpravu.
+%TODO
 \newpage
 
 \section{\textsf{Networking}}
@@ -542,7 +554,7 @@ Nyní je třeba zprovoznit síťová rozhraní. Potřebné balíčky se nainstal
 \texttt{ip link show | awk -F': ' '/\^[0-9]+: / \{print \$2\}'}
 
 \hspace{-1.5em}Vstup je poté uložen do proměnné \texttt{iface}\\
-Narozdíl od většiny ostatních proměnných zde není možnost výběru z přednastavených hodnot. Důvodem je, TODO
+Narozdíl od většiny ostatních proměnných zde není možnost výběru z přednastavených hodnot. Důvodem je, %TODO
 \subsection{\textsf{DHCP}}
 DHCP provádí automatické nastavení IP adresy, výchozí brány a DNS serveru pomocí služby DHCP.
 Chceme-li aby systém dostávál IP adresu z DHCP serveru, je potřeba doinstalovat DHCP daemon:
@@ -559,6 +571,15 @@ Statická adresa se deklaruje v souboru \texttt{/etc/conf.d/net}. Je důležité
 \texttt{config\_\$iface="\$ip netmask \$mask brd \$brd"}\\
 \hspace*{1.5em}\texttt{routes\_\$iface="default via \$routerIP"}
 \subsubsection{\textsf{Broadcast Calculator}}
-Pro zjednodušení konfigurace statické IP adresy je součástí repositáře i jednoduchý program Broadcast Calculator
+Pro zjednodušení konfigurace statické IP adresy je součástí repositáře i jednoduchý program na výpočet adresy broadcastu, Broadcast Calculator. Použití programu je:
+
+\texttt{brdcal IP\_ADRESA MASKA\_PODSITE}
+
+%https://en.wikipedia.org/wiki/High-level_programming_language
+\hspace*{-1.5em}Výstupem pak je IP adresa broadcastu pro danou podsíť. \\
+
+
+Aby byla zajištěna spolehlivost a následná kompatibilita se scriptem, není možné použít vyšší programovací jazyky (Python, C\#, Java...), systém je nemusí podporovat. Z toho důvodu je celý program napsaný v jazyce C a za použití pouze tří knihoven: stdio.h, stdlib.h a string.h. Asymptotická složitost algoritmu je $O(1)$.
 \section{\textsf{Služby}}
+\section{\textsf{Zdroje}}
 \end{document}
