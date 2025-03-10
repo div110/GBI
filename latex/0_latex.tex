@@ -107,7 +107,7 @@ u kterého lze účině zvolit souborový systém. Zabírá zbytek místa na dis
 
 \texttt{swapsize=\$(((\$swapsize/1000000)*3/2))}\\
 
-Ovládání pro \texttt{fdisk} je blíže rozepsáno v tabulce níže.
+\hspace{-1.5em}Ovládání pro \texttt{fdisk} je blíže rozepsáno v tabulce níže.
 %https://man7.org/linux/man-pages/man8/fdisk.8.html
 \begin{table}[h]
 	\begin{tabular}{|c|c|c|}\hline
@@ -116,7 +116,9 @@ Ovládání pro \texttt{fdisk} je blíže rozepsáno v tabulce níže.
 		n&noauto-pt&Vytvoří nový oddíl bez nové tabulky oddílů \\ \hline
 		t&type&následuje číslo, přiřadí oddílu typový štítek \\ \hline
 		w&wipe&fyzicky přemaže aktuální rozdělení disku, někdy označován write \\ \hline
-		B&protect-boot&Nemazat první sektor na disku \\ \hline
+		i&info&Vypíše informace o oddílu \\ \hline
+		l&list&Vypíše všechny typy oddílů \\ \hline
+		v&verify&Ověří tabulku rozdělení \\ \hline
 		%TODO
 	\end{tabular}
 \end{table}
@@ -581,5 +583,7 @@ Pro zjednodušení konfigurace statické IP adresy je součástí repositáře i
 
 Aby byla zajištěna spolehlivost a následná kompatibilita se scriptem, není možné použít vyšší programovací jazyky (Python, C\#, Java...), systém je nemusí podporovat. Z toho důvodu je celý program napsaný v jazyce C a za použití pouze tří knihoven: stdio.h, stdlib.h a string.h. Asymptotická složitost algoritmu je $O(1)$.
 \section{\textsf{Služby}}
+\subsection{\textsf{SecureShell}}
+\subsection{\textsf{MariaDB}}
 \section{\textsf{Zdroje}}
 \end{document}
