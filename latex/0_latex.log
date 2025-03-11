@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2022/dev/Debian) (preloaded format=xelatex 2025.1.11)  10 MAR 2025 22:13
+This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2022/dev/Debian) (preloaded format=xelatex 2025.1.11)  11 MAR 2025 21:47
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -587,14 +587,14 @@ Underfull \hbox (badness 10000) in paragraph at lines 291--292
 
  []
 
-[12]
+
 Overfull \hbox (27.65373pt too wide) in paragraph at lines 296--301
 \TU/TeXGyreTermes(0)/m/n/12 určují vývojáři. Všechny použité přepínače se nachá
 zí ve složce \TU/lmtt/m/n/12 /etc/portage/make.conf\TU/TeXGyreTermes(0)/m/n/12 
 . 
  []
 
-
+[12]
 Underfull \hbox (badness 10000) in paragraph at lines 306--307
 
  []
@@ -656,7 +656,10 @@ Overfull \hbox (0.95499pt too wide) in paragraph at lines 476--477
 nel 
  []
 
-[16]
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [16]
 Underfull \hbox (badness 10000) in paragraph at lines 491--499
 
  []
@@ -713,17 +716,17 @@ Underfull \hbox (badness 10000) in paragraph at lines 581--582
 
  []
 
-[20] (./0_latex.aux)
+[20] [21] (./0_latex.aux)
 Package rerunfilecheck Info: File `0_latex.out' has not changed.
-(rerunfilecheck)             Checksum: D25F1B239B304061DCE61C3BED98F163;3543.
+(rerunfilecheck)             Checksum: 705EE5164E00722FE452AB845FA53050;3860.
  ) 
 Here is how much of TeX's memory you used:
  11431 strings out of 476191
  231287 string characters out of 5812072
- 591391 words of memory out of 5000000
+ 591741 words of memory out of 5000000
  32021 multiletter control sequences out of 15000+600000
  472579 words of font info for 66 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 73i,12n,85p,647b,492s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 73i,12n,85p,647b,506s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on 0_latex.pdf (20 pages).
+Output written on 0_latex.pdf (21 pages).

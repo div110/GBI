@@ -126,7 +126,7 @@ u kterého lze účině zvolit souborový systém. Zabírá zbytek místa na dis
 
 
 
-\newpage
+¨
 \subsection{\textsf{Souborový systém}}\hypertarget{Souborový systém}{}
 Manuální instalace i script dávají uživateli možnost vyběru souborového systému pro kořenový oddíl.
 Souborový systém slouží k interpretaci dat ve formě souborů, adresářů a metadat. Dělí se na dvě hlavní skupiny: Žurnálovací a Copy on Write.\\
@@ -291,7 +291,7 @@ Příkaz pro jednoduchý update celého systému je:
 \texttt{emerge -avuDN @world}\\
 
 Uživatel by měl mít na paměti, že update může trvat až nižší desítky hodin. Pro lepší časový odhad je vhodné si přečíst obsah výstupu přepínače \texttt{-a}. %\texttt{-v}
-\newpage
+
 \subsubsection{\textsf{USE}}
 Mezi hlavní výhody Portage patří USE Flags. Ty slouží ke konfiguraci sestavení a instalace balíčků. Určují jaké funkce mají programy obsahovat a podporovat.\\
 Použijeme-li například vlajku \texttt{X}, bude všechen software instalován s podporou display serveru Xorg. Víme-li, že některé funkce nebudeme potřebovat, můžeme je odebrat pomocí znaménka mínus(pomlčky). Například: \texttt{-kde} odebere podporu grafických prostředí KDE.
@@ -477,7 +477,7 @@ Script parametr vkládá do souboru installkernel:
 
 Úprava initramfs vyžaduje velké množství znalostí a schopností, proto ji nebudeme více rozebírat. Podrobnější informace obsahuje Gentoo wiki. %https://wiki.gentoo.org/wiki/Custom_Initramfs
 
-\newpage
+
 \subsection{\textsf{Linux Kernel}}
 
 \subsubsection{\textsf{Architektura}}
@@ -582,8 +582,16 @@ Pro zjednodušení konfigurace statické IP adresy je součástí repositáře i
 
 
 Aby byla zajištěna spolehlivost a následná kompatibilita se scriptem, není možné použít vyšší programovací jazyky (Python, C\#, Java...), systém je nemusí podporovat. Z toho důvodu je celý program napsaný v jazyce C a za použití pouze tří knihoven: stdio.h, stdlib.h a string.h. Asymptotická složitost algoritmu je $O(1)$.
+
+\newpage
 \section{\textsf{Služby}}
+Součástí scriptu je možnost instalace a zprovoznění užitečných služeb. Služby pevně spjaté se systémem, tj. spravující systém, jsou nainstalovány a zprovnozněny již v rámci chroot.sh scriptu. Ostatní služby mají scripty uložené v adresáři \texttt{Services} a je tudíž potřeba je spustit manuálně. Seznam služeb a jejich využití je blíže popsán v následujících podkapitolách. 
+\subsection{\textsf{Sysklogd}} %https://wiki.gentoo.org/wiki/Sysklogd
+Sysklogd je daemon pro logovací službu Syslog. Provedena je pouze instalace a přidání do seznamu Init systému(OpenRC). Služba pracuje podle výchozí konfigurace. V případě nutnosti konfigurace je třeba upravit soubor \texttt{/etc/syslog.conf}
 \subsection{\textsf{SecureShell}}
+SecureShell, častěji označován zkratkou SSH, je program umožňující vzdálenou správu počítače pomocí textového rozhraní
+\subsection{\textsf{Cronie}}
+\subsection{\textsf{WPA Supplicant}}
 \subsection{\textsf{MariaDB}}
 \section{\textsf{Zdroje}}
 \end{document}
