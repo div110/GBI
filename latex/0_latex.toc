@@ -26,10 +26,13 @@
 \contentsline {subsection}{\numberline {6.1}\textsf {DHCP}}{19}{subsection.6.1}%
 \contentsline {subsection}{\numberline {6.2}\textsf {Statická IP adresa}}{19}{subsection.6.2}%
 \contentsline {subsubsection}{\numberline {6.2.1}\textsf {Broadcast Calculator}}{20}{subsubsection.6.2.1}%
-\contentsline {section}{\numberline {7}\textsf {Služby}}{21}{section.7}%
-\contentsline {subsection}{\numberline {7.1}\textsf {Sysklogd}}{21}{subsection.7.1}%
-\contentsline {subsection}{\numberline {7.2}\textsf {SecureShell}}{21}{subsection.7.2}%
-\contentsline {subsection}{\numberline {7.3}\textsf {Cronie}}{21}{subsection.7.3}%
-\contentsline {subsection}{\numberline {7.4}\textsf {WPA Supplicant}}{21}{subsection.7.4}%
-\contentsline {subsection}{\numberline {7.5}\textsf {MariaDB}}{21}{subsection.7.5}%
-\contentsline {section}{\numberline {8}\textsf {Zdroje}}{21}{section.8}%
+\contentsline {section}{\numberline {7}\textsf {Bootloader}}{21}{section.7}%
+\contentsline {subsection}{\numberline {7.1}\textsf {První fáze}}{21}{subsection.7.1}%
+\contentsline {subsection}{\numberline {7.2}\textsf {Druhá fáze}}{21}{subsection.7.2}%
+\contentsline {section}{\numberline {8}\textsf {Služby}}{22}{section.8}%
+\contentsline {subsection}{\numberline {8.1}\textsf {SecureShell}}{22}{subsection.8.1}%
+\contentsline {subsection}{\numberline {8.2}\textsf {Sysklogd}}{22}{subsection.8.2}%
+\contentsline {subsection}{\numberline {8.3}\textsf {Cronie}}{22}{subsection.8.3}%
+\contentsline {subsection}{\numberline {8.4}\textsf {WPA Supplicant}}{22}{subsection.8.4}%
+\contentsline {subsection}{\numberline {8.5}\textsf {MariaDB}}{22}{subsection.8.5}%
+\contentsline {section}{\numberline {9}\textsf {Zdroje}}{22}{section.9}%

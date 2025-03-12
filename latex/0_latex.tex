@@ -423,7 +423,7 @@ K propsání změn v \texttt{ACCEPT\_LICENSE} je nutné systém aktualizovat pom
 
 \newpage
 
-\section{\textsf{Kernel}}
+\section{\textsf{Kernel}}\hypertarget{Kernel}{}
 %https://cs.wikipedia.org/wiki/J%C3%A1dro_opera%C4%8Dn%C3%ADho_syst%C3%A9mu
 Jádro, kernel, je součástí většiny operačních systémů. Zajišťuje přístup k~fyzickým prostředkům počítače. Mezi hlavní funkce patří správa: procesorů, procesů, pamětí a periferií. 
 
@@ -463,7 +463,7 @@ Pro procesory od výrobce Intel je potřeba stáhnout ještě mikrokód:
 \texttt{emerge sys-firmware/intel-microcode}. 
 
 Procesory od AMD mají mikrokód z \texttt{sys-kernel/linux-firmware}.
-\subsection{\textsf{Initramfs}}
+\subsection{\textsf{Initramfs}} \hypertarget{Initramfs}{}
 %https://wiki.gentoo.org/wiki/Initramfs
 %https://www.youtube.com/watch?v=KQjRnuwb7is
 {\bf Init}ial {\bf ram}-based {\bf f}ile {\bf s}ystem je malý filesystem. Cílem initramfs je připravit minimální prostředí pro spuštění Init systému. Provádí načtení kernel modulů a driverů pro zavedení důležitých filesystémů. Jakmile je vše potřebné připraveno, předá kontrolu Init systému.
@@ -521,7 +521,7 @@ K automatickému montování blokových zařízení slouží záznamy v souboru 
 \texttt{backup} - zahrnutí zařízení do zálohy, boolean\\
 \texttt{fsck} - {\bf f}ile{\bf s}ystem {\bf c}hec{\bf k} určuje v jakém pořadí jsou zařízení kontrolována\\
 
-Z kapitoly o \hyperlink{Souborový systém}{Souborovém systému} víme, že script umožňuje výběr souborového systému pro \texttt{root} oddíl, tento údaj je nutné předat mezi scripty \texttt{instalator.sh} a \texttt{chroot.sh}. Scripty si proměnné předávají pomocí jednoduchých textových souborů.
+Z \hyperlink{Souborový systém}{kapitoly o Souborovém systému} víme, že script umožňuje výběr souborového systému pro \texttt{root} oddíl, tento údaj je nutné předat mezi scripty \texttt{instalator.sh} a \texttt{chroot.sh}. Scripty si proměnné předávají pomocí jednoduchých textových souborů.
 
 \hspace*{-1.5em}Pro export proměnných:
 
@@ -584,12 +584,27 @@ Pro zjednodušení konfigurace statické IP adresy je součástí repositáře i
 Aby byla zajištěna spolehlivost a následná kompatibilita se scriptem, není možné použít vyšší programovací jazyky (Python, C\#, Java...), systém je nemusí podporovat. Z toho důvodu je celý program napsaný v jazyce C a za použití pouze tří knihoven: stdio.h, stdlib.h a string.h. Asymptotická složitost algoritmu je $O(1)$.
 
 \newpage
+\section{\textsf{Bootloader}}
+%https://en.wikipedia.org/wiki/Bootloader
+
+Hlavním úkolem bootloaderu, zavaděče, je nahrát \hyperlink{Kernel}{jádro operačního systému} a \hyperlink{Initramfs}{Initramfs} do paměti RAM. Dělí se na bootloadery první fáze a druhé fáze.
+\subsection{\textsf{První fáze}}
+Mluvíme-li o bootloaderu první fáze, máme téměř vždy na mysli firmware základní desky. Nejčastěji UEFI nebo BIOS. Jelikož většina počítačových systémů používá UEFI, nebudeme zde více rozebírat BIOS ani MBR.
+
+\hspace{-1.5em}Bootloader ihned po zapnutí provede {\bf P}ower {\bf O}n {\bf S}elf {\bf T}est. Tím se zajistí, že všechny komponenty pracují správně. V opačném případě se bootování zruší a UEFI, často pomocí reproduktoru, vrátí chybu. Je dobré zmínit, že úspěšný POST neznamená plně funkční komponenty. Následně začne hledat EFI oddíl, ve skriptu proměnná \texttt{diskname1}. Z oddílu se pokusí načíst bootloader druhé fáze, kterému poté předá řízení.
+
+\subsection{\textsf{Druhá fáze}}
+\newpage
 \section{\textsf{Služby}}
 Součástí scriptu je možnost instalace a zprovoznění užitečných služeb. Služby pevně spjaté se systémem, tj. spravující systém, jsou nainstalovány a zprovnozněny již v rámci chroot.sh scriptu. Ostatní služby mají scripty uložené v adresáři \texttt{Services} a je tudíž potřeba je spustit manuálně. Seznam služeb a jejich využití je blíže popsán v následujících podkapitolách. 
+
+\subsection{\textsf{SecureShell}}
+SecureShell, častěji označován zkratkou SSH, je program umožňující vzdálenou správu počítače pomocí textového rozhraní. Služba je součástí základní sady nástrojů Gentoo, tudíž není třeba ji instalovat zvlášť. Script tedy službu pouze přídá do seznamu pro spuštění při startu: 
+
+\texttt{rc-update add sshd default}
 \subsection{\textsf{Sysklogd}} %https://wiki.gentoo.org/wiki/Sysklogd
 Sysklogd je daemon pro logovací službu Syslog. Provedena je pouze instalace a přidání do seznamu Init systému(OpenRC). Služba pracuje podle výchozí konfigurace. V případě nutnosti konfigurace je třeba upravit soubor \texttt{/etc/syslog.conf}
-\subsection{\textsf{SecureShell}}
-SecureShell, častěji označován zkratkou SSH, je program umožňující vzdálenou správu počítače pomocí textového rozhraní
+
 \subsection{\textsf{Cronie}}
 \subsection{\textsf{WPA Supplicant}}
 \subsection{\textsf{MariaDB}}
