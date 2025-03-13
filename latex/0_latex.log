@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2022/dev/Debian) (preloaded format=xelatex 2025.1.11)  12 MAR 2025 22:35
+This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2022/dev/Debian) (preloaded format=xelatex 2025.1.11)  13 MAR 2025 18:01
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -716,7 +716,39 @@ Underfull \hbox (badness 10000) in paragraph at lines 581--582
 
  []
 
-[20] [21] [22] (./0_latex.aux)
+[20]
+Overfull \hbox (2.10707pt too wide) in paragraph at lines 597--598
+\TU/TeXGyreTermes(0)/m/n/12 GRUBu, jsou technicky zároveň i bootmanagery, jelik
+ož nabízí možnost načtení různých
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 597--598
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 599--603
+
+ []
+
+[21]
+Overfull \hbox (4.99638pt too wide) in paragraph at lines 617--618
+\TU/TeXGyreTermes(0)/m/n/12 na základě intervalu nebo data. Veškeré úlohy se pl
+ánují ve souborech \TU/lmtt/m/n/12 crontab\TU/TeXGyreTermes(0)/m/n/12 . Crontab
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 617--618
+
+ []
+
+
+Underfull \vbox (badness 6842) has occurred while \output is active []
+
+ [22]
+[23] (./0_latex.aux)
 Package rerunfilecheck Info: File `0_latex.out' has not changed.
 (rerunfilecheck)             Checksum: 8986B330514F6A799FB2FCEE8C034E33;4188.
  ) 
@@ -729,4 +761,4 @@ Here is how much of TeX's memory you used:
  1348 hyphenation exceptions out of 8191
  73i,12n,85p,647b,506s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on 0_latex.pdf (22 pages).
+Output written on 0_latex.pdf (23 pages).

@@ -594,6 +594,13 @@ Mluvíme-li o bootloaderu první fáze, máme téměř vždy na mysli firmware z
 \hspace{-1.5em}Bootloader ihned po zapnutí provede {\bf P}ower {\bf O}n {\bf S}elf {\bf T}est. Tím se zajistí, že všechny komponenty pracují správně. V opačném případě se bootování zruší a UEFI, často pomocí reproduktoru, vrátí chybu. Je dobré zmínit, že úspěšný POST neznamená plně funkční komponenty. Následně začne hledat EFI oddíl, ve skriptu proměnná \texttt{diskname1}. Z oddílu se pokusí načíst bootloader druhé fáze, kterému poté předá řízení.
 
 \subsection{\textsf{Druhá fáze}}
+Úkolem bootloaderu druhé fáze je načíst operační systém do paměti RAM. Nejpoužívanějším bootloaderem druhé fáze pro Linux je GRUB. Většina bootloaderů, včetně GRUBu, jsou technicky zároveň i bootmanagery, jelikož nabízí možnost načtení různých programů. Kromě načítání operačních systémů dokáží moderní bootloadery načíst testery, hry, jiné bootloadery a téměř libovolný jiný program. Script provádí instalaci zavaděče GRUB podle GPT schématu:\\
+
+\texttt{echo 'GRUB\_PLATFORMS="efi-64"' | tee -a /etc/portage/make.conf}\\
+\hspace*{1.5em}\texttt{emerge --ask sys-boot/grub}\\
+\hspace*{1.5em}\texttt{grub-install --efi-directory=/efi}\\
+\hspace*{1.5em}\texttt{grub-mkconfig -o /boot/grub/grub.cfg}\\
+
 \newpage
 \section{\textsf{Služby}}
 Součástí scriptu je možnost instalace a zprovoznění užitečných služeb. Služby pevně spjaté se systémem, tj. spravující systém, jsou nainstalovány a zprovnozněny již v rámci chroot.sh scriptu. Ostatní služby mají scripty uložené v adresáři \texttt{Services} a je tudíž potřeba je spustit manuálně. Seznam služeb a jejich využití je blíže popsán v následujících podkapitolách. 
@@ -606,6 +613,20 @@ SecureShell, častěji označován zkratkou SSH, je program umožňující vzdá
 Sysklogd je daemon pro logovací službu Syslog. Provedena je pouze instalace a přidání do seznamu Init systému(OpenRC). Služba pracuje podle výchozí konfigurace. V případě nutnosti konfigurace je třeba upravit soubor \texttt{/etc/syslog.conf}
 
 \subsection{\textsf{Cronie}}
+%https://packages.gentoo.org/packages/sys-process/cronie
+Cronie je moderní plánovač úloh postavený na službě Cron. Cronie umožňuje plánování na základě intervalu nebo data. Veškeré úlohy se plánují ve souborech \texttt{crontab}. Crontab soubor pro systémové úlohy je umístěn v \texttt{/etc/crontab}. Syntaxe pro \texttt{crontab}:\\
+
+\texttt{*$_{1}$ *$_{2}$ *$_{3}$ *$_{4}$ *$_{5}$ /umisteni\_scriptu}
+
+\begin{table}[h]
+	\begin{tabular}{|c|c|}
+		\hline
+		*$_{1}$&  hkhkjhk \\
+		\hline
+	\end{tabular}
+
+\end{table}
+
 \subsection{\textsf{WPA Supplicant}}
 \subsection{\textsf{MariaDB}}
 \section{\textsf{Zdroje}}
