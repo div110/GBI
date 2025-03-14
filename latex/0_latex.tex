@@ -619,14 +619,28 @@ Cronie je moderní plánovač úloh postavený na službě Cron. Cronie umožňu
 \texttt{*$_{1}$ *$_{2}$ *$_{3}$ *$_{4}$ *$_{5}$ /umisteni\_scriptu}
 
 \begin{table}[h]
+	\centering
 	\begin{tabular}{|c|c|}
+		\hline 
+		Lokace&Popis \\
 		\hline
-		*$_{1}$&  hkhkjhk \\
+		*$_{1}$&  Minuta : 0-59 \\
+		\hline
+		*$_{2}$&  Hodina : 0-23 \\
+		\hline
+		*$_{3}$&  Den v měsíci : 1-31 \\
+		\hline
+		*$_{4}$&  Měsíc v roce : 1-12 \\
+		\hline
+		*$_{5}$&  Den v týdnu : 0-6 \\
+		\hline
+		*/cislo&  Označuje periodu dle umístění \\
+		\hline
+		*&  Asterisk označuje jakoukoliv hodnotu \\
 		\hline
 	\end{tabular}
 
 \end{table}
-
 \subsection{\textsf{WPA Supplicant}}
 \subsection{\textsf{MariaDB}}
 \section{\textsf{Zdroje}}
