@@ -642,6 +642,18 @@ Cronie je moderní plánovač úloh postavený na službě Cron. Cronie umožňu
 
 \end{table}
 \subsection{\textsf{WPA Supplicant}}
+Připojení k WIFI síti, narozdíl od ethernetu, vyžaduje dodatečnou konfiguraci. Častým nástrojem pro připojení k WIFI sítím je \texttt{wpa\_supplicant}. Po kompilaci je potřeba vytvořit konfigurační soubor pro síťové rozhraní. Konfigurační soubory jsou umístěny v adresáři \texttt{/etc/wpa\_supplicant/}. Script vytváří konfigurační soubor podle názvu rozhraní:\\
+
+\texttt{echo """ctrl\_interface=/run/wpa\_supplicant
+	update\_config=1 """ > \hspace*{1.5em}/etc/wpa\_supplicant/wpa\_supplicant-\$\{wlancard\}.conf}\\
+
+\hspace{-1.5em}Pro připojení k samotné síti je potřeba název (SSID) a heslo (PSK). Záznam se vygeneruje pomocí wpa\_passphrase přesměrovaným do konfiguračního souboru: \\
+
+\texttt{wpa\_passphrase \$\{ssid\} \$\{psk\} >> \\\hspace*{1.5em}/etc/wpa\_supplicant/wpa\_supplicant-\$\{wlancard\}.conf}\\
+
+\hspace{-1.5em}Prvotní připojení provede script automaticky, nicméně je dobré zmínit strukturu příkazu pro opětovné připojení:\\
+
+\texttt{wpa\_supplicant -i nazev\_rozhrani -c /umisteni/konf\_souboru}
 \subsection{\textsf{MariaDB}}
 \section{\textsf{Zdroje}}
 \end{document}
