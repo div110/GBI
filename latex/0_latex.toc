@@ -35,4 +35,5 @@
 \contentsline {subsection}{\numberline {8.3}\textsf {Cronie}}{22}{subsection.8.3}%
 \contentsline {subsection}{\numberline {8.4}\textsf {WPA Supplicant}}{23}{subsection.8.4}%
 \contentsline {subsection}{\numberline {8.5}\textsf {MariaDB}}{23}{subsection.8.5}%
-\contentsline {section}{\numberline {9}\textsf {Zdroje}}{23}{section.9}%
+\contentsline {section}{\numberline {9}\textsf {Závěr}}{24}{section.9}%
+\contentsline {section}{\numberline {10}\textsf {Zdroje}}{25}{section.10}%

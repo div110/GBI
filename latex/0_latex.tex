@@ -169,56 +169,54 @@ Pro výchozí výběr byl zvolen archiv z FTP serveru Fakulty informatiky
 Masarykovy Univerzity v Brně. Script řeší výběr archivu pomocí jednoduché logiky,
 která upřednostní manuální výběr, je-li dostupný:}\\
 
-\texttt{read -p stage3 2>\&1}\\
-\texttt{if [ -z "\$stage3" ]; then}\\
-\texttt{\hspace*{+1.5em}wget https://ftp.fi.muni.cz/pub/linux/gentoo/...\\}
-\texttt{else}\\
-\texttt{\hspace*{+1.5em}wget \$stage3}\\
-\texttt{fi}\\
+{\hspace*{+1.5em}\texttt{read -p stage3 2>\&1}\\
+{\hspace*{+1.5em}\texttt{if [ -z "\$stage3" ]; then}\\
+{\hspace*{+1.5em}\texttt{\hspace*{+1.5em}wget https://ftp.fi.muni.cz/pub/linux/gentoo/...\\}
+{\hspace*{+1.5em}\texttt{else}\\
+{\hspace*{+1.5em}\texttt{\hspace*{+1.5em}wget \$stage3}\\
+{\hspace*{+1.5em}\texttt{fi}\\
 
-{Nesprávně zvolený profil lze po dokončení instalace změnit pomocí:\\}
+\hspace{-1.5em}{Nesprávně zvolený profil lze po dokončení instalace změnit pomocí:\\}
 
 \texttt{eselect profile list}\\
 \texttt{\hspace*{--1.5em}eselect profile set \#}\\
 
-{Uživatel by však měl mít na paměti, že změna profilu může, v některých případech
-vést až k překompilování celého systému.}
+\hspace{-1.5em}{Uživatel by však měl mít na paměti, že změna profilu může, v některých případech
+vést až k překompilování celého systému.}\\
 
-V tuto chvíli se doporučuje, aby uživatel provedl kontrolu archivu pomocí checksumů.
+\hspace{-1.5em}V tuto chvíli se doporučuje, aby uživatel provedl kontrolu archivu pomocí checksumů.
 Ty lze získat v souboru .DIGESTS z jakéhokoliv zrcadla. Pro druhý, vlastní checksum je doporučený nástroj sha256sum, který vytváří checksum pomocí algoritmu sha256. Použití:
 
 \texttt{sha256sum nazevSouboru}
 
-Z bezpečnostních důvodů není doporučeno starší algoritmy, například: md5, sha1...
-
-Script, z důvodu minimalizace rizik a skrytých paradoxů, tuto kontrolu neprovádí.
+\hspace{-1.5em}Z bezpečnostních důvodů není doporučeno starší algoritmy (md5, sha1...)
+Script, z důvodu minimalizace rizik a skrytých paradoxů, tuto kontrolu neprovádí. %TODO
 \newpage
 \subsection{\textsf{Instalace archivu}}
 Před instalací je vhodné nastavit systémový čas. K tomu slouží chrony:\\
-\texttt{chrony -q}\\
- anebo, není-li dostupné RTC, pomocí: \\ \texttt{date mmddhhmmyy}.\\
+\hspace*{1.5em}\texttt{chrony -q}\\
+ anebo, není-li dostupné RTC, pomocí: \\ \hspace*{1.5em}\texttt{date mmddhhmmyy}.\\
  
 V případě jakýchkoliv pochybností je možné datum zkontrolovat pomocí \texttt{date}.
 \\Archiv je potřeba extrahovat do cílového adresáře nového systému. Proto je nutné,\\
 aby byl adresář již předem vytvořený. Ve velké většině případů \texttt{/mnt/gentoo}.\\
 Tarball instalujeme pomocí nástroje tar v příkazu:
 
-\texttt{tar xpvf stage3-*.tar.xz --xattrs-include='*.*' --numeric-owner \\-C /mnt/gentoo}
+\texttt{tar xpvf stage3-*.tar.xz --xattrs-include='*.*' --numeric-owner \\\hspace*{1.5em}-C /mnt/gentoo}\\
 
-Pro lepší orientaci bude význam přepínačů a argumentů rozepsán:
+\hspace{-1.5em}Pro lepší orientaci bude význam přepínačů a argumentů rozepsán:\\
 
 \texttt{x} - soubor bude extrahován.\\
-\texttt{p} - ponechat oprávnění. *\\
-\texttt{v} - zapíná výpis průběhu extrakce, volitelný.\\
-\texttt{f} - určuje jaký soubor má být extrahován a cestu k němu.\\
-\texttt{--xattrs-include='*.*'} - zachová rozšiřující atributy.
+\hspace*{1.5em}\texttt{p} - ponechat oprávnění. \\
+\hspace*{1.5em}\texttt{v} - zapíná výpis průběhu extrakce, volitelný.\\
+\hspace*{1.5em}\texttt{f} - určuje jaký soubor má být extrahován a cestu k němu.\\
+\hspace*{1.5em}\texttt{--xattrs-include='*.*'} - zachová rozšiřující atributy.
 (např.:SELinux štítky)\\
-\texttt{--numeric-owner} - zachová vlastnictví podle číselných ID uživatelů a
+\hspace*{1.5em}\texttt{--numeric-owner} - zachová vlastnictví podle číselných ID uživatelů a
 skupin.\\
-\texttt{-C /mnt/gentoo} - extrahuje obsah do uvedeného adresáře.\\
+\hspace*{1.5em}\texttt{-C /mnt/gentoo} - extrahuje obsah do uvedeného adresáře.\\
 
-*Ačkoliv tar již nemění oprávnění při extrakci, může dojít ke
-ztrátě speciálních oprávnění, například: setuid, setgid
+
 
 \newpage
 \subsection{\textsf{Kompilace}}
@@ -230,22 +228,21 @@ Zároveň obsahuje přepínače pro překladače GCC, C++ a Rust. Jejich správn
 \subsubsection{\textsf{Flags}}
 Pro nastavení GCC slouží proměnná CFlags ve tvaru \texttt{CFLAGS="flag1 flag2..."}. Nastavení C++ je totožné, mění se pouze proměná a to na \texttt{'CXXFLAGS'}.
 Uvádíme-li, že nastavení jsou totožná, je to myšleno doslovně. Je doporučeno, aby přepínače u překladačů byli při instalaci stejné. Níže je uvedena
-vzorová konfigurace:
+vzorová konfigurace:\\
 
 \texttt{CFLAGS="-march=native -O2 -pipe"}\\
-\texttt{CXXFLAGS="-march=native -O2 -pipe"}
+\hspace*{1.5em}\texttt{CXXFLAGS="-march=native -O2 -pipe"}
 
-\texttt{-march=native} - použije nastavení a instrukční sady pro daný procesor\\
+\hspace{-1.5em}\texttt{-march=native} - použije nastavení a instrukční sady pro daný procesor\\
 \texttt{-O2} - překladač se pokusí kompilovat rychleji na úkor paměti.\\
-\texttt{-pipe} - zrychluje kompilaci díky 'rourám', ty překladač vytvoří místo dočasných souborů.\\
+\texttt{-pipe} - zrychluje kompilaci díky 'rourám', ty překladač vytvoří místo dočasných souborů.
 
-Proměnná pro Rust je \texttt{RUSTFLAGS}.
+\hspace{-1.5em}Proměnná pro Rust je \texttt{RUSTFLAGS}.\\
 
-\texttt{RUSTFLAGS="\$-C target-cpu=native opt-level=2"}\\
+\texttt{RUSTFLAGS="\$-C target-cpu=native opt-level=2"}
 
-\texttt{target-cpu=native} - přizpůsobí kompilaci pro instalovaný procesor.\\
-\texttt{opt-level=2} - optimalizuje strojový kód, podobné -O2      %https://doc.rust-lang.org/rustc/codegen-options/index.html
-
+\hspace{-1.5em}\texttt{target-cpu=native} - přizpůsobí kompilaci pro instalovaný procesor.\\
+\texttt{opt-level=2} - optimalizuje strojový kód, podobné -O2 %https://doc.rust-lang.org/rustc/codegen-options/index.html
 \subsection{\textsf{MAKE Operace}}
 Chceme-li, aby systém zůstal responzivní i během kompilace, je potřeba omezit maximální zatížení systému.
 Přepínače make omezující zátěž se zadávají do proměnné \texttt{MAKEOPTS}.
@@ -654,6 +651,18 @@ Připojení k WIFI síti, narozdíl od ethernetu, vyžaduje dodatečnou konfigur
 \hspace{-1.5em}Prvotní připojení provede script automaticky, nicméně je dobré zmínit strukturu příkazu pro opětovné připojení:\\
 
 \texttt{wpa\_supplicant -i nazev\_rozhrani -c /umisteni/konf\_souboru}
-\subsection{\textsf{MariaDB}}
+\subsection{\textsf{MariaDB}}%https://en.wikipedia.org/wiki/MariaDB
+MariaDB patří k nejpoužívanějším databázovým serverům. Hlavní výhodou oproti konkurenci je licence GNU GPLv2 a plná kompatibilita s MySQL. Script provede kompilaci včetně základní konfigurace.\\
+
+\texttt{read -p "heslo pro MariaDB: " \$password}\\
+\hspace*{1.5em}\texttt{emerge dev-db/mariadb}\\
+\hspace*{1.5em}\texttt{mysql\_secure\_installation <<-YO}\\
+\hspace*{3em}\texttt{\$password}\\
+\hspace*{3em}\texttt{\dots}\\
+\hspace*{1.5em}\texttt{YO}
+
+\newpage
+\section{\textsf{Závěr}}
+\newpage
 \section{\textsf{Zdroje}}
 \end{document}
