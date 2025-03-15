@@ -108,7 +108,6 @@ u kterého lze účině zvolit souborový systém. Zabírá zbytek místa na dis
 \texttt{swapsize=\$(((\$swapsize/1000000)*3/2))}\\
 
 \hspace{-1.5em}Ovládání pro \texttt{fdisk} je blíže rozepsáno v tabulce níže.
-%https://man7.org/linux/man-pages/man8/fdisk.8.html
 \begin{table}[h]
 	\begin{tabular}{|c|c|c|}\hline
 		Vstup & Zkratka & Popis \\ \hline
@@ -126,7 +125,7 @@ u kterého lze účině zvolit souborový systém. Zabírá zbytek místa na dis
 
 
 
-¨
+
 \subsection{\textsf{Souborový systém}}\hypertarget{Souborový systém}{}
 Manuální instalace i script dávají uživateli možnost vyběru souborového systému pro kořenový oddíl.
 Souborový systém slouží k interpretaci dat ve formě souborů, adresářů a metadat. Dělí se na dvě hlavní skupiny: Žurnálovací a Copy on Write.\\
@@ -242,7 +241,7 @@ vzorová konfigurace:\\
 \texttt{RUSTFLAGS="\$-C target-cpu=native opt-level=2"}
 
 \hspace{-1.5em}\texttt{target-cpu=native} - přizpůsobí kompilaci pro instalovaný procesor.\\
-\texttt{opt-level=2} - optimalizuje strojový kód, podobné -O2 %https://doc.rust-lang.org/rustc/codegen-options/index.html
+\texttt{opt-level=2} - optimalizuje strojový kód, podobné -O2 %
 \subsection{\textsf{MAKE Operace}}
 Chceme-li, aby systém zůstal responzivní i během kompilace, je potřeba omezit maximální zatížení systému.
 Přepínače make omezující zátěž se zadávají do proměnné \texttt{MAKEOPTS}.
@@ -335,18 +334,11 @@ Přepínače pro grafický čip, v případě potrřeby, lze nastavit pomocí p�
 		\hline
 		Nvidia & nouveau & Open Source*\\
 		\hline
-		
-		%https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Base
-		%https://wiki.gentoo.org/wiki/Radeon#Feature_support
-		%https://wiki.gentoo.org/wiki/Intel#Feature_support
-		%https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Base#VIDEO_CARDS
 	\end{tabular}
 \end{table}
 *Všechny modely kromě architektur Maxwell, Pascal, Volta
 \newpage
 \subsubsection{\textsf{Licence}}
-%https://www.gentoo.org/glep/glep-0023.html#id7
-%https://wiki.gentoo.org/wiki/License_groups
 Od roku 2014 obsahují repositáře Gentoo štítky s licencemi balíčků. Pro lepší orientaci byla také zavedena proměnná \texttt{ACCEPT\_LICENSE}. Licence byly rozděleny do skupin, které se deklarují v~\texttt{/etc/portage/make.conf}:
 
 \texttt{ACCEPT\_LICENSE="group"}
@@ -421,17 +413,11 @@ K propsání změn v \texttt{ACCEPT\_LICENSE} je nutné systém aktualizovat pom
 \newpage
 
 \section{\textsf{Kernel}}\hypertarget{Kernel}{}
-%https://cs.wikipedia.org/wiki/J%C3%A1dro_opera%C4%8Dn%C3%ADho_syst%C3%A9mu
 Jádro, kernel, je součástí většiny operačních systémů. Zajišťuje přístup k~fyzickým prostředkům počítače. Mezi hlavní funkce patří správa: procesorů, procesů, pamětí a periferií. 
 
 Program nikdy nekomunikuje přímo s komponentou, místo toho komunikuje s jádrem pomocí systémových volání, které pak předá instrukce komponentě. Vyhodou je, že jádro může takto sbírat instrukce od více procesů a následně je řadit podle plánovacího algoritmu, tzv. scheduler.
 
 \subsection{\textsf{Scheduler}}
-%https://en.wikipedia.org/wiki/Earliest_eligible_virtual_deadline_first_scheduling
-%https://hackmd.io/@Kuanch/eevdf
-%https://www.phoronix.com/news/Linux-6.6-EEVDF-Merged
-%https://en.wikipedia.org/wiki/Completely_Fair_Scheduler
-%https://blogs.oracle.com/linux/post/cfs-group-scheduling
 Scheduler pro linuxové jádro se nazývá {\bf C}ompletely {\bf F}air {\bf S}cheduler ({\bf CFS}). Účelem je poskytnout všem entitám stejný čas na procesoru. Entity zaštiťují jeden proces či skupinu procesů. Nejmenší možnou entitou je jeden jednovláknový proces, největší entita (skupina) může obsahovat všechny běžící procesy, taková entita je označena \texttt{root\_task\_group}. 
 \subsubsection{\textsf{Group scheduling}}
 Skupiny mají přidělenou hodnotu \texttt{cpu.shares}. Poměr hodnot \texttt{cpu.shares} jednotlivých skupin určuje jejich čas na procesoru. Obsahuje-li skupina podskupiny, postup se opakuje. Dělení na skupiny není teoreticky nutné, avšak je žádoucí například na systémech s více uživateli.
@@ -442,15 +428,10 @@ Po přidělení času (pod)skupinám je potřeba naplánovat jednotlivé procesy
 Uvedené podmínky zaručují že, jakýkoliv takový strom s $n$ uzly bude obsahovat maximálně $2\log(n+1)$ vrstev. Asymptotická složitost operací je tedy $O(\log n)$.\\
 
 
-%https://ocw.mit.edu/courses/6-046j-introduction-to-algorithms-sma-5503-fall-2005/resources/lecture-10-red-black-trees-rotations-insertions-deletions/
-%https://www.cs.kent.edu/~mallouzi/Algorithm%202014/Lecture14-a.pdf
-%https://www.cs.usfca.edu/~galles/visualization/RedBlack.html
-%https://www.eecs.umich.edu/courses/eecs380/ALG/red_black.html
-%https://en.wikipedia.org/wiki/Red%E2%80%93black_tree
-\subsection{\textsf{Firmware}}
 
+\subsection{\textsf{Firmware}}
 Firmware je kód běžící přímo na fyzické komponentě. Často je uložen v paměti, která je součástí komponenty. V případech kdy tomu tak není je potřeba jej nahrát z kernelu operačního systému. Nejčastěji se jedná o grafické karty, síťové a zvukové karty. 
-%https://www.linuxfromscratch.org/blfs/view/svn/postlfs/firmware.html
+
 Firmware Linuxu uložen v adresáři \texttt{/usr/lib/firmware}, odkud je při zavádění načten do zařízení. Velkou část potřebného firmwaru obsahuje \texttt{sys-kernel/linux-firmware}. 
 
 \texttt{emerge sys-kernel/linux-firmware}
@@ -461,26 +442,20 @@ Pro procesory od výrobce Intel je potřeba stáhnout ještě mikrokód:
 
 Procesory od AMD mají mikrokód z \texttt{sys-kernel/linux-firmware}.
 \subsection{\textsf{Initramfs}} \hypertarget{Initramfs}{}
-%https://wiki.gentoo.org/wiki/Initramfs
-%https://www.youtube.com/watch?v=KQjRnuwb7is
 {\bf Init}ial {\bf ram}-based {\bf f}ile {\bf s}ystem je malý filesystem. Cílem initramfs je připravit minimální prostředí pro spuštění Init systému. Provádí načtení kernel modulů a driverů pro zavedení důležitých filesystémů. Jakmile je vše potřebné připraveno, předá kontrolu Init systému.
 Initramfs je plnohodnotné uživatelské prostředí, je tedy možné v něm spouštět procesy. Standartním využitím této vlastnosti je záchranný systém nebo zadávání hesla pro odšifrování disku. Méně standartním využitím je hraní hry Tetris. 
 
 Generaci initramfs provádí Installkernel najde-li dracut parametr v souboru adresáře /etc/portage/package.use/.
 
-Script parametr vkládá do souboru installkernel:
+\hspace{-1.5em}Script parametr vkládá do souboru installkernel:
 
 \texttt{echo "sys-kernel/installkernel dracut" | tee -a /\dots/installkernel}
 
-Úprava initramfs vyžaduje velké množství znalostí a schopností, proto ji nebudeme více rozebírat. Podrobnější informace obsahuje Gentoo wiki. %https://wiki.gentoo.org/wiki/Custom_Initramfs
+\hspace{-1.5em}Úprava initramfs vyžaduje velké množství znalostí a schopností, proto ji nebudeme více rozebírat. Podrobnější informace obsahuje Gentoo wiki. 
 
 
 \subsection{\textsf{Linux Kernel}}
-
 \subsubsection{\textsf{Architektura}}
-%https://cs.wikipedia.org/wiki/Mikroj%C3%A1dro
-%https://cs.wikipedia.org/wiki/Hybridn%C3%AD_j%C3%A1dro
-%https://cs.wikipedia.org/wiki/Monolitick%C3%A9_j%C3%A1dro
 Architektura linuxového jádra je monolitická, modulární. Je tedy možné dynamicky přidávat nebo odebírat moduly. Linuxové jádro může tedy teoreticky obsahovat jen momentálně potřebné moduly. Jádro je sestaveno jako jeden blok, proto není potřeba mezi procesová komunikace jako u mikrojádra. 
 \subsubsection{\textsf{Kompilace}}
 Script nabízí dvě možnosti, lokální kompilaci a předkompilovaný kernel. Kompilace jádra zabere mnoho času, je-li čas na instalaci omezený, je doporučeno použít předkompilovaný kernel. Výhodou lokální kompilace je přizpůsobení podle přepínačů. 
@@ -495,8 +470,6 @@ Script nabízí dvě možnosti, lokální kompilaci a předkompilovaný kernel. 
 \texttt{fi}\\
 \newpage
 \subsubsection{\textsf{fstab}}
-%https://cs.wikipedia.org/wiki/Za%C5%99%C3%ADzen%C3%AD_(soubor)
-%https://wiki.gentoo.org/wiki//etc/fstab
 V Linuxu se zařízení z hlediska souborů dělí na bloková a znaková. Bloková zařízení jsou především různá úložiště. Operace se provádějí v blocích přes buffer. Znaková zařízení jsou zařízení s krátkou odezvou, například: klávesnice, myš terminál. Operace se provádí ihned pomocí sekvence znaků(bytů).
 
 K automatickému montování blokových zařízení slouží záznamy v souboru /etc/fstab. Struktura záznamu je:
@@ -539,8 +512,6 @@ Z \hyperlink{Souborový systém}{kapitoly o Souborovém systému} víme, že scr
 \newpage
 
 \section{\textsf{Networking}}
-%https://packages.gentoo.org/packages/net-misc/netifrc
-
 Nyní je třeba zprovoznit síťová rozhraní. Potřebné balíčky se nainstalují pomocí příkazu:
 
 \texttt{emerge --noreplace net-misc/netifrc}\\
@@ -574,7 +545,7 @@ Pro zjednodušení konfigurace statické IP adresy je součástí repositáře i
 
 \texttt{brdcal IP\_ADRESA MASKA\_PODSITE}
 
-%https://en.wikipedia.org/wiki/High-level_programming_language
+
 \hspace*{-1.5em}Výstupem pak je IP adresa broadcastu pro danou podsíť. \\
 
 
@@ -582,7 +553,6 @@ Aby byla zajištěna spolehlivost a následná kompatibilita se scriptem, není 
 
 \newpage
 \section{\textsf{Bootloader}}
-%https://en.wikipedia.org/wiki/Bootloader
 
 Hlavním úkolem bootloaderu, zavaděče, je nahrát \hyperlink{Kernel}{jádro operačního systému} a \hyperlink{Initramfs}{Initramfs} do paměti RAM. Dělí se na bootloadery první fáze a druhé fáze.
 \subsection{\textsf{První fáze}}
@@ -606,11 +576,11 @@ Součástí scriptu je možnost instalace a zprovoznění užitečných služeb.
 SecureShell, častěji označován zkratkou SSH, je program umožňující vzdálenou správu počítače pomocí textového rozhraní. Služba je součástí základní sady nástrojů Gentoo, tudíž není třeba ji instalovat zvlášť. Script tedy službu pouze přídá do seznamu pro spuštění při startu: 
 
 \texttt{rc-update add sshd default}
-\subsection{\textsf{Sysklogd}} %https://wiki.gentoo.org/wiki/Sysklogd
+\subsection{\textsf{Sysklogd}} 
 Sysklogd je daemon pro logovací službu Syslog. Provedena je pouze instalace a přidání do seznamu Init systému(OpenRC). Služba pracuje podle výchozí konfigurace. V případě nutnosti konfigurace je třeba upravit soubor \texttt{/etc/syslog.conf}
 
 \subsection{\textsf{Cronie}}
-%https://packages.gentoo.org/packages/sys-process/cronie
+
 Cronie je moderní plánovač úloh postavený na službě Cron. Cronie umožňuje plánování na základě intervalu nebo data. Veškeré úlohy se plánují ve souborech \texttt{crontab}. Crontab soubor pro systémové úlohy je umístěn v \texttt{/etc/crontab}. Syntaxe pro \texttt{crontab}:\\
 
 \texttt{*$_{1}$ *$_{2}$ *$_{3}$ *$_{4}$ *$_{5}$ /umisteni\_scriptu}
@@ -651,7 +621,7 @@ Připojení k WIFI síti, narozdíl od ethernetu, vyžaduje dodatečnou konfigur
 \hspace{-1.5em}Prvotní připojení provede script automaticky, nicméně je dobré zmínit strukturu příkazu pro opětovné připojení:\\
 
 \texttt{wpa\_supplicant -i nazev\_rozhrani -c /umisteni/konf\_souboru}
-\subsection{\textsf{MariaDB}}%https://en.wikipedia.org/wiki/MariaDB
+\subsection{\textsf{MariaDB}}
 MariaDB patří k nejpoužívanějším databázovým serverům. Hlavní výhodou oproti konkurenci je licence GNU GPLv2 a plná kompatibilita s MySQL. Script provede kompilaci včetně základní konfigurace.\\
 
 \texttt{read -p "heslo pro MariaDB: " \$password}\\
@@ -665,4 +635,39 @@ MariaDB patří k nejpoužívanějším databázovým serverům. Hlavní výhodo
 \section{\textsf{Závěr}}
 \newpage
 \section{\textsf{Zdroje}}
+\begin{enumerate}
+	\item KERRISK, Michael. Linux manual page. Online. Man7. 2025. Dostupné z: https://man7.org/linux/man-pages/man8/fdisk.8.html. [cit. 2025-03-15].
+	\item https://doc.rust-lang.org/rustc/codegen-options/index.html
+	\item https://wiki.gentoo.org/wiki/Radeon\#Feature\_support
+	\item https://wiki.gentoo.org/wiki/Intel\#Feature\_support
+	\item https://www.gentoo.org/glep/glep-0023.html\#id7
+	\item https://wiki.gentoo.org/wiki/License\_groups
+	\item https://cs.wikipedia.org/wiki/J\%C3\%A1dro\_opera\%C4\%8Dn\%C3\%ADho\_syst\%C3\%A9mu
+	\item https://en.wikipedia.org/wiki/Earliest\_eligible\_virtual\_deadline\_first\_scheduling
+	\item https://hackmd.io/@Kuanch/eevdf
+	\item https://www.phoronix.com/news/Linux-6.6-EEVDF-Merged
+	\item https://en.wikipedia.org/wiki/Completely\_Fair\_Scheduler
+	\item https://blogs.oracle.com/linux/post/cfs-group-scheduling
+	\item https://ocw.mit.edu/courses/6-046j-introduction-to-algorithms-sma-5503-fall-2005/resources/lecture-10-red-black-trees-rotations-insertions-deletions/
+	\item https://www.cs.kent.edu/~mallouzi/Algorithm\%202014/Lecture14-a.pdf
+	\item https://www.cs.usfca.edu/~galles/visualization/RedBlack.html
+	\item https://www.eecs.umich.edu/courses/eecs380/ALG/red\_black.html
+	\item https://en.wikipedia.org/wiki/Red\%E2\%80\%93black\_tree
+	\item https://www.linuxfromscratch.org/blfs/view/svn/postlfs/firmware.html
+	\item https://wiki.gentoo.org/wiki/Initramfs
+	\item https://www.youtube.com/watch?v=KQjRnuwb7is
+	\item https://wiki.gentoo.org/wiki/Custom\_Initramfs
+	\item https://cs.wikipedia.org/wiki/Mikroj\%C3\%A1dro
+	\item https://cs.wikipedia.org/wiki/Hybridn\%C3\%AD\_j\%C3\%A1dro
+	\item https://cs.wikipedia.org/wiki/Monolitick\%C3\%A9\_j\%C3\%A1dro
+	\item https://cs.wikipedia.org/wiki/Za\%C5\%99\%C3\%ADzen\%C3\%AD\_(soubor)
+	\item https://wiki.gentoo.org/wiki//etc/fstab
+	\item https://en.wikipedia.org/wiki/High-level\_programming\_language
+	\item https://en.wikipedia.org/wiki/Bootloader
+	\item https://wiki.gentoo.org/wiki/Sysklogd
+	\item https://wiki.gentoo.org/wiki/Cron
+	\item https://en.wikipedia.org/wiki/MariaDB
+
+	
+\end{enumerate}
 \end{document}

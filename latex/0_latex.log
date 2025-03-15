@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2022/dev/Debian) (preloaded format=xelatex 2025.1.11)  15 MAR 2025 18:25
+This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2022/dev/Debian) (preloaded format=xelatex 2025.1.11)  15 MAR 2025 22:42
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -520,153 +520,154 @@ Underfull \hbox (badness 10000) in paragraph at lines 108--109
  []
 
 
-Overfull \hbox (12.63109pt too wide) in paragraph at lines 113--124
+Overfull \hbox (12.63109pt too wide) in paragraph at lines 112--123
 [][] 
  []
 
 [7] [8]
-Overfull \hbox (15.50171pt too wide) in paragraph at lines 161--167
+Overfull \hbox (15.50171pt too wide) in paragraph at lines 160--166
 \TU/TeXGyreTermes(0)/m/n/12 uživatelského rozhraní. Profilů existuje velké množ
 ství, čehož důsledkem je více funkčních
  []
 
 
-Overfull \hbox (11.77274pt too wide) in paragraph at lines 161--167
+Overfull \hbox (11.77274pt too wide) in paragraph at lines 160--166
 \TU/TeXGyreTermes(0)/m/n/12 kombinací. Z tohoto důvodu script umožňuje zvolit a
 rchiv jak automaticky, tak i manuálně
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 168--171
+Underfull \hbox (badness 10000) in paragraph at lines 167--170
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 172--178
+Underfull \hbox (badness 10000) in paragraph at lines 171--177
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 179--180
+Underfull \hbox (badness 10000) in paragraph at lines 178--179
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 181--183
+Underfull \hbox (badness 10000) in paragraph at lines 180--182
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 184--186
+Underfull \hbox (badness 10000) in paragraph at lines 183--185
 
  []
 
 [9]
-Underfull \hbox (badness 10000) in paragraph at lines 196--199
+Underfull \hbox (badness 10000) in paragraph at lines 195--198
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 205--206
+Underfull \hbox (badness 10000) in paragraph at lines 204--205
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 207--208
+Underfull \hbox (badness 10000) in paragraph at lines 206--207
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 209--218
+Underfull \hbox (badness 10000) in paragraph at lines 208--217
 
  []
 
 [10]
-Underfull \hbox (badness 10000) in paragraph at lines 229--232
+Underfull \hbox (badness 10000) in paragraph at lines 228--231
 
  []
 
 
-Overfull \hbox (10.74706pt too wide) in paragraph at lines 236--239
+Overfull \hbox (10.74706pt too wide) in paragraph at lines 235--238
 \TU/lmtt/m/n/12 -pipe \TU/TeXGyreTermes(0)/m/n/12 - zrychluje kompilaci díky ’r
 ourám’, ty překladač vytvoří místo dočasných souborů. 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 240--241
+Underfull \hbox (badness 10000) in paragraph at lines 239--240
 
  []
 
 [11]
-Underfull \hbox (badness 10000) in paragraph at lines 288--289
+Underfull \hbox (badness 10000) in paragraph at lines 287--288
 
  []
 
 
-Overfull \hbox (27.65373pt too wide) in paragraph at lines 293--298
+Overfull \hbox (27.65373pt too wide) in paragraph at lines 292--297
 \TU/TeXGyreTermes(0)/m/n/12 určují vývojáři. Všechny použité přepínače se nachá
 zí ve složce \TU/lmtt/m/n/12 /etc/portage/make.conf\TU/TeXGyreTermes(0)/m/n/12 
 . 
  []
 
 [12]
-Underfull \hbox (badness 10000) in paragraph at lines 303--304
+Underfull \hbox (badness 10000) in paragraph at lines 302--303
 
  []
 
 
-Overfull \hbox (0.95499pt too wide) in paragraph at lines 308--309
+Overfull \hbox (0.95499pt too wide) in paragraph at lines 307--308
 []\TU/lmtt/m/n/12 echo "*/* $(cpuid2flags)" > /etc/portage/package.use/00cpu-fl
 ags 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 308--309
+Underfull \hbox (badness 10000) in paragraph at lines 307--308
 
  []
 
 
-Overfull \hbox (38.03499pt too wide) in paragraph at lines 312--313
+Overfull \hbox (38.03499pt too wide) in paragraph at lines 311--312
 []\TU/lmtt/m/n/12 echo "*/* VIDEO_CARDS: *gpu*" > /etc/portage/package.use/00vi
 deo-cards 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 312--313
+Underfull \hbox (badness 10000) in paragraph at lines 311--312
 
  []
 
 [13]
-Overfull \hbox (5.45906pt too wide) in paragraph at lines 409--410
+Overfull \hbox (5.45906pt too wide) in paragraph at lines 401--402
 \TU/TeXGyreTermes(0)/m/n/12 dem je velké množství proprietárních ovladačů, nutn
 ých pro funkci fyzických prostředků. 
  []
 
 [14]
-Overfull \hbox (7.2457pt too wide) in paragraph at lines 437--438
+Overfull \hbox (7.2457pt too wide) in paragraph at lines 423--424
 \TU/TeXGyreTermes(0)/m/n/12 Skupiny mají přidělenou hodnotu \TU/lmtt/m/n/12 cpu
 .shares\TU/TeXGyreTermes(0)/m/n/12 . Poměr hodnot \TU/lmtt/m/n/12 cpu.shares \T
 U/TeXGyreTermes(0)/m/n/12 jednotlivých
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 439--441
+Underfull \hbox (badness 10000) in paragraph at lines 425--427
 
  []
 
 [15]
-Underfull \hbox (badness 10000) in paragraph at lines 442--443
+Underfull \hbox (badness 10000) in paragraph at lines 428--429
 
  []
 
 
-Overfull \hbox (6.4697pt too wide) in paragraph at lines 452--455
-\TU/TeXGyreTermes(0)/m/n/12 do zařízení. Velkou část potřebného firmwaru obsahu
-je \TU/lmtt/m/n/12 sys-kernel/linux-firmware\TU/TeXGyreTermes(0)/m/n/12 . 
+Overfull \hbox (39.7897pt too wide) in paragraph at lines 435--436
+\TU/TeXGyreTermes(0)/m/n/12 načten do zařízení. Velkou část potřebného firmwaru
+ obsahuje \TU/lmtt/m/n/12 sys-kernel/linux-firmware\TU/TeXGyreTermes(0)/m/n/12 
+. 
  []
 
 
-Overfull \hbox (0.95499pt too wide) in paragraph at lines 473--474
+Overfull \hbox (0.95499pt too wide) in paragraph at lines 452--453
 []\TU/lmtt/m/n/12 echo "sys-kernel/installkernel dracut" | tee -a /…/installker
 nel 
  []
@@ -675,50 +676,50 @@ nel
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [16]
-Underfull \hbox (badness 10000) in paragraph at lines 488--496
+Underfull \hbox (badness 10000) in paragraph at lines 463--471
 
  []
 
 [17]
-Overfull \hbox (5.92204pt too wide) in paragraph at lines 502--503
+Overfull \hbox (5.92204pt too wide) in paragraph at lines 475--476
 []\TU/TeXGyreTermes(0)/m/n/12 K automatickému montování blokových zařízení slou
 ží záznamy v souboru /etc/fstab.
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 514--520
+Underfull \hbox (badness 10000) in paragraph at lines 487--493
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 525--529
+Underfull \hbox (badness 10000) in paragraph at lines 498--502
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 532--536
+Underfull \hbox (badness 10000) in paragraph at lines 505--509
 
  []
 
 [18]
-Overfull \hbox (1.76173pt too wide) in paragraph at lines 544--545
+Overfull \hbox (1.76173pt too wide) in paragraph at lines 515--516
 \TU/TeXGyreTermes(0)/m/n/12 Nyní je třeba zprovoznit síťová rozhraní. Potřebné 
 balíčky se nainstalují pomocí příkazu: 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 546--547
+Underfull \hbox (badness 10000) in paragraph at lines 517--518
 
  []
 
 
-Overfull \hbox (3.71274pt too wide) in paragraph at lines 549--550
+Overfull \hbox (3.71274pt too wide) in paragraph at lines 520--521
 [] \TU/TeXGyreTermes(0)/m/n/12 Zde script umožňuje výběr ze dvou možností: DHCP
 , Statická IP adresa. Každá možnost
  []
 
 
-Overfull \hbox (0.80573pt too wide) in paragraph at lines 551--552
+Overfull \hbox (0.80573pt too wide) in paragraph at lines 522--523
 [] \TU/TeXGyreTermes(0)/m/n/12 Společnou částí je výběr síťového rozhraní. Vyps
 ání všech dostupných síťových rozhraní
  []
@@ -727,85 +728,103 @@ Overfull \hbox (0.80573pt too wide) in paragraph at lines 551--552
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [19]
-Underfull \hbox (badness 10000) in paragraph at lines 578--579
+Underfull \hbox (badness 10000) in paragraph at lines 549--550
 
  []
 
 [20]
-Overfull \hbox (2.10707pt too wide) in paragraph at lines 594--595
+Overfull \hbox (2.10707pt too wide) in paragraph at lines 564--565
 \TU/TeXGyreTermes(0)/m/n/12 GRUBu, jsou technicky zároveň i bootmanagery, jelik
 ož nabízí možnost načtení různých
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 594--595
+Underfull \hbox (badness 10000) in paragraph at lines 564--565
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 596--600
+Underfull \hbox (badness 10000) in paragraph at lines 566--570
 
  []
 
 [21]
-Overfull \hbox (4.99638pt too wide) in paragraph at lines 614--615
+Overfull \hbox (4.99638pt too wide) in paragraph at lines 584--585
 \TU/TeXGyreTermes(0)/m/n/12 na základě intervalu nebo data. Veškeré úlohy se pl
 ánují ve souborech \TU/lmtt/m/n/12 crontab\TU/TeXGyreTermes(0)/m/n/12 . Crontab
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 614--615
+Underfull \hbox (badness 10000) in paragraph at lines 584--585
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 642--643
+Underfull \hbox (badness 10000) in paragraph at lines 612--613
 
  []
 
 [22]
-Overfull \hbox (0.955pt too wide) in paragraph at lines 645--646
+Overfull \hbox (0.955pt too wide) in paragraph at lines 615--616
 []\TU/lmtt/m/n/12 echo """ctrl_interface=/run/wpa_supplicant update_config=1 ""
 " >
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 645--646
+Underfull \hbox (badness 10000) in paragraph at lines 615--616
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 647--648
+Underfull \hbox (badness 10000) in paragraph at lines 617--618
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 649--650
+Underfull \hbox (badness 10000) in paragraph at lines 619--620
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 651--652
+Underfull \hbox (badness 10000) in paragraph at lines 621--622
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 655--656
+Underfull \hbox (badness 10000) in paragraph at lines 625--626
 
  []
 
-[23] [24] [25] (./0_latex.aux)
+[23] [24]
+Overfull \hbox (66.07904pt too wide) in paragraph at lines 645--646
+[]\TU/TeXGyreTermes(0)/m/n/12 https://cs.wikipedia.org/wiki/J%C3%A1dro_opera%C4
+%8Dn%C3%ADho_syst%C3%A9mu 
+ []
+
+
+Overfull \hbox (4.09903pt too wide) in paragraph at lines 646--647
+[]\TU/TeXGyreTermes(0)/m/n/12 https://en.wikipedia.org/wiki/Earliest_eligible_v
+irtual_deadline_first_scheduling 
+ []
+
+
+Overfull \hbox (102.47504pt too wide) in paragraph at lines 651--652
+[]\TU/TeXGyreTermes(0)/m/n/12 https://ocw.mit.edu/courses/6-046j-introduction-t
+o-algorithms-sma-5503-fall-2005/resources/lecture-
+ []
+
+[25] [26] (./0_latex.aux)
 Package rerunfilecheck Info: File `0_latex.out' has not changed.
 (rerunfilecheck)             Checksum: 88B1696E9444941FDE7DA684B96EA175;4264.
  )
 (\end occurred inside a group at level 6)
 
-### simple group (level 6) entered at line 176 ({)
-### simple group (level 5) entered at line 175 ({)
-### simple group (level 4) entered at line 174 ({)
-### simple group (level 3) entered at line 173 ({)
-### simple group (level 2) entered at line 172 ({)
+### simple group (level 6) entered at line 175 ({)
+### simple group (level 5) entered at line 174 ({)
+### simple group (level 4) entered at line 173 ({)
+### simple group (level 3) entered at line 172 ({)
+### simple group (level 2) entered at line 171 ({)
 ### simple group (level 1) entered at line 102 ({)
 ### bottom level 
 Here is how much of TeX's memory you used:
@@ -815,6 +834,6 @@ Here is how much of TeX's memory you used:
  32022 multiletter control sequences out of 15000+600000
  472579 words of font info for 66 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 73i,12n,85p,647b,634s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 73i,12n,85p,647b,691s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on 0_latex.pdf (25 pages).
+Output written on 0_latex.pdf (26 pages).
