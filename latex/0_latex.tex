@@ -4,6 +4,7 @@
 \usepackage{graphicx}
 \usepackage{titlesec}
 \usepackage{hyperref}
+\usepackage{tablefootnote}
 \onehalfspacing
 
 \setlength{\parskip}{6pt}
@@ -97,7 +98,7 @@ u kterého lze účině zvolit souborový systém. Zabírá zbytek místa na dis
 \texttt{fi\\}
 \texttt{done\\}
 
-\texttt{select} umožňuje vybrat soubor ze složky \texttt{/dev}, kde se nacházejí bloková zařízení.
+\hspace{-1.5em}\texttt{select} umožňuje vybrat soubor ze složky \texttt{/dev}, kde se nacházejí bloková zařízení.
 \newpage
 {Pro škálování Swapu je potřeba zjistit informace o velikosti paměti RAM. Ty jsou uložené v souboru \texttt{/proc/meminfo}. Pro \texttt{fdisk} je potřeba, aby jsme dostali pouze numerický údaj. Přečtení a zpracování tedy vypadá následovně:\\
 	
@@ -125,7 +126,7 @@ u kterého lze účině zvolit souborový systém. Zabírá zbytek místa na dis
 
 
 
-
+\newpage
 \subsection{\textsf{Souborový systém}}\hypertarget{Souborový systém}{}
 Manuální instalace i script dávají uživateli možnost vyběru souborového systému pro kořenový oddíl.
 Souborový systém slouží k interpretaci dat ve formě souborů, adresářů a metadat. Dělí se na dvě hlavní skupiny: Žurnálovací a Copy on Write.\\
@@ -258,18 +259,21 @@ Přepínače make omezující zátěž se zadávají do proměnné \texttt{MAKEO
 Všechny následující kroky se již budou provádět v novém systému.
 Pro vstup do nového systému, jelikož se nejedná o virtualizaci, je nutné zajistit přístup k fyzickým prostředkům.
 Toho docílíme přikazem mount adresářů \texttt{/sys}, \texttt{/proc}, \texttt{/dev} a \texttt{/run} na jejich \texttt{/mnt/gentoo} protějšky. Chceme-li v novém 
-systému stejné DNS servery, zkopírujeme ještě jejich záznam: \\ \texttt{cp /etc/resolv.conf /mnt/gentoo/etc}\\ Pokud se jedná o symlink
-je potřeba přidat přepínač  \texttt{--dereference}, 
-\\abychom zkopírovali soubor, ne odkaz na něj. 
+systému stejné DNS servery, zkopírujeme ještě jejich záznam: 
+
+\texttt{cp /etc/resolv.conf /mnt/gentoo/etc} 
+
+\hspace{-1.5em}Pokud se jedná o symlink je potřeba přidat přepínač  \texttt{--dereference}, 
+abychom zkopírovali soubor, ne odkaz na něj. 
 \subsection{\textsf{Chroot}}
 Do nového prostředí se dostaneme pomocí nástroje chroot ve tvaru:
 
-\texttt{chroot /mnt/gentoo chroot.sh}\\
-\texttt{/mnt/gentoo} - adresář s novým kořenem\\
+\texttt{chroot /mnt/gentoo chroot.sh}
+
+\hspace{-1.5em}\texttt{/mnt/gentoo} - adresář s novým kořenem\\
 \texttt{/bin/bash} - program/příkaz, který chceme v novém prostředí spustit
 
-Zároveň je nyní vhodné namontovat EFI oddíl na \texttt{/efi} adresář.
-
+\hspace{-1.5em}Zároveň je nyní vhodné namontovat EFI oddíl na \texttt{/efi} adresář.
 \subsection{\textsf{Portage}}
 Oficiální package manager pro Gentoo je Portage. Kromě instalací zároveň řeší závislosti, opravy, správu a metadata balíčků.
 %Hlavním způsobem instalace je sestavení ze zdrojového kódu, avšak dnes již obsahuje i mnoho binárních balíčků. \\
@@ -278,13 +282,13 @@ Software se instaluje pomocí příkazu:
 
  \texttt{emerge kategorie/nazev} 
  
-Nevíme-li, některý z výše uvedených parametrů, můžeme využít příkaz:
+\hspace{-1.5em}Nevíme-li, některý z výše uvedených parametrů, můžeme využít příkaz:
 
 \texttt{emerge --search regulerni\_vyraz} 
 
-Příkaz pro jednoduchý update celého systému je:
+\hspace{-1.5em}Příkaz pro jednoduchý update celého systému je:
 
-\texttt{emerge -avuDN @world}\\
+\texttt{emerge -avuDN @world}
 
 Uživatel by měl mít na paměti, že update může trvat až nižší desítky hodin. Pro lepší časový odhad je vhodné si přečíst obsah výstupu přepínače \texttt{-a}. %\texttt{-v}
 
@@ -297,20 +301,20 @@ Jejich seznam si můžeme vypsat pomocí příkazu:
 
 \texttt{cat /etc/portage/make.conf | grep USE}
 
-Seznam všech přepínačů se nachází na webu:
+\hspace{-1.5em}Seznam všech přepínačů se nachází na webu:
 
 \texttt{https://www.gentoo.org/support/use-flags/}\\
 
-Existují i přepínače procesor a grafický čip. Přepínače pro procesor se nastavují pomocí programu cpuid2cpuflags:
+\hspace{-1.5em}Existují i přepínače procesor a grafický čip. Přepínače pro procesor se nastavují pomocí programu cpuid2cpuflags:
 
 
 \texttt{echo "*/* \$(cpuid2flags)" > /etc/portage/package.use/00cpu-flags}\\
 
-Přepínače pro grafický čip, v případě potrřeby, lze nastavit pomocí příkazu:
+\hspace{-1.5em}Přepínače pro grafický čip, v případě potrřeby, lze nastavit pomocí příkazu:
 
 \texttt{echo "*/* VIDEO\_CARDS: *gpu*" > /etc/portage/package.use/00video-cards}\\
 
-\texttt{*gpu*} nahradíme dle následující tabulky:
+\hspace{-1.5em}\texttt{*gpu*} nahradíme dle následující tabulky:
 
 \begin{table}[h]
 	\centering
@@ -332,18 +336,18 @@ Přepínače pro grafický čip, v případě potrřeby, lze nastavit pomocí p�
 		\hline
 		WSL&d3d12&- \\
 		\hline
-		Nvidia & nouveau & Open Source*\\
+		Nvidia & nouveau & Open Source \tablefootnote{Všechny modely kromě architektur Maxwell, Pascal, Volta.}\\ 
 		\hline
 	\end{tabular}
 \end{table}
-*Všechny modely kromě architektur Maxwell, Pascal, Volta
+
 \newpage
 \subsubsection{\textsf{Licence}}
 Od roku 2014 obsahují repositáře Gentoo štítky s licencemi balíčků. Pro lepší orientaci byla také zavedena proměnná \texttt{ACCEPT\_LICENSE}. Licence byly rozděleny do skupin, které se deklarují v~\texttt{/etc/portage/make.conf}:
 
 \texttt{ACCEPT\_LICENSE="group"}
 
-Základní skupiny jsou:
+\hspace{-1.5em}Základní skupiny jsou:
 
 \begin{table}[h]
 	\centering
@@ -397,7 +401,6 @@ Základní skupiny jsou:
 	\end{tabular}
 \end{table}
 Pokud uživatel chce mít možnost nainstalovat software pod jakoukoliv licencí, může zvolit přepínač \texttt{*}.
-
 Jelikož se jedná o limitující nastavení, script nastaví hodnotu parametru na \texttt{*}. Důvodem je velké množství proprietárních ovladačů, nutných pro funkci fyzických prostředků.
 
 
@@ -405,7 +408,7 @@ V případě, že uživatel chce použít licenci pouze v rámci balíčku, lze 
 
 \texttt{nazev/balicku licence}
 
-K propsání změn v \texttt{ACCEPT\_LICENSE} je nutné systém aktualizovat pomocí:
+\hspace{-1.5em}K propsání změn v \texttt{ACCEPT\_LICENSE} je nutné systém aktualizovat pomocí:
 
 \texttt{emerge --ask --verbose --update --deep --newuse @world}
 
@@ -421,6 +424,7 @@ Program nikdy nekomunikuje přímo s komponentou, místo toho komunikuje s jádr
 Scheduler pro linuxové jádro se nazývá {\bf C}ompletely {\bf F}air {\bf S}cheduler ({\bf CFS}). Účelem je poskytnout všem entitám stejný čas na procesoru. Entity zaštiťují jeden proces či skupinu procesů. Nejmenší možnou entitou je jeden jednovláknový proces, největší entita (skupina) může obsahovat všechny běžící procesy, taková entita je označena \texttt{root\_task\_group}. 
 \subsubsection{\textsf{Group scheduling}}
 Skupiny mají přidělenou hodnotu \texttt{cpu.shares}. Poměr hodnot \texttt{cpu.shares} jednotlivých skupin určuje jejich čas na procesoru. Obsahuje-li skupina podskupiny, postup se opakuje. Dělení na skupiny není teoreticky nutné, avšak je žádoucí například na systémech s více uživateli.
+
 \subsubsection{\textsf{Task scheduling}}
 Po přidělení času (pod)skupinám je potřeba naplánovat jednotlivé procesy skupiny. Plánování se provádí pomocí hodnoty \texttt{vruntime}. \texttt{vruntime} je odvozen z doby strávené na procesoru a priority(NICE). Platí, že rostoucí priorita (klesající NICE) zpomaluje růst \texttt{vruntime}. Procesy s vyšší prioritou dostanou více prostoru. Procesy jsou podle \texttt{vruntime} seřazeny do Red-black tree. Jedná se o upravený binární strom s barevně označenými uzly. Strom vždy řadí menší hodnotu (v tomto případě \texttt{vruntime}) vlevo. Barvy uzlů se průbežně mění, vždy však splňují čtyři podmínky:\\
 1. Vkládaný uzel je červený.\\2. Každý uzel je černý nebo červený\\3. Nikdy nesmí být dva červené uzly bezprostředně nad sebou.\\4. Cesty z libovolných černých uzlů na konec obsahují stejný počet černých bodů. \\ 
@@ -436,11 +440,11 @@ Firmware Linuxu uložen v adresáři \texttt{/usr/lib/firmware}, odkud je při z
 
 \texttt{emerge sys-kernel/linux-firmware}
 
-Pro procesory od výrobce Intel je potřeba stáhnout ještě mikrokód:
+\hspace{-1.5em}Pro procesory od výrobce Intel je potřeba stáhnout ještě mikrokód:
 
 \texttt{emerge sys-firmware/intel-microcode}. 
 
-Procesory od AMD mají mikrokód z \texttt{sys-kernel/linux-firmware}.
+\hspace{-1.5em}Procesory od AMD mají mikrokód z \texttt{sys-kernel/linux-firmware}.
 \subsection{\textsf{Initramfs}} \hypertarget{Initramfs}{}
 {\bf Init}ial {\bf ram}-based {\bf f}ile {\bf s}ystem je malý filesystem. Cílem initramfs je připravit minimální prostředí pro spuštění Init systému. Provádí načtení kernel modulů a driverů pro zavedení důležitých filesystémů. Jakmile je vše potřebné připraveno, předá kontrolu Init systému.
 Initramfs je plnohodnotné uživatelské prostředí, je tedy možné v něm spouštět procesy. Standartním využitím této vlastnosti je záchranný systém nebo zadávání hesla pro odšifrování disku. Méně standartním využitím je hraní hry Tetris. 
@@ -524,7 +528,7 @@ Nyní je třeba zprovoznit síťová rozhraní. Potřebné balíčky se nainstal
 \texttt{ip link show | awk -F': ' '/\^[0-9]+: / \{print \$2\}'}
 
 \hspace{-1.5em}Vstup je poté uložen do proměnné \texttt{iface}\\
-Narozdíl od většiny ostatních proměnných zde není možnost výběru z přednastavených hodnot. Důvodem je, %TODO
+Narozdíl od většiny ostatních proměnných zde není možnost výběru z přednastavených hodnot. Důvodem je, že síťová rozhraní nemusí mít k dispozici drivery, potažmo být vůbec připojená.
 \subsection{\textsf{DHCP}}
 DHCP provádí automatické nastavení IP adresy, výchozí brány a DNS serveru pomocí služby DHCP.
 Chceme-li aby systém dostávál IP adresu z DHCP serveru, je potřeba doinstalovat DHCP daemon:
@@ -642,31 +646,31 @@ MariaDB patří k nejpoužívanějším databázovým serverům. Hlavní výhodo
 	\item https://wiki.gentoo.org/wiki/Intel\#Feature\_support
 	\item https://www.gentoo.org/glep/glep-0023.html\#id7
 	\item https://wiki.gentoo.org/wiki/License\_groups
-	\item https://cs.wikipedia.org/wiki/J\%C3\%A1dro\_opera\%C4\%8Dn\%C3\%ADho\_syst\%C3\%A9mu
-	\item https://en.wikipedia.org/wiki/Earliest\_eligible\_virtual\_deadline\_first\_scheduling
+	\item Jádro operačního systému. Online. In: Wikipedia: the free encyclopedia. San Francisco (CA): Wikimedia Foundation, 2001-. Dostupné z: https://cs.wikipedia.org/wiki/J\%C3\%A1dro\_opera\%C4\%8Dn\%C3\%ADho\_syst\%C3\%A9mu. [cit. 2024-09-11].
+	\item EEVDF. Online. In: Wikipedia: the free encyclopedia. San Francisco (CA): Wikimedia Foundation, 2001-, 2024-6-21. Dostupné z: https://en.wikipedia.org/wiki/Earliest\_eligible\_virtual\_deadline\_first\_scheduling. [cit. 2024-09-11].
 	\item https://hackmd.io/@Kuanch/eevdf
 	\item https://www.phoronix.com/news/Linux-6.6-EEVDF-Merged
-	\item https://en.wikipedia.org/wiki/Completely\_Fair\_Scheduler
+	\item Completely Fair Scheduler. Online. In: Wikipedia: the free encyclopedia. San Francisco (CA): Wikimedia Foundation, 2001-. Dostupné z: https://en.wikipedia.org/wiki/Completely\_Fair\_Scheduler. [cit. 2025-01-05].
 	\item https://blogs.oracle.com/linux/post/cfs-group-scheduling
 	\item https://ocw.mit.edu/courses/6-046j-introduction-to-algorithms-sma-5503-fall-2005/resources/lecture-10-red-black-trees-rotations-insertions-deletions/
 	\item https://www.cs.kent.edu/~mallouzi/Algorithm\%202014/Lecture14-a.pdf
 	\item https://www.cs.usfca.edu/~galles/visualization/RedBlack.html
 	\item https://www.eecs.umich.edu/courses/eecs380/ALG/red\_black.html
-	\item https://en.wikipedia.org/wiki/Red\%E2\%80\%93black\_tree
+	\item Red-black tree. Online. In: Wikipedia: the free encyclopedia. San Francisco (CA): Wikimedia Foundation, 2001-. Dostupné z: https://en.wikipedia.org/wiki/Red\%E2\%80\%93black\_tree. [cit. 2025-03-16].
 	\item https://www.linuxfromscratch.org/blfs/view/svn/postlfs/firmware.html
 	\item https://wiki.gentoo.org/wiki/Initramfs
-	\item https://www.youtube.com/watch?v=KQjRnuwb7is
+	\item HAND, David [@ptolemarch]. Linux initramfs for fun, and, uh... Online. 2018. Dostupné z: Youtube, https://www.youtube.com/watch?v=KQjRnuwb7is. [cit. 2025-02-09].
 	\item https://wiki.gentoo.org/wiki/Custom\_Initramfs
-	\item https://cs.wikipedia.org/wiki/Mikroj\%C3\%A1dro
-	\item https://cs.wikipedia.org/wiki/Hybridn\%C3\%AD\_j\%C3\%A1dro
-	\item https://cs.wikipedia.org/wiki/Monolitick\%C3\%A9\_j\%C3\%A1dro
-	\item https://cs.wikipedia.org/wiki/Za\%C5\%99\%C3\%ADzen\%C3\%AD\_(soubor)
+	\item Mikrojádro. Online. In: Wikipedia: the free encyclopedia. San Francisco (CA): Wikimedia Foundation, 2001-. Dostupné z: https://cs.wikipedia.org/wiki/Mikroj\%C3\%A1dro. [cit. 2025-01-11].
+	\item Hybridní jádro. Online. In: Wikipedia: the free encyclopedia. San Francisco (CA): Wikimedia Foundation, 2001-. Dostupné z: https://cs.wikipedia.org/wiki/Hybridn\%C3\%AD\_j\%C3\%A1dro. [cit. 2025-01-11].
+	\item Monolitické jádro. Online. In: Wikipedia: the free encyclopedia. San Francisco (CA): Wikimedia Foundation, 2001-. Dostupné z: https://cs.wikipedia.org/wiki/Monolitick\%C3\%A9\_j\%C3\%A1dro. [cit. 2025-01-11].
+	\item Zařízení (soubor). Online. In: Wikipedia: the free encyclopedia. San Francisco (CA): Wikimedia Foundation, 2001-. Dostupné z: https://cs.wikipedia.org/wiki/Za\%C5\%99\%C3\%ADzen\%C3\%AD\_(soubor). [cit. 2025-01-12].
 	\item https://wiki.gentoo.org/wiki//etc/fstab
-	\item https://en.wikipedia.org/wiki/High-level\_programming\_language
-	\item https://en.wikipedia.org/wiki/Bootloader
+	\item High-level programming language. Online. In: Wikipedia: the free encyclopedia. San Francisco (CA): Wikimedia Foundation, 2001-. Dostupné z: https://en.wikipedia.org/wiki/High-level\_programming\_language. [cit. 2025-01-13].
+	\item Bootloader. Online. In: Wikipedia: the free encyclopedia. San Francisco (CA): Wikimedia Foundation, 2001-. Dostupné z: https://en.wikipedia.org/wiki/Bootloader. [cit. 2025-02-24].
 	\item https://wiki.gentoo.org/wiki/Sysklogd
 	\item https://wiki.gentoo.org/wiki/Cron
-	\item https://en.wikipedia.org/wiki/MariaDB
+	\item MariaDB. Online. In: Wikipedia: the free encyclopedia. San Francisco (CA): Wikimedia Foundation, 2001-. Dostupné z: https://en.wikipedia.org/wiki/MariaDB. [cit. 2025-03-15].
 
 	
 \end{enumerate}
