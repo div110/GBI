@@ -180,6 +180,7 @@ sudo echo $diskname3 | sudo tee -a /mnt/gentoo/diskname3
 ###########################################
 
 
-
+echo "Zkontrolujte checksum Tarballu pomoci sha256sum"
+echo "pote spustte chroot.sh"
 #změna kořene na nové prostředí
 sudo chroot /mnt/gentoo /bin/bash #########
