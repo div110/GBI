@@ -1,4 +1,4 @@
-This is LuaHBTeX, Version 1.14.0 (TeX Live 2022/dev/Debian)  (format=lualatex 2025.2.3)  18 MAR 2025 10:06
+This is LuaHBTeX, Version 1.14.0 (TeX Live 2022/dev/Debian)  (format=lualatex 2025.2.3)  18 MAR 2025 10:36
  restricted system commands enabled.
 **0_latex.tex
 (./0_latex.tex
@@ -859,67 +859,97 @@ Underfull \hbox (badness 10000) in paragraph at lines 627--628
  []
 
 [23] [24]
-Overfull \hbox (356.85376pt too wide) in paragraph at lines 647--648
+Overfull \hbox (48.66974pt too wide) in paragraph at lines 643--644
+[]\TU/TeXGyreTermes(0)/m/n/12 /etc/portage/make.conf. On-line. Gen-too Wiki. C20
+01–2025. Dos-tupné z: https://wiki.gen-
+ []
+
+
+Overfull \hbox (42.75275pt too wide) in paragraph at lines 644--645
+[]\TU/TeXGyreTermes(0)/m/n/12 GLEP 23. On-line. Gen-too. C2001–2025. Dos-tupn
+é z: https://www.gen-too.org/glep/glep-
+ []
+
+
+Overfull \hbox (13.25374pt too wide) in paragraph at lines 645--646
+[]\TU/TeXGyreTermes(0)/m/n/12 Li-cense Groups. On-line. Gen-too Wiki. C2001–20
+25. Dos-tupné z: https://wiki.gen-
+ []
+
+
+Overfull \hbox (356.85376pt too wide) in paragraph at lines 646--647
 \TU/TeXGyreTermes(0)/m/n/12 Fran-cisco (CA): Wiki-me-dia Foun-da-tion, 2001-. Do
 s-tupné z: https://cs.wikipedia.org/wiki/J%C3%A1dro_opera%C4%8Dn%C3%ADho_syst%C
 3%A9mu.
  []
 
 
-Overfull \hbox (43.98976pt too wide) in paragraph at lines 648--649
+Overfull \hbox (43.98976pt too wide) in paragraph at lines 647--648
 \TU/TeXGyreTermes(0)/m/n/12 Wiki-me-dia Foun-da-tion, 2001-, 2024-6-21. Dos-tupn
 é z: https://en.wikipedia.org/wiki/Ear-
  []
 
 
-Overfull \hbox (74.37373pt too wide) in paragraph at lines 651--652
+Overfull \hbox (74.37373pt too wide) in paragraph at lines 650--651
 \TU/TeXGyreTermes(0)/m/n/12 Fran-cisco (CA): Wiki-me-dia Foun-da-tion, 2001-. Do
 s-tupné z: https://en.wikipedia.org/wiki/Com-
  []
 
 
-Overfull \hbox (102.47507pt too wide) in paragraph at lines 653--654
+Overfull \hbox (102.47507pt too wide) in paragraph at lines 652--653
 []\TU/TeXGyreTermes(0)/m/n/12 https://ocw.mit.edu/courses/6-046j-introduction-to
 -algorithms-sma-5503-fall-2005/resources/lecture-
  []
 
 
-Overfull \hbox (137.47374pt too wide) in paragraph at lines 657--658
+Overfull \hbox (137.47374pt too wide) in paragraph at lines 656--657
 \TU/TeXGyreTermes(0)/m/n/12 (CA): Wiki-me-dia Foun-da-tion, 2001-. Dos-tupné z:
  https://en.wikipedia.org/wiki/Red%E2%80%93black_tree.
  []
 
 [25]
-Overfull \hbox (68.34573pt too wide) in paragraph at lines 662--663
+Overfull \hbox (21.52173pt too wide) in paragraph at lines 660--661
+[]\TU/TeXGyreTermes(0)/m/n/12 Cus-tom Initramfs. On-line. Gen-too Wiki. C2001
+–2025. Dos-tupné z: https://wiki.gen-
+ []
+
+
+Overfull \hbox (68.34573pt too wide) in paragraph at lines 661--662
 \TU/TeXGyreTermes(0)/m/n/12 Wiki-me-dia Foun-da-tion, 2001-. Dos-tupné z: https
 ://cs.wikipedia.org/wiki/Mikroj%C3%A1dro.
  []
 
 
-Overfull \hbox (15.40973pt too wide) in paragraph at lines 663--664
+Overfull \hbox (15.40973pt too wide) in paragraph at lines 662--663
 \TU/TeXGyreTermes(0)/m/n/12 (CA): Wiki-me-dia Foun-da-tion, 2001-. Dos-tupné z:
  https://cs.wikipedia.org/wiki/Hy-
  []
 
 
-Overfull \hbox (29.71373pt too wide) in paragraph at lines 664--665
+Overfull \hbox (29.71373pt too wide) in paragraph at lines 663--664
 \TU/TeXGyreTermes(0)/m/n/12 (CA): Wiki-me-dia Foun-da-tion, 2001-. Dos-tupné z:
  https://cs.wikipedia.org/wiki/Mono-
  []
 
 
-Overfull \hbox (205.66975pt too wide) in paragraph at lines 665--666
+Overfull \hbox (205.66975pt too wide) in paragraph at lines 664--665
 \TU/TeXGyreTermes(0)/m/n/12 (CA): Wiki-me-dia Foun-da-tion, 2001-. Dos-tupné z:
  https://cs.wikipedia.org/wiki/Za%C5%99%C3%ADzen%C3%AD_(sou-
  []
 
 
-Overfull \hbox (116.36441pt too wide) in paragraph at lines 667--668
+Overfull \hbox (116.36441pt too wide) in paragraph at lines 666--667
 \TU/TeXGyreTermes(0)/m/n/12 dia. San Fran-cisco (CA): Wiki-me-dia Foun-da-tion, 2001-. Dos-tupn
 é z: https://en.wikipedia.org/wiki/High-
  []
 
-[26] (./0_latex.aux)
+
+Overfull \hbox (47.76973pt too wide) in paragraph at lines 669--670
+[]\TU/TeXGyreTermes(0)/m/n/12 Cron. On-line. Gen-too Wiki. C2001–2025. Dos-tup
+né z: https://wiki.gen-too.org/wiki/Cron.
+ []
+
+[26] [27] (./0_latex.aux)
 Package rerunfilecheck Info: File `0_latex.out' has not changed.
 (rerunfilecheck)             Checksum: 88B1696E9444941FDE7DA684B96EA175;4264.
 )
@@ -939,10 +969,10 @@ Here is how much of LuaTeX's memory you used:
  482 words of node memory still in use:
    3 hlist, 1 vlist, 1 rule, 3 glue, 3 kern, 1 glyph, 5 attribute, 61 glue_spec,
  5 attribute_list, 1 write nodes
-   avail lists: 2:698,3:268,4:11,5:429,6:89,7:4626,8:52,9:474,10:7,11:274
+   avail lists: 2:698,3:268,4:11,5:429,6:89,7:5069,8:52,9:474,10:7,11:314
  33059 multiletter control sequences out of 65536+600000
  64 fonts using 6756239 bytes
- 68i,14n,84p,702b,722s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 68i,14n,84p,702b,724s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texmf/fonts/opentype/public/lm/lmmono12-regular.otf></usr/share/texm
 f/fonts/opentype/public/lm/lmsans12-regular.otf></usr/share/texmf/fonts/opentype
 /public/tex-gyre/texgyretermes-bold.otf></usr/share/texmf/fonts/opentype/public/
@@ -951,10 +981,10 @@ sans17-regular.otf></usr/share/texmf/fonts/opentype/public/lm/lmsans10-bold.otf>
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/s
 hare/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/tex
 live/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb>
-Output written on 0_latex.pdf (26 pages, 168300 bytes).
+Output written on 0_latex.pdf (27 pages, 169065 bytes).
 
-PDF statistics: 419 PDF objects out of 1000 (max. 8388607)
- 364 compressed objects within 4 object streams
+PDF statistics: 422 PDF objects out of 1000 (max. 8388607)
+ 366 compressed objects within 4 object streams
  101 named destinations out of 1000 (max. 131072)
  313 words of extra memory for PDF output out of 10000 (max. 100000000)
 
