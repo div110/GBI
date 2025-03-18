@@ -42,7 +42,7 @@ Vedoucí práce: Petr Martínek
 
 \newpage
 \thispagestyle{empty}
-Prohlašuji, že jsem předkládanou práci vypracoval sám za použití zdrojů a literatury v ní uvedených. Souhlasím s tím, aby moje maturitní práce byla využívána pro potřeby Střední školy spojů a informatiky, Tábor, Bydlinského 2474 nebo jiných subjektů, které se podílely na zadání práce.\\ 
+Prohlašuji, že jsem předkládanou práci vypracoval sám za použití zdrojů a~literatury v~ní uvedených. Souhlasím s~tím, aby moje maturitní práce byla využívána pro potřeby Střední školy spojů a~informatiky, Tábor, Bydlinského 2474 nebo jiných subjektů, které se podílely na zadání práce.\\ 
 \\	…………………….~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~……………………..\\
 datum~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~podpis
 
@@ -54,9 +54,9 @@ datum~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~podpis
 \newpage
 \section{\textsf{Anotace}}
 {Teoretická část maturitní práce popisuje proces instalace operačního systému Gentoo
-	a její vliv na tvorbu scriptu. V práci je také zároveň rozvedena problematika stěžejních
-	kroků instalace a částí operačního systému. Cílem práce bylo usnadnit novým uživatelům instalaci a konfiguraci
-	systému pro jednodušší přechod z jiných operačních systémů. Z toho důvodu je script volně přístupný na webových stránkách Github. 
+	a~její vliv na tvorbu scriptu. V~práci je také zároveň rozvedena problematika stěžejních
+	kroků instalace a~částí operačního systému. Cílem práce bylo usnadnit novým uživatelům instalaci a~konfiguraci
+	systému pro jednodušší přechod z~jiných operačních systémů. Z~toho důvodu je script volně přístupný na webových stránkách Github. 
 	\vspace{2cm}
 	\\Klíčová slova:
 	%\\Keywords:
@@ -67,12 +67,12 @@ datum~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~podpis
 
 \section{\textsf{Příprava disků}}
 {Příprava disků je nutným krokem každé instalace. Hlavním důvodem je, 
-že stávající schéma rozdělení a souborové systémy nemusí být v souladu s novým operačním systémem. 
+že stávající schéma rozdělení a~souborové systémy nemusí být v~souladu s~novým operačním systémem. 
 Z toho důvodu nestačí disky pouze smazat. Použíté schéma rozdělení je GPT. 
-Mezi hlavní důvody pro výběr GPT patří: lepší kompatibilita s UEFI systémy, 
-vyšší maximální počet oddílů, podpora disků větších než 2TB a kontrola integrity.
-Oddíly a jejích nastavení mají velký vliv na paměť i výkon systému. Proto je potřeba, 
-aby script i samotná instalace přizpůsobily rozdělení specifikacím systému.} 
+Mezi hlavní důvody pro výběr GPT patří: lepší kompatibilita s~UEFI systémy, 
+vyšší maximální počet oddílů, podpora disků větších než 2TB a~kontrola integrity.
+Oddíly a~jejích nastavení mají velký vliv na paměť i~výkon systému. Proto je potřeba, 
+aby script i~samotná instalace přizpůsobily rozdělení specifikacím systému.} 
 
 {První je EFI oddíl. Slouží pro zavádění UEFI systémů. Bude obsahovat Bootloader. 
 Velikost je pevně nastavena na 1GB, jelikož není potřeba škálovat se systémem.
@@ -80,11 +80,11 @@ Oddíl bude naformátován jako fat32.}
 
 {Druhý je Swap oddíl. Swap obsahuje části operační paměti, vyhodnocené jako nejméně používané. 
 Rozbor samotného algoritmu pro správu paměti je mimo záběr maturitní práce. Je třeba,
-aby velikost Swap oddílu rostla s kapacitou paměti RAM. Tento vztah je způsoben vlastnostmi hibernace, 
+aby velikost Swap oddílu rostla s~kapacitou paměti RAM. Tento vztah je způsoben vlastnostmi hibernace, 
 která nahraje celý obsah operační paměti na Swap oddíl. Má-li tedy systém využívat hibernaci, je nutné
 aby velikost oddílu byla ostře větší, než velikost paměti RAM. }
 
-{Třetí je Root oddíl. Obsahuje komplement EFI oddílu. Je to zároveň také jediný oddíl z trojice, 
+{Třetí je Root oddíl. Obsahuje komplement EFI oddílu. Je to zároveň také jediný oddíl z~trojice, 
 u kterého lze účinně zvolit souborový systém. Zabírá zbytek místa na disku.}
 
 {Script vytváří oddíly pomocí nástroje \texttt{fdisk}. \texttt{fdisk} je interaktivní nástroj na tvorbu \\oddílů, proto je nutné, aby script dodával instrukce přímo do vstupu nástroje, ne shellu. Přesměrování provádí Here document, který dokáže přesměrovat dávkovaný vstup přímo do programu.\\ Výběr disku:}
@@ -98,17 +98,17 @@ u kterého lze účinně zvolit souborový systém. Zabírá zbytek místa na di
 \texttt{fi\\}
 \texttt{done\\}
 
-\hspace{-1.5em}\texttt{select} umožňuje vybrat soubor ze složky \texttt{/dev}, kde se nacházejí bloková zařízení.
+\hspace{-1.5em}\textit{select} umožňuje vybrat soubor ze složky \textit{/dev}, kde se nacházejí bloková zařízení.
 \newpage
-{Pro škálování Swapu je potřeba zjistit informace o velikosti paměti RAM. Ty jsou uložené v souboru \texttt{/proc/meminfo}. Pro \texttt{fdisk} je potřeba, aby jsme získali pouze numerický údaj. Přečtení a zpracování tedy vypadá následovně:\\
+{Pro škálování Swapu je potřeba zjistit informace o~velikosti paměti RAM. Ty jsou uložené v~souboru \textit{/proc/meminfo}. Pro \textit{fdisk} je potřeba, aby jsme získali pouze numerický údaj. Přečtení a~zpracování tedy vypadá následovně:\\
 	
 \texttt{swapsize=\$(sudo cat /proc/meminfo | head -n 1 | sed 's/[\^{}0-9]//g')}\\
 
-\hspace*{-1.5em}Výsledné číslo pak zvětšíme o 50 \%:\\ 
+\hspace*{-1.5em}Výsledné číslo pak zvětšíme o~50~\%:\\ 
 
 \texttt{swapsize=\$(((\$swapsize/1000000)*3/2))}\\
 
-\hspace{-1.5em}Ovládání pro \texttt{fdisk} je blíže rozepsáno v tabulce níže.
+\hspace{-1.5em}Ovládání pro \textit{fdisk} je blíže rozepsáno v~tabulce níže.
 \begin{table}[h]
 	\begin{tabular}{|c|c|c|}\hline
 		Vstup & Zkratka & Popis \\ \hline
@@ -129,13 +129,13 @@ u kterého lze účinně zvolit souborový systém. Zabírá zbytek místa na di
 
 \newpage
 \subsection{\textsf{Souborový systém}}\hypertarget{Souborový systém}{}
-Manuální instalace i script dávají uživateli možnost vyběru souborového systému pro kořenový oddíl.
-Souborový systém slouží k interpretaci dat ve formě souborů, adresářů a metadat. Dělí se na dvě hlavní skupiny: Žurnálovací a Copy on Write.\\
-Žurnálovací systémy uchovávají záznam prováděných operací ve speciální datové struktuře v rámci jejich oddílu. 
-Záznam slouží k obnově konzistence souborového systému v případě přerušení zápisu, způsobeným například odpojením zdroje elektřiny. \\
-Copy on Write systémy nevytváří kopii souboru pro úpravu, pouze předají odkaz na již existující soubor a to klidně více procesům najednou.
-Kopii dat vytvoří až v případě, kdy se nějaký z procesů pokusí přepsat data. Tento přístup umožňuje integraci snapshotů a RAIDů.
-Script vybírá mezi třemi souborovými systémy: XFS, btrfs a ext4. \\Je vhodné zmínit, že formátování odstraní veškerá data z oddílu. 
+Manuální instalace i~script dávají uživateli možnost vyběru souborového systému pro kořenový oddíl.
+Souborový systém slouží k~interpretaci dat ve formě souborů, adresářů a~metadat. Dělí se na dvě hlavní skupiny: Žurnálovací a~Copy on Write.\\
+Žurnálovací systémy uchovávají záznam prováděných operací ve speciální datové struktuře v~rámci jejich oddílu. 
+Záznam slouží k~obnově konzistence souborového systému v~případě přerušení zápisu, způsobeným například odpojením zdroje elektřiny. \\
+Copy on Write systémy nevytváří kopii souboru pro úpravu, pouze předají odkaz na již existující soubor a~to klidně více procesům najednou.
+Kopii dat vytvoří až v~případě, kdy se nějaký z~procesů pokusí přepsat data. Tento přístup umožňuje integraci snapshotů a~RAIDů.
+Script vybírá mezi třemi souborovými systémy: XFS, btrfs a~ext4. \\Je vhodné zmínit, že formátování odstraní veškerá data z~oddílu. 
 Formátování oddílů pro souborový systém ve scriptu provádí příkaz mkfs: 
 
 \texttt{mkfs.vfat -F 32 /dev/sda1}\\
@@ -156,15 +156,15 @@ Formátování oddílů pro souborový systém ve scriptu provádí příkaz mkf
 
 \newpage
 \section{\textsf{Stage Tarball}}
-{Pro instalaci základního systému je třeba tzv. Stage 3 Tarball, neboli archiv obsahující
-minimální systém pro začátek instalace. Archivů je mnoho a dělí se podle profilů.
+{Pro instalaci základního systému je třeba tzv. Stage 3~Tarball, neboli archiv obsahující
+minimální systém pro začátek instalace. Archivů je mnoho a~dělí se podle profilů.
 
-Každý profil blíže specifikuje budoucí záměr a funkce systému. Například profil
+Každý profil blíže specifikuje budoucí záměr a~funkce systému. Například profil
 ‘Desktop’ obsahuje balíčky, respektive jejich USE přepínače, usnadňující zprovoznění uživatelského rozhraní.
-Profilů je velké množství, čehož důsledkem je více funkčních kombinací. Z tohoto důvodu script umožňuje zvolit archiv jak automaticky, tak i ručně pomocí URL adresy. 
+Profilů je velké množství, čehož důsledkem je více funkčních kombinací. Z~ tohoto důvodu script umožňuje zvolit archiv jak automaticky, tak i~ručně pomocí URL adresy. 
 
-Pro výchozí výběr byl zvolen archiv z FTP serveru Fakulty informatiky
-Masarykovy Univerzity v Brně. Script řeší výběr archivu pomocí jednoduché logiky,
+Pro výchozí výběr byl zvolen archiv z~FTP serveru Fakulty informatiky
+Masarykovy Univerzity v~Brně. Script řeší výběr archivu pomocí jednoduché logiky,
 která upřednostní manuální výběr, je-li dostupný:}\\
 
 {\hspace*{+1.5em}\texttt{read -p stage3 2>\&1}\\
@@ -179,11 +179,11 @@ která upřednostní manuální výběr, je-li dostupný:}\\
 \texttt{eselect profile list}\\
 \texttt{\hspace*{--1.5em}eselect profile set \#}\\
 
-\hspace{-1.5em}{Uživatel by však měl mít na paměti, že změna profilu může, v některých případech
-vést až k překompilování celého systému.}\\
+\hspace{-1.5em}{Uživatel by však měl mít na paměti, že změna profilu může, v~některých případech
+vést až k~překompilování celého systému.}\\
 
 \hspace{-1.5em}V tuto chvíli se doporučuje, aby uživatel provedl kontrolu archivu pomocí checksumů.
-Ty lze získat ze souboru .DIGESTS z jakéhokoliv zrcadla. Pro druhý, vlastní checksum je doporučený nástroj \texttt{sha256sum}, který vytváří checksum pomocí algoritmu sha256. Použití:
+Ty lze získat ze souboru .DIGESTS z~jakéhokoliv zrcadla. Pro druhý, vlastní checksum je doporučený nástroj \textit{sha256sum}, který vytváří checksum pomocí algoritmu sha256. Použití:
 
 \texttt{sha256sum nazevSouboru}
 
@@ -191,18 +191,18 @@ Ty lze získat ze souboru .DIGESTS z jakéhokoliv zrcadla. Pro druhý, vlastní 
 
 \newpage
 \subsection{\textsf{Instalace archivu}}
-Před instalací je vhodné nastavit systémový čas. K tomu slouží chrony:\\
+Před instalací je vhodné nastavit systémový čas. K~tomu slouží chrony:\\
 \hspace*{1.5em}\texttt{chrony -q}\\
  anebo, není-li dostupné RTC, pomocí: \\ \hspace*{1.5em}\texttt{date mmddhhmmyy}.\\
  
-V případě jakýchkoliv pochybností je možné datum zkontrolovat pomocí \texttt{date}.
+V případě jakýchkoliv pochybností je možné datum zkontrolovat pomocí \textit{date}.
 \\Archiv je potřeba extrahovat do cílového adresáře nového systému. Proto je nutné,\\
-aby byl adresář již předem vytvořený. Ve velké většině případů \texttt{/mnt/gentoo}.\\
-Tarball instalujeme pomocí nástroje tar v příkazu:
+aby byl adresář již předem vytvořený. Ve velké většině případů \textit{/mnt/gentoo}.\\
+Tarball instalujeme pomocí nástroje tar v~příkazu:
 
 \texttt{tar xpvf stage3-*.tar.xz --xattrs-include='*.*' \\\hspace*{1.5em}--numeric-owner -C /mnt/gentoo}\\
 
-\hspace{-1.5em}Pro lepší orientaci bude význam přepínačů a argumentů rozepsán:\\
+\hspace{-1.5em}Pro lepší orientaci bude význam přepínačů a~argumentů rozepsán:\\
 
 \texttt{x} - soubor bude extrahován.\\
 \hspace*{1.5em}\texttt{p} - Ponechat oprávnění. \\
@@ -218,13 +218,13 @@ skupin.\\
 \newpage
 \subsection{\textsf{Kompilace}}
 Součástí základního systému je Portage. Portage je nativní package manager pro Gentoo.
-Obstarává kompilace, instalace, závislosti, synchronizace a mnoho dalšího. V této fázi instalace
-je doporučené optimalizovat kompilace. Veškerá globální konfigurace je součástí \texttt{/etc/portage/make.conf}.
-Zároveň obsahuje přepínače pro překladače GCC, C++ a Rust. Jejich správnému nastavení bude věnována následující podkapitola.
+Obstarává kompilace, instalace, závislosti, synchronizace a~mnoho dalšího. V~této fázi instalace
+je doporučené optimalizovat kompilace. Veškerá globální konfigurace je součástí \textit{/etc/portage/make.conf}.
+Zároveň obsahuje přepínače pro překladače GCC, C++ a~Rust. Jejich správnému nastavení bude věnována následující podkapitola.
 
 \subsubsection{\textsf{Flags}}
-Pro nastavení GCC slouží proměnná \texttt{CFLAGS} ve tvaru:\\ \hspace*{1.5em}\texttt{CFLAGS="flag1 flag2..."}\\Nastavení C++ je totožné, mění se pouze proměná a to na \texttt{'CXXFLAGS'}.
-Uvádíme-li, že nastavení jsou totožná, je to myšleno doslovně. Je doporučeno, aby přepínače u překladačů byli při instalaci stejné. Níže je uvedena
+Pro nastavení GCC slouží proměnná \textit{CFLAGS} ve tvaru:\\ \hspace*{1.5em}\texttt{CFLAGS="flag1 flag2..."}\\Nastavení C++ je totožné, mění se pouze proměná a~to na \textit{'CXXFLAGS'}.
+Uvádíme-li, že nastavení jsou totožná, je to myšleno doslovně. Je doporučeno, aby přepínače u~překladačů byli při instalaci stejné. Níže je uvedena
 vzorová konfigurace:\\
 \hspace*{1.5em}\texttt{CFLAGS="-march=native -O2 -pipe"}\\
 \hspace*{1.5em}\texttt{CXXFLAGS="-march=native -O2 -pipe"}
@@ -233,15 +233,15 @@ vzorová konfigurace:\\
 \texttt{-O2} - Překladač se pokusí kompilovat rychleji na úkor paměti.\\
 \texttt{-pipe} - Zrychluje kompilaci díky rourám, ty překladač vytvoří místo souborů.
 
-\hspace{-1.5em}Proměnná pro Rust je \texttt{RUSTFLAGS}:
+\hspace{-1.5em}Proměnná pro Rust je \textit{RUSTFLAGS}:
 
 \texttt{RUSTFLAGS="\$-C target-cpu=native opt-level=2"}
 
 \hspace{-1.5em}\texttt{target-cpu=native} - Přizpůsobí kompilaci pro instalovaný procesor.\\
 \texttt{opt-level=2} - Optimalizuje strojový kód, podobné -O2. %
 \subsection{\textsf{MAKE Operace}}
-Chceme-li, aby systém zůstal responzivní i během kompilace, je potřeba omezit maximální zatížení systému.
-Přepínače make omezující zátěž se zadávají do proměnné \texttt{MAKEOPTS}:
+Chceme-li, aby systém zůstal responzivní i~během kompilace, je potřeba omezit maximální zatížení systému.
+Přepínače make omezující zátěž se zadávají do proměnné \textit{MAKEOPTS}:
 
 \texttt{MAKEOPTS="-j5 -l5"}
 
@@ -252,33 +252,33 @@ Přepínače make omezující zátěž se zadávají do proměnné \texttt{MAKEO
 
 \newpage
 \section{\textsf{Nový systém}}
-Všechny následující kroky se již budou provádět v novém systému.
-Pro vstup do nového systému, jelikož se nejedná o virtualizaci, je nutné zajistit přímý přístup k fyzickým prostředkům.
-Toho docílíme namontováním adresářů \texttt{/sys}, \texttt{/proc}, \texttt{/dev} a \texttt{/run} na jejich \texttt{/mnt/gentoo} protějšky. Chceme-li v novém 
+Všechny následující kroky se již budou provádět v~novém systému.
+Pro vstup do nového systému, jelikož se nejedná o~virtualizaci, je nutné zajistit přímý přístup k~fyzickým prostředkům.
+Toho docílíme namontováním adresářů \textit{/sys}, \textit{/proc}, \textit{/dev} a~\textit{/run} na jejich \textit{/mnt/gentoo} protějšky. Chceme-li v~novém 
 systému stejné DNS servery, zkopírujeme ještě jejich záznam: 
 
 \texttt{cp /etc/resolv.conf /mnt/gentoo/etc} 
 
-\hspace{-1.5em}Pokud se jedná o symlink je potřeba přidat přepínač  \texttt{--dereference}, \\
+\hspace{-1.5em}Pokud se jedná o~symlink je potřeba přidat přepínač  \textit{--dereference}, \\
 abychom zkopírovali soubor, ne odkaz na něj. 
 \subsection{\textsf{Chroot}}
-Do nového prostředí se dostaneme pomocí nástroje \texttt{chroot} ve tvaru:
+Do nového prostředí se dostaneme pomocí nástroje \textit{chroot} ve tvaru:
 
 \texttt{chroot /mnt/gentoo chroot.sh}
 
 \hspace{-1.5em}\texttt{/mnt/gentoo} - adresář s novým kořenem\\
 \texttt{/bin/bash} - program/příkaz, který chceme v novém prostředí spustit
 
-\hspace{-1.5em}Zároveň je nyní vhodné namontovat EFI oddíl na \texttt{/efi} adresář.
+\hspace{-1.5em}Zároveň je nyní vhodné namontovat EFI oddíl na \textit{/efi} adresář.
 \subsection{\textsf{Portage}}
-Oficiální package manager pro Gentoo je Portage. Kromě instalací řeší \\závislosti, opravy, správu a metadata balíčků.
-Nejčastějším způsobem instalace je \\sestavení ze zdrojového kódu, avšak dnes již obsahuje i mnoho binárních balíčků.
+Oficiální package manager pro Gentoo je Portage. Kromě instalací řeší \\závislosti, opravy, správu a~metadata balíčků.
+Nejčastějším způsobem instalace je \\sestavení ze zdrojového kódu, avšak dnes již obsahuje i~mnoho binárních balíčků.
 \subsubsection{\textsf{Základní příkazy}}
 Software se instaluje pomocí příkazu:  
 
  \texttt{emerge kategorie/nazev} 
  
-\hspace{-1.5em}Nevíme-li, některý z výše uvedených parametrů, můžeme využít příkaz:
+\hspace{-1.5em}Nevíme-li, některý z~výše uvedených parametrů, můžeme využít příkaz:
 
 \texttt{emerge --search regulerni\_vyraz} 
 
@@ -286,13 +286,13 @@ Software se instaluje pomocí příkazu:
 
 \texttt{emerge -avuDN @world}
 
-\hspace*{-1.5em}Uživatel by měl mít na paměti, že update může trvat až desítky hodin, viz přepínač \texttt{-a}. %\texttt{-v}
+\hspace*{-1.5em}Uživatel by měl mít na paměti, že update může trvat až desítky hodin, viz přepínač \textit{-a}. %\textit{-v}
 
 \subsubsection{\textsf{USE}}
-Mezi hlavní výhody Portage patří USE Flags. Ty slouží ke konfiguraci sestavení a instalace balíčků. Určují jaké funkce mají programy obsahovat a podporovat.\\
-Použijeme-li například vlajku \texttt{X}, bude všechen software instalován s podporou display serveru Xorg. Víme-li, že některé funkce nebudeme potřebovat, můžeme je odebrat pomocí znaménka mínus(pomlčky). Například \texttt{-kde} odebere podporu grafických prostředí KDE.
+Mezi hlavní výhody Portage patří USE Flags. Ty slouží ke konfiguraci sestavení a~instalace balíčků. Určují jaké funkce mají programy obsahovat a~podporovat.\\
+Použijeme-li například vlajku \textit{X}, bude všechen software instalován s~podporou display serveru Xorg. Víme-li, že některé funkce nebudeme potřebovat, můžeme je odebrat pomocí znaménka mínus(pomlčky). Například \textit{-kde} odebere podporu grafických prostředí KDE.
 Ne všechny balíčky přepínače USE podporují. Podporu přepínačů určují vývojáři.
-Všechny použité přepínače se nachází ve složce \texttt{/etc/portage/make.conf}. \\
+Všechny použité přepínače se nachází ve složce \textit{/etc/portage/make.conf}. \\
 Jejich seznam si můžeme vypsat pomocí příkazu:
 
 \texttt{cat /etc/portage/make.conf | grep USE}
@@ -301,16 +301,16 @@ Jejich seznam si můžeme vypsat pomocí příkazu:
 
 \texttt{https://www.gentoo.org/support/use-flags/}\\
 
-\hspace{-1.5em}Existují i přepínače procesor a grafický čip. Přepínače pro procesor se nastavují pomocí programu \texttt{cpuid2cpuflags}:
+\hspace{-1.5em}Existují i~přepínače procesor a~grafický čip. Přepínače pro procesor se nastavují pomocí programu \textit{cpuid2cpuflags}:
 
 
 \texttt{echo "*/* \$(cpuid2flags)" > /etc/portage/package.use/00cpu-flags}\\
 
-\hspace{-1.5em}Přepínače pro grafický čip, v případě potrřeby, lze nastavit pomocí příkazu:
+\hspace{-1.5em}Přepínače pro grafický čip, v~případě potřeby, lze nastavit pomocí příkazu:
 
 \texttt{echo "*/* VIDEO\_CARDS: *gpu*" > /etc/portage/package.use/00video-\\\hspace*{1.5em}cards}\\
 
-\hspace{-1.5em}\texttt{*gpu*} nahradíme podle následující tabulky:
+\hspace{-1.5em}\textit{*gpu*} nahradíme podle následující tabulky:
 
 \begin{table}[h]
 	\centering
@@ -339,7 +339,7 @@ Jejich seznam si můžeme vypsat pomocí příkazu:
 
 \newpage
 \subsubsection{\textsf{Licence}}
-Od roku 2014 obsahují repositáře Gentoo štítky s licencemi balíčků. Pro lepší orientaci byla také zavedena proměnná \texttt{ACCEPT\_LICENSE}. Licence byly rozděleny do skupin, které se deklarují v~\texttt{/etc/portage/make.conf}:
+Od roku 2014 obsahují repositáře Gentoo štítky s~licencemi balíčků. Pro lepší orientaci byla také zavedena proměnná \textit{ACCEPT\_LICENSE}. Licence byly rozděleny do skupin, které se deklarují v~\textit{/etc/portage/make.conf}:
 
 \texttt{ACCEPT\_LICENSE="group"}
 
@@ -396,15 +396,15 @@ Od roku 2014 obsahují repositáře Gentoo štítky s licencemi balíčků. Pro 
 	\hline
 	\end{tabular}
 \end{table}
-\hspace{-1.5em}Pokud uživatel chce instalovat software pod jakoukoliv licencí, může zvolit přepínač \texttt{*}.
-Jelikož se jedná o limitující kategorii, script nastaví hodnotu parametru na~\texttt{*}. Důvodem je velké množství proprietárních ovladačů, nutných pro funkci fyzických prostředků.
+\hspace{-1.5em}Pokud uživatel chce instalovat software pod jakoukoliv licencí, může zvolit přepínač \textit{*}.
+Jelikož se jedná o~limitující kategorii, script nastaví hodnotu parametru na~\textit{*}. Důvodem je velké množství proprietárních ovladačů, nutných pro funkci fyzických prostředků.
 
 
-\hspace*{-1.5em}V případě, že uživatel chce použít licenci pouze v rámci balíčku, lze toho docílit pomocí záznamu v~\texttt{/etc/portage/package.use/} ve tvaru:
+\hspace*{-1.5em}V případě, že uživatel chce použít licenci pouze v~rámci balíčku, lze toho docílit pomocí záznamu v~\textit{/etc/portage/package.use/} ve tvaru:
 
 \texttt{nazev/balicku licence}
 
-\hspace{-1.5em}K propsání změn v \texttt{ACCEPT\_LICENSE} je nutné systém aktualizovat pomocí:
+\hspace{-1.5em}K propsání změn v~\textit{ACCEPT\_LICENSE} je nutné systém aktualizovat pomocí:
 
 \texttt{emerge --ask --verbose --update --deep --newuse @world}
 
@@ -414,25 +414,25 @@ Jelikož se jedná o limitující kategorii, script nastaví hodnotu parametru n
 \section{\textsf{Kernel}}\hypertarget{Kernel}{}
 Jádro, kernel, je součástí většiny operačních systémů. Zajišťuje přístup k~fyzickým prostředkům počítače. Mezi hlavní funkce patří správa: procesorů, procesů, pamětí a~periferií. 
 
-Program nikdy nekomunikuje přímo s komponentou, místo toho komunikuje s~jádrem pomocí systémových volání, které pak předá instrukce komponentě. Vyhodou je, že jádro může takto sbírat instrukce od více procesů a následně je řadit podle plánovacího algoritmu, tzv. scheduler.
+Program nikdy nekomunikuje přímo s~komponentou, místo toho komunikuje s~jádrem pomocí systémových volání, které pak předá instrukce komponentě. Vyhodou je, že jádro může takto sbírat instrukce od více procesů a~následně je řadit podle plánovacího algoritmu, tzv. scheduler.
 
 \subsection{\textsf{Scheduler}}
-Scheduler pro linuxové jádro se nazývá {\bf C}ompletely {\bf F}air {\bf S}cheduler ({\bf CFS}). Účelem je poskytnout všem entitám stejný čas na procesoru. Entity zaštiťují jeden proces nebo skupinu procesů. Nejmenší možnou entitou je jeden jednovláknový proces, největší entita (skupina) může obsahovat všechny běžící procesy, taková entita je označena \texttt{root\_task\_group}. 
+Scheduler pro linuxové jádro se nazývá {\bf C}ompletely {\bf F}air {\bf S}cheduler ({\bf CFS}). Účelem je poskytnout všem entitám stejný čas na procesoru. Entity zaštiťují jeden proces nebo skupinu procesů. Nejmenší možnou entitou je jeden jednovláknový proces, největší entita (skupina) může obsahovat všechny běžící procesy, taková entita je označena \textit{root\_task\_group}. 
 \subsubsection{\textsf{Group scheduling}}
-Skupiny mají přidělenou hodnotu \texttt{cpu.shares}. Poměr hodnot \texttt{cpu.shares} jednotlivých skupin určuje jejich čas na procesoru. Obsahuje-li skupina podskupiny, postup se opakuje. Dělení na skupiny není teoreticky nutné, avšak je žádoucí například u systémů s více uživateli.
+Skupiny mají přidělenou hodnotu \textit{cpu.shares}. Poměr hodnot \textit{cpu.shares} jednotlivých skupin určuje jejich čas na procesoru. Obsahuje-li skupina podskupiny, postup se opakuje. Dělení na skupiny není teoreticky nutné, avšak je žádoucí například u~systémů s~více uživateli.
 
 \subsubsection{\textsf{Task scheduling}}
-Po přidělení času (pod)skupinám je potřeba naplánovat jednotlivé procesy skupiny. Plánování se provádí pomocí hodnoty \texttt{vruntime}. \texttt{vruntime} je odvozen z doby strávené na procesoru a priority(NICE). Platí, že rostoucí priorita (klesající NICE) zpomaluje růst \texttt{vruntime}. Procesy s vyšší prioritou dostanou více prostoru. Procesy jsou podle \texttt{vruntime} seřazeny do Red-black tree. Jedná se o upravený binární strom s barevně označenými uzly. Strom vždy řadí menší hodnotu (v tomto případě \texttt{vruntime}) vlevo. Barvy uzlů se průbežně mění, vždy však splňují čtyři podmínky:\\
-1. Vkládaný uzel je červený.\\2. Každý uzel je černý nebo červený.\\3. Nikdy nesmí být dva červené uzly bezprostředně nad sebou.\\4. Cesty z libovolných černých uzlů na konec obsahují stejný počet černých bodů. \\ 
+Po přidělení času (pod)skupinám je potřeba naplánovat jednotlivé procesy skupiny. Plánování se provádí pomocí hodnoty \textit{vruntime}. \textit{vruntime} je odvozen z~doby strávené na procesoru a~priority(NICE). Platí, že rostoucí priorita (klesající NICE) zpomaluje růst \textit{vruntime}. Procesy s~vyšší prioritou dostanou více prostoru. Procesy jsou podle \textit{vruntime} seřazeny do Red-black tree. Jedná se o~upravený binární strom s~barevně označenými uzly. Strom vždy řadí menší hodnotu (v tomto případě \textit{vruntime}) vlevo. Barvy uzlů se průbežně mění, vždy však splňují čtyři podmínky:\\
+1. Vkládaný uzel je červený.\\2. Každý uzel je černý nebo červený.\\3. Nikdy nesmí být dva červené uzly bezprostředně nad sebou.\\4. Cesty z~libovolných černých uzlů na konec obsahují stejný počet černých bodů. \\ 
 
-\hspace*{-1.5em}Uvedené podmínky zaručují, že jakýkoliv takový strom s $n$ uzly bude obsahovat \\maximálně $2\log(n+1)$ vrstev. Asymptotická složitost operací je $O(\log n)$.\\
+\hspace*{-1.5em}Uvedené podmínky zaručují, že jakýkoliv takový strom s~$n$ uzly bude obsahovat \\maximálně $2\log(n+1)$ vrstev. Asymptotická složitost operací je $O(\log n)$.\\
 
 
 
 \subsection{\textsf{Firmware}}
-Firmware je kód běžící přímo na fyzické komponentě. Často je uložen v paměti, která je součástí komponenty. V případech kdy tomu tak není je potřeba jej nahrát z kernelu operačního systému. Nejčastěji se jedná o grafické karty, síťové a zvukové karty. 
+Firmware je kód běžící přímo na fyzické komponentě. Často je uložen v~paměti, která je součástí komponenty. V~případech kdy tomu tak není je potřeba jej nahrát z~kernelu operačního systému. Nejčastěji se jedná o~grafické karty, síťové a~zvukové karty. 
 
-Firmware Linuxu uložen v adresáři \texttt{/usr/lib/firmware}, odkud je při zavádění načten do zařízení. Velkou část potřebného firmwaru obsahuje \texttt{sys-kernel/linux-firmware}:
+Firmware Linuxu uložen v~adresáři \textit{/usr/lib/firmware}, odkud je při zavádění načten do zařízení. Velkou část potřebného firmwaru obsahuje \textit{sys-kernel/linux-firmware}:
 
 \texttt{emerge sys-kernel/linux-firmware}
 
@@ -442,24 +442,24 @@ Firmware Linuxu uložen v adresáři \texttt{/usr/lib/firmware}, odkud je při z
 
 \hspace{-1.5em}Mikrokód pro procesory AMD je součástí  \texttt{sys-kernel/linux-firmware}.
 \subsection{\textsf{Initramfs}} \hypertarget{Initramfs}{}
-{\bf Init}ial {\bf ram}-based {\bf f}ile {\bf s}ystem je malý filesystem. Cílem initramfs je připravit minimální prostředí pro spuštění Init systému. Provádí načtení kernel modulů a driverů pro zavedení důležitých filesystémů. Jakmile je vše potřebné připraveno, předá kontrolu Init systému.
-Initramfs je plnohodnotné uživatelské prostředí, je tedy možné v něm spouštět procesy. Standartním využitím této vlastnosti je záchranný systém nebo zadávání hesla pro odšifrování disku. Méně standartním využitím je hraní hry Tetris. 
+{\bf Init}ial {\bf ram}-based {\bf f}ile {\bf s}ystem je malý filesystem. Cílem initramfs je připravit minimální prostředí pro spuštění Init systému. Provádí načtení kernel modulů a~driverů pro zavedení důležitých filesystémů. Jakmile je vše potřebné připraveno, předá kontrolu Init systému.
+Initramfs je plnohodnotné uživatelské prostředí, je tedy možné v~něm spouštět procesy. Standartním využitím této vlastnosti je záchranný systém nebo zadávání hesla pro odšifrování disku. Méně standartním využitím je hraní hry Tetris. 
 
-Generaci initramfs provádí \texttt{Installkernel} najde-li \texttt{dracut} parametr v souboru adresáře \texttt{/etc/portage/}.
+Generaci initramfs provádí \textit{Installkernel} najde-li \textit{dracut} parametr v~souboru adresáře \textit{/etc/portage/}.
 
-\hspace{-1.5em}Script parametr vkládá do souboru \texttt{installkernel}:
+\hspace{-1.5em}Script parametr vkládá do souboru \textit{installkernel}:
 
 \texttt{echo "sys-kernel/installkernel dracut" | tee -a /\dots/installkernel}
 
 \hspace{-1.5em}Úprava {Initramfs} %\hyperlink{Initramfs}
-vyžaduje velké množství znalostí a schopností, proto ji nebudeme více rozebírat. Podrobnější informace obsahuje Gentoo wiki. 
+vyžaduje velké množství znalostí a~schopností, proto ji nebudeme více rozebírat. Podrobnější informace obsahuje Gentoo wiki. 
 
 
 \subsection{\textsf{Linux Kernel}}
 \subsubsection{\textsf{Architektura}}
-Architektura linuxového jádra je monolitická, modulární. Je tedy možné dynamicky přidávat a odebírat moduly. Linuxové jádro může tedy teoreticky obsahovat jen momentálně potřebné moduly. Jádro je sestaveno jako jeden blok, proto není potřeba mezi procesová komunikace jako u mikrojádra. 
+Architektura linuxového jádra je monolitická, modulární. Je tedy možné dynamicky přidávat a~odebírat moduly. Linuxové jádro může tedy teoreticky obsahovat jen momentálně potřebné moduly. Jádro je sestaveno jako jeden blok, proto není potřeba mezi procesová komunikace jako u~mikrojádra. 
 \subsubsection{\textsf{Kompilace}}
-Script nabízí dvě možnosti: lokální kompilaci a předkompilovaný kernel. Kompilace jádra zabere mnoho času. Je-li čas na instalaci omezený, je doporučeno použít předkompilovaný kernel. Výhodou lokální kompilace je přizpůsobení podle přepínačů. 
+Script nabízí dvě možnosti: lokální kompilaci a~předkompilovaný kernel. Kompilace jádra zabere mnoho času. Je-li čas na instalaci omezený, je doporučeno použít předkompilovaný kernel. Výhodou lokální kompilace je přizpůsobení podle přepínačů. 
 
 \hspace{-1.5em}\texttt{select binsrc in "Kompilovat lokálně" "Použít předkompilovaný";do}}\\
 \hspace*{1.5em}\texttt{break}\\
@@ -471,9 +471,9 @@ Script nabízí dvě možnosti: lokální kompilaci a předkompilovaný kernel. 
 \texttt{fi}\\
 \newpage
 \subsubsection{\textsf{fstab}}
-V Linuxu se zařízení z hlediska souborů dělí na bloková a znaková. Bloková zařízení jsou především různá úložiště. Operace se provádějí v blocích přes buffer. Znaková zařízení jsou zařízení s krátkou odezvou, například: klávesnice, myš a terminál. Operace se provádí ihned pomocí sekvence znaků(bytů).
+V Linuxu se zařízení z~hlediska souborů dělí na bloková a~znaková. Bloková zařízení jsou především různá úložiště. Operace se provádějí v~blocích přes buffer. Znaková zařízení jsou zařízení s~krátkou odezvou, například: klávesnice, myš a~terminál. Operace se provádí ihned pomocí sekvence znaků(bytů).
 
-K automatickému montování blokových zařízení slouží záznamy v souboru \texttt{/etc/fstab}. Struktura záznamu je:
+K automatickému montování blokových zařízení slouží záznamy v~souboru \textit{/etc/fstab}. Struktura záznamu je:
 
 \begin{table}[h]
 	\begin{tabular}{|c|c|c|c|c|c|}
@@ -485,14 +485,14 @@ K automatickému montování blokových zařízení slouží záznamy v souboru 
 		
 	\end{tabular}
 \end{table}
-\hspace*{-1.5em}\texttt{zařízení} - device file z /dev adresáře\\
+\hspace*{-1.5em}\texttt{zařízení} - device file z \textit{/dev adresáře}\\
 \texttt{umístění} - lokace pro montování obsahu zařízení \\
 \texttt{souborový systém} - souborový systém na zařízení\\
 \texttt{přepínač} - určuje způsob montování\\
 \texttt{backup} - zahrnutí zařízení do zálohy, boolean\\
 \texttt{fsck} - {\bf f}ile{\bf s}ystem {\bf c}hec{\bf k} určuje v jakém pořadí jsou zařízení kontrolována\\
 
-Z \hyperlink{Souborový systém}{kapitoly o Souborovém systému} víme, že script umožňuje výběr souborového systému pro \texttt{root} oddíl, tento údaj je nutné předat mezi scripty \texttt{instalator.sh} a \texttt{chroot.sh}. Scripty si proměnné předávají pomocí jednoduchých textových souborů.
+Z \hyperlink{Souborový systém}{kapitoly o~Souborovém systému} víme, že script umožňuje výběr souborového systému pro \textit{root} oddíl, tento údaj je nutné předat mezi scripty \textit{instalator.sh} a~\textit{chroot.sh}. Scripty si proměnné předávají pomocí jednoduchých textových souborů.
 
 \hspace*{-1.5em}Pro export proměnných:
 
@@ -508,7 +508,7 @@ Z \hyperlink{Souborový systém}{kapitoly o Souborovém systému} víme, že scr
 \hspace*{1.5em}\texttt{diskname2=\$(cat diskname2)}\\
 \hspace*{1.5em}\texttt{diskname3=\$(cat diskname3)}\\
 
-\hspace*{-1.5em}Tento postup není efektivní. Pro systémy s jedním diskem se proměnné \texttt{diskname} liší pouze v jednom znaku. Pokud by však cílový uživatel chtěl přizpůsobit script pro více disků je výše zmíněný přístup jednodušší na úpravu.
+\hspace*{-1.5em}Tento postup není efektivní. Pro systémy s~jedním diskem se proměnné \textit{diskname} liší pouze v~jednom znaku. Pokud by však cílový uživatel chtěl přizpůsobit script pro více disků je výše zmíněný přístup jednodušší na úpravu.
 \newpage
 
 \section{\textsf{Networking}}
@@ -517,31 +517,31 @@ Nyní je třeba zprovoznit síťová rozhraní. Potřebné balíčky se nainstal
 \texttt{emerge --noreplace net-misc/netifrc}\\
 
 
-\hspace{-1.5em}Zde script umožňuje výběr ze dvou možností: DHCP a Statická IP adresa. Obě možnosti jsou rozepsány v následujících podkapitolách.
+\hspace{-1.5em}Zde script umožňuje výběr ze dvou možností: DHCP a~Statická IP adresa. Obě možnosti jsou rozepsány v~následujících podkapitolách.
 
 \hspace{-1.5em}Společnou částí je výběr síťového rozhraní. Vypsání všech dostupných síťových rozhraní provádí příkaz:
 
 \texttt{ip link show | awk -F': ' '/\^[0-9]+: / \{print \$2\}'}
 
-\hspace{-1.5em}Vstup je poté uložen do proměnné \texttt{iface}\\
-Narozdíl od většiny ostatních proměnných zde není možnost výběru z přednastavených hodnot. Důvodem je, že síťová rozhraní nemusí být připojená nebo mít k dispozici drivery.
+\hspace{-1.5em}Vstup je poté uložen do proměnné \textit{iface}\\
+Narozdíl od většiny ostatních proměnných zde není možnost výběru z~přednastavených hodnot. Důvodem je, že síťová rozhraní nemusí být připojená nebo mít k~dispozici drivery.
 \subsection{\textsf{DHCP}}
-DHCP provádí automatické nastavení IP adresy, výchozí brány a DNS serveru pomocí služby DHCP.
-Chceme-li aby systém dostávál IP adresu z DHCP serveru, je potřeba doinstalovat DHCP daemon:
+DHCP provádí automatické nastavení IP adresy, výchozí brány a~DNS serveru pomocí služby DHCP.
+Chceme-li aby systém dostávál IP adresu z~DHCP serveru, je potřeba doinstalovat DHCP daemon:
 
 \texttt{emerge net-misc/dhcpcd}
 
-\hspace*{-1.5em}Konfigurace pro získání IP adresy se provádí v souboru \texttt{/etc/conf.d/net}. \\Struktura souboru vypadá následovně:
+\hspace*{-1.5em}Konfigurace pro získání IP adresy se provádí v~souboru \textit{/etc/conf.d/net}. \\Struktura souboru vypadá následovně:
 
 \texttt{config\_\$iface="dhcp"}
 
 \subsection{\textsf{Statická IP adresa}}
-Statická adresa se deklaruje v souboru \texttt{/etc/conf.d/net}. Je důležité mít na paměti, že DHCP nepřiděluje jen IP adresy, ale také nastavuje adresy výchozí brány a DNS serveru. Syntaxe pro zápis statické adresy je:
+Statická adresa se deklaruje v~souboru \textit{/etc/conf.d/net}. Je důležité mít na paměti, že DHCP nepřiděluje jen IP adresy, ale také nastavuje adresy výchozí brány a~DNS serveru. Syntaxe pro zápis statické adresy je:
 
 \texttt{config\_\$iface="\$ip netmask \$mask brd \$brd"}\\
 \hspace*{1.5em}\texttt{routes\_\$iface="default via \$routerIP"}
 \subsubsection{\textsf{Broadcast Calculator}}
-Pro zjednodušení konfigurace statické IP adresy je součástí repositáře i jednoduchý program na výpočet adresy broadcastu, Broadcast Calculator. Použití programu je:
+Pro zjednodušení konfigurace statické IP adresy je součástí repositáře i~jednoduchý program na výpočet adresy broadcastu, Broadcast Calculator. Použití programu je:
 
 \texttt{brdcal IP\_ADRESA MASKA\_PODSITE}
 
@@ -549,19 +549,19 @@ Pro zjednodušení konfigurace statické IP adresy je součástí repositáře i
 \hspace*{-1.5em}Výstupem pak je IP adresa broadcastu pro danou podsíť. \\
 
 
-Aby byla zajištěna spolehlivost a následná kompatibilita se scriptem, není možné použít vyšší programovací jazyky (Python, C\#, Java...), systém je nemusí podporovat. Z toho důvodu je celý program napsaný v jazyce C a za použití pouze tří knihoven: stdio.h, stdlib.h a string.h. Asymptotická složitost algoritmu je $O(1)$.
+Aby byla zajištěna spolehlivost a~následná kompatibilita se scriptem, není možné použít vyšší programovací jazyky (Python, C\#, Java...), systém je nemusí podporovat. Z~toho důvodu je celý program napsaný v~jazyce C a~za použití pouze tří knihoven: stdio.h, stdlib.h a~string.h. Asymptotická složitost algoritmu je $O(1)$.
 
 \newpage
 \section{\textsf{Bootloader}}
 
-Hlavním úkolem bootloaderu, zavaděče, je nahrát \hyperlink{Kernel}{jádro operačního systému} a \hyperlink{Initramfs}{Initramfs} do paměti RAM. Dělí se na bootloadery první fáze a druhé fáze.
+Hlavním úkolem bootloaderu, zavaděče, je nahrát \hyperlink{Kernel}{jádro operačního systému} a~\hyperlink{Initramfs}{Initramfs} do paměti RAM. Dělí se na bootloadery první fáze a~druhé fáze.
 \subsection{\textsf{První fáze}}
-Mluvíme-li o bootloaderu první fáze, máme téměř vždy na mysli firmware základní desky. Nejčastěji UEFI nebo BIOS. Jelikož většina počítačových systémů používá UEFI, nebudeme zde více rozebírat BIOS ani MBR.
+Mluvíme-li o~bootloaderu první fáze, máme téměř vždy na mysli firmware základní desky. Nejčastěji UEFI nebo BIOS. Jelikož většina počítačových systémů používá UEFI, nebudeme zde více rozebírat BIOS ani MBR.
 
-\hspace{-1.5em}Bootloader ihned po zapnutí provede {\bf P}ower {\bf O}n {\bf S}elf {\bf T}est. Tím se zajistí, že všechny komponenty pracují správně. V opačném případě se bootování zruší a UEFI, často pomocí reproduktoru, vrátí chybu. Je dobré zmínit, že úspěšný POST neznamená plně funkční komponenty. Následně začne hledat EFI oddíl, ve skriptu proměnná \texttt{diskname1}. Z oddílu se pokusí načíst bootloader druhé fáze, kterému poté předá řízení.
+\hspace{-1.5em}Bootloader ihned po zapnutí provede {\bf P}ower {\bf O}n {\bf S}elf {\bf T}est. Tím se zajistí, že všechny komponenty pracují správně. V~opačném případě se bootování zruší a~UEFI, často pomocí reproduktoru, vrátí chybu. Je dobré zmínit, že úspěšný POST neznamená plně funkční komponenty. Následně začne hledat EFI oddíl, ve skriptu proměnná \textit{diskname1}. Z~oddílu se pokusí načíst bootloader druhé fáze, kterému poté předá řízení.
 
 \subsection{\textsf{Druhá fáze}}
-Úkolem bootloaderu druhé fáze je načíst operační systém do paměti RAM. Nejpoužívanějším bootloaderem druhé fáze pro Linux je GRUB. Většina bootloaderů, včetně GRUBu, jsou technicky zároveň i bootmanagery, jelikož nabízí možnost načtení různých programů. Kromě načítání operačních systémů dokáží moderní bootloadery načíst testery, hry, jiné bootloadery a téměř libovolný jiný program. Script provádí instalaci zavaděče GRUB podle GPT schématu:\\
+Úkolem bootloaderu druhé fáze je načíst operační systém do paměti RAM. Nejpoužívanějším bootloaderem druhé fáze pro Linux je GRUB. Většina bootloaderů, včetně GRUBu, jsou technicky zároveň i~bootmanagery, jelikož nabízí možnost načtení různých programů. Kromě načítání operačních systémů dokáží moderní bootloadery načíst testery, hry, jiné bootloadery a~téměř libovolný jiný program. Script provádí instalaci zavaděče GRUB podle GPT schématu:\\
 
 \texttt{echo 'GRUB\_PLATFORMS="efi-64"' | tee -a /etc/portage/make.conf}\\
 \hspace*{1.5em}\texttt{emerge --ask sys-boot/grub}\\
@@ -570,18 +570,18 @@ Mluvíme-li o bootloaderu první fáze, máme téměř vždy na mysli firmware z
 
 \newpage
 \section{\textsf{Služby}}
-Součástí scriptu je možnost instalace a zprovoznění užitečných služeb. Služby pevně spjaté se systémem, tj. spravující systém, jsou nainstalovány a zprovnozněny již v rámci chroot.sh scriptu. Ostatní služby mají scripty uložené v adresáři \texttt{Services} a je tudíž potřeba je spustit manuálně. Seznam služeb a jejich využití je blíže popsán v následujících podkapitolách. 
+Součástí scriptu je možnost instalace a~zprovoznění užitečných služeb. Služby pevně spjaté se systémem, tj. spravující systém, jsou nainstalovány a~zprovnozněny již v~rámci chroot.sh scriptu. Ostatní služby mají scripty uložené v~adresáři \textit{Services} a~je tudíž potřeba je spustit manuálně. Seznam služeb a~jejich využití je blíže popsán v~následujících podkapitolách. 
 
 \subsection{\textsf{SecureShell}}
 SecureShell, častěji označován zkratkou SSH, je program umožňující vzdálenou správu počítače pomocí textového rozhraní. Služba je součástí základní sady nástrojů Gentoo, proto není třeba ji instalovat zvlášť. Script tedy službu pouze přídá do seznamu pro spuštění při startu: 
 
 \texttt{rc-update add sshd default}
 \subsection{\textsf{Sysklogd}} 
-Sysklogd je daemon pro logovací službu Syslog. Provedena je pouze instalace a přidání do seznamu Init systému(OpenRC). Služba pracuje podle výchozí konfigurace. V případě nutnosti konfigurace je třeba upravit soubor \texttt{/etc/syslog.conf}
+Sysklogd je daemon pro logovací službu Syslog. Provedena je pouze instalace a~přidání do seznamu Init systému(OpenRC). Služba pracuje podle výchozí konfigurace. V~případě nutnosti konfigurace je třeba upravit soubor \textit{/etc/syslog.conf}
 
 \subsection{\textsf{Cronie}}
 
-Cronie je moderní plánovač úloh postavený na službě Cron. Cronie umožňuje plánování na základě intervalu nebo data. Veškeré úlohy se plánují ve souborech \texttt{crontab}. Crontab soubor pro systémové úlohy je umístěn v \texttt{/etc/crontab}. Syntaxe pro \texttt{crontab}:\\
+Cronie je moderní plánovač úloh postavený na službě Cron. Cronie umožňuje plánování na základě intervalu nebo data. Veškeré úlohy se plánují ve souborech \textit{crontab}. Crontab soubor pro systémové úlohy je umístěn v~\textit{/etc/crontab}. Syntaxe pro \textit{crontab}:\\
 
 \texttt{*$_{1}$ *$_{2}$ *$_{3}$ *$_{4}$ *$_{5}$ /umisteni\_scriptu}
 
@@ -609,12 +609,12 @@ Cronie je moderní plánovač úloh postavený na službě Cron. Cronie umožňu
 
 \end{table}
 \subsection{\textsf{WPA Supplicant}}
-Připojení k WIFI síti, narozdíl od Ethernetu, vyžaduje dodatečnou konfiguraci. Častým nástrojem pro připojení k WIFI sítím je \texttt{wpa\_supplicant}. Po kompilaci je potřeba vytvořit konfigurační soubor pro síťové rozhraní. Konfigurační soubory jsou umístěny v adresáři \texttt{/etc/wpa\_supplicant/}. Script vytváří konfigurační soubor podle názvu rozhraní:\\
+Připojení k~WIFI síti, narozdíl od Ethernetu, vyžaduje dodatečnou konfiguraci. Častým nástrojem pro připojení k~WIFI sítím je \textit{wpa\_supplicant}. Po kompilaci je potřeba vytvořit konfigurační soubor pro síťové rozhraní. Konfigurační soubory jsou umístěny v~adresáři \textit{/etc/wpa\_supplicant/}. Script vytváří konfigurační soubor podle názvu rozhraní:\\
 
 \texttt{echo """ctrl\_interface=/run/wpa\_supplicant
 	update\_config=1 """ > \hspace*{1.5em}/etc/wpa\_supplicant/wpa\_supplicant-\$\{wlancard\}.conf}\\
 
-\hspace{-1.5em}Pro připojení k samotné síti je potřeba název (SSID) a heslo (PSK). Záznam se generuje pomocí \texttt{wpa\_passphrase} přesměrovaným do konfiguračního souboru: \\
+\hspace{-1.5em}Pro připojení~k samotné síti je potřeba název (SSID)~a heslo (PSK). Záznam se generuje pomocí \textit{wpa\_passphrase} přesměrovaným do konfiguračního souboru: \\
 
 \texttt{wpa\_passphrase \$\{ssid\} \$\{psk\} >> \\\hspace*{1.5em}/etc/wpa\_supplicant/wpa\_supplicant-\$\{wlancard\}.conf}\\
 
@@ -622,9 +622,9 @@ Připojení k WIFI síti, narozdíl od Ethernetu, vyžaduje dodatečnou konfigur
 
 \texttt{wpa\_supplicant -i nazev\_rozhrani -c /umisteni/konf\_souboru}
 
-\hspace*{-1.5em}Pro automatické připojení při zapnutí terminálu lze příkaz vložit do souboru '\texttt{.bashrc}'.
+\hspace*{-1.5em}Pro automatické připojení při zapnutí terminálu lze příkaz vložit do souboru '\textit{.bashrc}'.
 \subsection{\textsf{MariaDB}}
-MariaDB patří k nejpoužívanějším databázovým serverům. Hlavní výhodou oproti konkurenci je licence GNU GPLv2 a plná kompatibilita s MySQL. Script provede kompilaci včetně základní konfigurace.\\
+MariaDB patří k~nejpoužívanějším databázovým serverům. Hlavní výhodou oproti konkurenci je licence GNU GPLv2 a~plná kompatibilita s~MySQL. Script provede kompilaci včetně základní konfigurace.\\
 
 \texttt{read -p "heslo pro MariaDB: " \$password}\\
 \hspace*{1.5em}\texttt{emerge dev-db/mariadb}\\
@@ -668,7 +668,5 @@ MariaDB patří k nejpoužívanějším databázovým serverům. Hlavní výhodo
 	\item Sysklogd. Online. Gentoo Wiki. C2001–2025. Dostupné z: https://wiki.gentoo.org/wiki/Sysklogd. [cit. 2025-03-11].
 	\item Cron. Online. Gentoo Wiki. C2001–2025. Dostupné z: https://wiki.gentoo.org/wiki/Cron. [cit. 2025-03-14].
 	\item MariaDB. Online. In: Wikipedia: the free encyclopedia. San Francisco (CA): Wikimedia Foundation, 2001-. Dostupné z: https://en.wikipedia.org/wiki/MariaDB. [cit. 2025-03-15].
-
-	
 \end{enumerate}
 \end{document}

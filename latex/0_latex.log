@@ -1,4 +1,4 @@
-This is LuaHBTeX, Version 1.14.0 (TeX Live 2022/dev/Debian)  (format=lualatex 2025.2.3)  18 MAR 2025 10:36
+This is LuaHBTeX, Version 1.14.0 (TeX Live 2022/dev/Debian)  (format=lualatex 2025.2.3)  18 MAR 2025 15:22
  restricted system commands enabled.
 **0_latex.tex
 (./0_latex.tex
@@ -665,14 +665,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 207--215
 
  []
 
-[10] [11]
-Overfull \hbox (27.65361pt too wide) in paragraph at lines 292--297
-\TU/TeXGyreTermes(0)/m/n/12 určují vývo-jáři. Všechny použité přepí-na
-če se nachází ve složce \TU/lmtt/m/n/12 /etc/portage/make.conf\TU/TeXGyreTe
-rmes(0)/m/n/12 . 
- []
-
-[12]
+[10] [11] [12]
 Underfull \hbox (badness 10000) in paragraph at lines 302--303
 
  []
@@ -704,13 +697,6 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <5> on input line 338.
 [13] [14]
-Overfull \hbox (7.23355pt too wide) in paragraph at lines 422--423
-\TU/TeXGyreTermes(0)/m/n/12 Skupiny mají přiděle-nou hod-notu \TU/lmtt/m/n/1
-2 cpu.shares\TU/TeXGyreTermes(0)/m/n/12 . Poměr hod-not \TU/lmtt/m/n/12 cpu.sha
-res \TU/TeXGyreTermes(0)/m/n/12 jed-notlivých
- []
-
-
 Underfull \hbox (badness 10000) in paragraph at lines 425--427
 
  []
@@ -718,6 +704,14 @@ Underfull \hbox (badness 10000) in paragraph at lines 425--427
 [15]
 Underfull \hbox (badness 10000) in paragraph at lines 428--429
 
+ []
+
+
+Overfull \hbox (2.11906pt too wide) in paragraph at lines 448--449
+[]\TU/TeXGyreTermes(0)/m/n/12 Gen-eraci initramfs provádí \TU/TeXGyreTermes(0
+)/m/it/12 In-stal-lk-er-nel \TU/TeXGyreTermes(0)/m/n/12 najde-li \TU/TeXGyreTer
+mes(0)/m/it/12 dra-cut \TU/TeXGyreTermes(0)/m/n/12 parametr v souboru adresá
+ře
  []
 
 
@@ -735,10 +729,10 @@ Underfull \hbox (badness 10000) in paragraph at lines 464--472
  []
 
 [17]
-Overfull \hbox (24.15pt too wide) in paragraph at lines 476--477
+Overfull \hbox (5.81407pt too wide) in paragraph at lines 476--477
 []\TU/TeXGyreTermes(0)/m/n/12 K au-to-mat-ick-ému mon-tování blokových za-
-řízení slouží záz-namy v souboru \TU/lmtt/m/n/12 /etc/fstab\TU/TeXGyreTer
-mes(0)/m/n/12 .
+řízení slouží záz-namy v souboru \TU/TeXGyreTermes(0)/m/it/12 /etc/fstab\
+TU/TeXGyreTermes(0)/m/n/12 .
  []
 
 
@@ -780,6 +774,12 @@ aní. Vyp-sání všech dos-tup-ných síťových rozhraní
  []
 
 
+Overfull \hbox (0.64415pt too wide) in paragraph at lines 539--540
+\TU/TeXGyreTermes(0)/m/n/12 DHCP nepřiděluje jen IP adresy, ale také nas-tavu
+je adresy vý-chozí brány a DNS serveru.
+ []
+
+
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [19]
@@ -788,10 +788,10 @@ Underfull \hbox (badness 10000) in paragraph at lines 549--550
  []
 
 [20]
-Overfull \hbox (5.4567pt too wide) in paragraph at lines 561--562
+Overfull \hbox (1.16077pt too wide) in paragraph at lines 561--562
 \TU/TeXGyreTermes(0)/m/n/12 funkční kom-po-nenty. Následně za-čne hle-dat 
-EFI oddíl, ve skriptu proměnná \TU/lmtt/m/n/12 diskname1\TU/TeXGyreTermes(0)
-/m/n/12 .
+EFI oddíl, ve skriptu proměnná \TU/TeXGyreTermes(0)/m/it/12 diskname1\TU/TeX
+GyreTermes(0)/m/n/12 .
  []
 
 
@@ -811,15 +811,15 @@ Underfull \hbox (badness 10000) in paragraph at lines 566--570
  []
 
 [21]
-Overfull \hbox (4.99637pt too wide) in paragraph at lines 584--585
-\TU/TeXGyreTermes(0)/m/n/12 na zák-ladě in-ter-valu nebo data. Vešk-eré úlo
-hy se plánují ve sou-borech \TU/lmtt/m/n/12 crontab\TU/TeXGyreTermes(0)/m/n/1
-2 . Crontab
+Underfull \hbox (badness 10000) in paragraph at lines 584--585
+
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 584--585
-
+Overfull \hbox (8.35774pt too wide) in paragraph at lines 612--613
+\TU/TeXGyreTermes(0)/m/n/12 v adresáři \TU/TeXGyreTermes(0)/m/it/12 /etc/wpa_s
+up-pli-cant/\TU/TeXGyreTermes(0)/m/n/12 . Script vytváří kon-fig-u-rační so
+u-bor po-dle názvu rozhraní: 
  []
 
 
@@ -964,27 +964,28 @@ Package rerunfilecheck Info: File `0_latex.out' has not changed.
 ### bottom level
 
 Here is how much of LuaTeX's memory you used:
- 12924 strings out of 477805
+ 12925 strings out of 477805
  100000,662416 words of node,token memory allocated
  482 words of node memory still in use:
    3 hlist, 1 vlist, 1 rule, 3 glue, 3 kern, 1 glyph, 5 attribute, 61 glue_spec,
  5 attribute_list, 1 write nodes
-   avail lists: 2:698,3:268,4:11,5:429,6:89,7:5069,8:52,9:474,10:7,11:314
- 33059 multiletter control sequences out of 65536+600000
- 64 fonts using 6756239 bytes
- 68i,14n,84p,702b,724s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/share/texmf/fonts/opentype/public/lm/lmmono12-regular.otf></usr/share/texm
-f/fonts/opentype/public/lm/lmsans12-regular.otf></usr/share/texmf/fonts/opentype
-/public/tex-gyre/texgyretermes-bold.otf></usr/share/texmf/fonts/opentype/public/
-tex-gyre/texgyretermes-regular.otf></usr/share/texmf/fonts/opentype/public/lm/lm
-sans17-regular.otf></usr/share/texmf/fonts/opentype/public/lm/lmsans10-bold.otf>
-</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/s
-hare/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/tex
-live/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb>
-Output written on 0_latex.pdf (27 pages, 169065 bytes).
+   avail lists: 2:698,3:268,4:7,5:435,6:89,7:5069,8:52,9:474,10:5,11:314
+ 33060 multiletter control sequences out of 65536+600000
+ 65 fonts using 6930967 bytes
+ 68i,14n,84p,698b,724s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/share/texmf/fonts/opentype/public/tex-gyre/texgyretermes-italic.otf></usr/
+share/texmf/fonts/opentype/public/lm/lmmono12-regular.otf></usr/share/texmf/font
+s/opentype/public/lm/lmsans12-regular.otf></usr/share/texmf/fonts/opentype/publi
+c/tex-gyre/texgyretermes-bold.otf></usr/share/texmf/fonts/opentype/public/tex-gy
+re/texgyretermes-regular.otf></usr/share/texmf/fonts/opentype/public/lm/lmsans17
+-regular.otf></usr/share/texmf/fonts/opentype/public/lm/lmsans10-bold.otf></usr/
+share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/t
+exlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/t
+exmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb>
+Output written on 0_latex.pdf (27 pages, 177234 bytes).
 
-PDF statistics: 422 PDF objects out of 1000 (max. 8388607)
- 366 compressed objects within 4 object streams
+PDF statistics: 429 PDF objects out of 1000 (max. 8388607)
+ 370 compressed objects within 4 object streams
  101 named destinations out of 1000 (max. 131072)
  313 words of extra memory for PDF output out of 10000 (max. 100000000)
 
