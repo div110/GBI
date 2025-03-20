@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2022/dev/Debian) (preloaded format=xelatex 2025.1.11)  19 MAR 2025 21:27
+This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2022/dev/Debian) (preloaded format=xelatex 2025.1.11)  20 MAR 2025 18:06
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -779,13 +779,13 @@ Underfull \hbox (badness 10000) in paragraph at lines 627--628
  []
 
 [23] [24]
-Overfull \hbox (7.09903pt too wide) in paragraph at lines 646--647
+Overfull \hbox (7.09903pt too wide) in paragraph at lines 651--652
 \TU/TeXGyreTermes(0)/m/n/12 https://en.wikipedia.org/wiki/Earliest_eligible_vir
 tual_deadline_first_scheduling.
  []
 
 
-Overfull \hbox (1.18208pt too wide) in paragraph at lines 647--648
+Overfull \hbox (1.18208pt too wide) in paragraph at lines 652--653
 []\TU/TeXGyreTermes(0)/m/n/12 EEVDF Notes [@Kuanch]. Online. 2024, 8 August 202
 4. Dostupné z: HackMD,
  []
