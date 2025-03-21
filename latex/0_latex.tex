@@ -84,7 +84,7 @@ Oddíl bude naformátován jako fat32.}
 {Druhý je Swap oddíl. Swap obsahuje části operační paměti, vyhodnocené jako nej-\\méně používané. 
 Rozbor samotného algoritmu pro správu paměti je mimo záběr maturitní práce. Je třeba,
 aby velikost Swap oddílu rostla s~kapacitou paměti RAM. Tento vztah je způsoben vlastnostmi hibernace, 
-která nahraje celý obsah operační paměti na Swap oddíl. Má-li tedy systém využívat hibernaci, je nutné
+která nahraje celý obsah operační paměti na Swap oddíl. Má-li tedy systém využívat hibernaci je nutné,
 aby velikost oddílu byla ostře větší, než velikost paměti RAM. }
 
 {Třetí je Root oddíl. Obsahuje komplement EFI oddílu. Je to zároveň také jediný oddíl z~trojice, 
@@ -227,7 +227,7 @@ Zároveň obsahuje přepínače pro překladače GCC, C++ a~Rust. Jejich správn
 
 \subsubsection{\textsf{Flags}}
 Pro nastavení GCC slouží proměnná \textit{CFLAGS} ve tvaru:\\ \hspace*{1.5em}\texttt{CFLAGS="flag1 flag2..."}\\Nastavení C++ je totožné, mění se pouze proměnná a~to na \textit{'CXXFLAGS'}.
-Uvádíme-li, že nastavení jsou totožná, je to myšleno doslovně. Je doporučeno, aby přepínače u~překladačů byli při instalaci stejné. Níže je uvedena
+Uvádíme-li, že nastavení jsou totožná, je to myšleno doslovně. Je doporučeno, aby přepínače u~překladačů byly při instalaci stejné. Níže je uvedena
 vzorová konfigurace:\\
 \hspace*{1.5em}\texttt{CFLAGS="-march=native -O2 -pipe"}\\
 \hspace*{1.5em}\texttt{CXXFLAGS="-march=native -O2 -pipe"}
@@ -446,7 +446,7 @@ Firmware Linuxu uložen v~adresáři \textit{/usr/lib/firmware}, odkud je při z
 \hspace{-1.5em}Mikrokód pro procesory AMD je součástí  \texttt{sys-kernel/linux-firmware}.
 \subsection{\textsf{Initramfs}} \hypertarget{Initramfs}{}
 {\bf Init}ial {\bf ram}-based {\bf f}ile {\bf s}ystem je malý filesystem. Cílem \textit{initramfs} je připravit minimální prostředí pro spuštění Init systému. Provádí načtení kernel modulů a~driverů pro zavedení důležitých filesystémů. Jakmile je vše potřebné připraveno, předá kontrolu Init systému.
-Initramfs je plnohodnotné uživatelské prostředí, je tedy možné v~něm spouštět procesy. Standartním využitím této vlastnosti je záchranný systém nebo zadávání hesla pro rozšifrování disku. Méně standardním využitím je hraní hry Tetris. 
+Initramfs je plnohodnotné uživatelské prostředí, je tedy možné v~něm spouštět procesy. Standardním využitím této vlastnosti je záchranný systém nebo zadávání hesla pro rozšifrování disku. Méně standardním využitím je hraní hry Tetris. 
 
 Generaci initramfs provádí \textit{Installkernel}, najde-li \textit{dracut} parametr v~souboru adresáře \textit{/etc/portage/}.
 
