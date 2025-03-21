@@ -36,6 +36,9 @@
 Třída: IT4/A\\
 Vedoucí práce: Petr Martínek
 }
+\vspace*{7em}
+\textsf{\LARGE\\
+Datum odevzdání: 31. března 2025 }
 \thispagestyle{empty}
 \end{figure}
 
@@ -301,7 +304,7 @@ Jejich seznam si můžeme vypsat pomocí příkazu:
 
 \texttt{https://www.gentoo.org/support/use-flags/}\\
 
-\hspace{-1.5em}Existují i~přepínače procesor a~grafický čip. Přepínače pro procesor se nastavují pomocí programu \textit{cpuid2cpuflags}:
+\hspace{-1.5em}Existují i~přepínače pro procesor a~grafický čip. Přepínače pro procesor se nastavují pomocí programu \textit{cpuid2cpuflags}:
 
 
 \texttt{echo "*/* \$(cpuid2flags)" > /etc/portage/package.use/00cpu-flags}\\
@@ -445,7 +448,7 @@ Firmware Linuxu uložen v~adresáři \textit{/usr/lib/firmware}, odkud je při z
 {\bf Init}ial {\bf ram}-based {\bf f}ile {\bf s}ystem je malý filesystem. Cílem \textit{initramfs} je připravit minimální prostředí pro spuštění Init systému. Provádí načtení kernel modulů a~driverů pro zavedení důležitých filesystémů. Jakmile je vše potřebné připraveno, předá kontrolu Init systému.
 Initramfs je plnohodnotné uživatelské prostředí, je tedy možné v~něm spouštět procesy. Standartním využitím této vlastnosti je záchranný systém nebo zadávání hesla pro rozšifrování disku. Méně standardním využitím je hraní hry Tetris. 
 
-Generaci initramfs provádí \textit{Installkernel} najde-li \textit{dracut} parametr v~souboru adresáře \textit{/etc/portage/}.
+Generaci initramfs provádí \textit{Installkernel}, najde-li \textit{dracut} parametr v~souboru adresáře \textit{/etc/portage/}.
 
 \hspace{-1.5em}Skript parametr vkládá do souboru \textit{installkernel}:
 
@@ -577,7 +580,7 @@ Součástí skriptu je možnost instalace a~zprovoznění užitečných služeb.
 
 \texttt{rc-update add sshd default}
 \subsection{\textsf{Sysklogd}} 
-\textit{Sysklogd} je daemon pro logovací službu \textit{Syslog}. Provedena je pouze instalace a~přidání do seznamu Init systému(OpenRC). Služba pracuje podle výchozí konfigurace. V~případě nutnosti konfigurace je třeba upravit soubor \textit{/etc/syslog.conf}
+\textit{Sysklogd} je daemon pro logovací službu \textit{Syslog}. Provedena je pouze instalace a~přidání do seznamu Init systému(OpenRC). Služba pracuje podle výchozí konfigurace. V~případě nutnosti konfigurace je třeba upravit soubor \textit{/etc/syslog.conf}.
 
 \subsection{\textsf{Cronie}}
 
