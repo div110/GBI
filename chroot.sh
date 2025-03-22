@@ -172,7 +172,9 @@ case $ipconfig in
   Statická)
     read -p "IP: " ip
     read -p "Maska: " mask
-    read -p "Broadcast: " brd  #brdcal
+    gcc brdCal.c -o /usr/bin/brdCal
+    brd=$(brdCal $ip $mask) 
+    #read -p "Broadcast: " brd  #brdcal
     read -p "Výchozí brána: " routerIP
     echo """config_$iface=\"$ip netmask $mask brd $brd\"
 routes_$iface=\"default via $routerIP\" """ | tee /etc/conf.d/net
