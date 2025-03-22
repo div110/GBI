@@ -109,6 +109,8 @@ sudo mount $diskname3 /mnt/gentoo
 
 
 sudo mv chroot.sh /mnt/gentoo/chroot.sh
+sudo mv brdCal.c /mnt/gentoo/brdCal.c
+sudo mv Services /mnt/gentoo/Services
 cd /mnt/gentoo
 sudo chronyd -q
 
