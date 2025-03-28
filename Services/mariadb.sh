@@ -1,4 +1,4 @@
-echo "dev-db/mariadb USE=\"+server\"" > /etc/portage/package.use/mariadb
+echo "dev-db/mariadb server" > /etc/portage/package.use/mariadb
 read -p "heslo pro MariaDB: " $password
 emerge dev-db/mariadb
 /etc/init.d/mariadb start
